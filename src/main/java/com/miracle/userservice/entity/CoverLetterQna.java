@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.websocket.Encoder;
 
 @Getter
 @NoArgsConstructor
@@ -15,13 +14,6 @@ public class CoverLetterQna extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cover_letter_id")
-    private CoverLetter coverLetter;
-
-    @Column(nullable = false, length = 255)
-    private String question;
-
-    @Column(columnDefinition = "TEXT")
-    private String answer;
+    @Embedded
+    private Qna qna;
 }
