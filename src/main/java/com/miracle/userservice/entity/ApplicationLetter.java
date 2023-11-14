@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -19,13 +21,14 @@ public class ApplicationLetter extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
+    @Column(name = "application_letter_type", nullable = false, length = 10)
     private PostType postType;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
     private Long postId;
 
     @Column(nullable = false)
@@ -47,14 +50,13 @@ public class ApplicationLetter extends BaseEntity {
     @Column(length = 20)
     private String userEducation;
 
-    private LocalDate userBirth;
-
     @Column(length = 50)
     private String userJob;
 
     @Column(length = 100)
     private String userGitLink;
 
+    private LocalDate userBirth;
     private int userCareer;
 
     @ElementCollection
@@ -62,7 +64,7 @@ public class ApplicationLetter extends BaseEntity {
             name = "application_letter_career_detail",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Column(name = "career_detail", nullable = false)
+    @Column(name = "content", nullable = false)
     private final List<String> careerDetailList = new ArrayList<>();
 
     @ElementCollection
@@ -70,15 +72,15 @@ public class ApplicationLetter extends BaseEntity {
             name = "application_letter_project",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Column(name = "project_content", nullable = false, columnDefinition = "TEXT")
-    private final List<String> projectContentList = new ArrayList<>();
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+    private final List<String> projectList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(
             name = "application_letter_etc",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Column(name = "etc", nullable = false)
+    @Column(name = "content", nullable = false)
     private final List<String> etcList = new ArrayList<>();
 
     @ElementCollection
@@ -86,7 +88,7 @@ public class ApplicationLetter extends BaseEntity {
             name = "application_letter_answer",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Column(nullable = false)
+    @Embedded
     private final List<Qna> qnaList = new ArrayList<>();
 
     @ElementCollection
@@ -95,6 +97,5 @@ public class ApplicationLetter extends BaseEntity {
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
     @Column(name = "stack_id", nullable = false)
-    private final List<Long> stackList = new ArrayList<>();
-
+    private final Set<Long> stackIdSet = new HashSet<>();
 }
