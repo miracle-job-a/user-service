@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,4 +23,7 @@ public class CoverLetter extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String title;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cover_letter_id")
+    private final List<CoverLetterQna> qnaList = new ArrayList<>();
 }
