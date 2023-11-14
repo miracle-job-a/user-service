@@ -9,7 +9,7 @@ import javax.websocket.Encoder;
 @Getter
 @NoArgsConstructor
 @Entity
-public class CoverLetterQna {
+public class CoverLetterQna extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

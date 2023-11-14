@@ -12,8 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-//@Index()
-public class ApplicationLetter {
+public class ApplicationLetter extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
