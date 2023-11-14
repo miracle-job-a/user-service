@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private int password;
 
     @Column(nullable = false, length = 30)
     private String name;
@@ -34,7 +33,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String address;
 
     @ElementCollection
@@ -51,6 +50,5 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "user_id")
     )
     @Column(name = "post_id", nullable = false)
-    private final Set<Long> postIdSet = new HashSet<>();
-
+    private final Set<Long> scrapPostIdSet = new HashSet<>();
 }
