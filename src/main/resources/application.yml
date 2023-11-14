@@ -1,0 +1,16 @@
+server:
+  port: 60001
+
+spring:
+  datasource:
+    url: ${DB_url}
+    username: ${DB_username}
+    password: ${DB_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
