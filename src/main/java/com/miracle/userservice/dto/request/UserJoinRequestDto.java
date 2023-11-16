@@ -1,16 +1,15 @@
 package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.Birth;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
-@Getter
-@ToString
+@Data
 public class UserJoinRequestDto {
 
     @Email(message = "400_1:이메일 형식이 올바르지 않습니다.")
@@ -42,5 +41,15 @@ public class UserJoinRequestDto {
         this.phone = null;
         this.birth = null;
         this.address = null;
+    }
+
+    @Builder
+    public UserJoinRequestDto(String email, String name, String password, String phone, LocalDate birth, String address) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.birth = birth;
+        this.address = address;
     }
 }

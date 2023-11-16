@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @RestControllerAdvice
 public class MainExceptionAdvice {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ApiResponse invalidRequest(MethodArgumentNotValidException e, BindingResult bindingResult) {
         FieldError fieldError = bindingResult.getFieldError();
@@ -32,12 +34,14 @@ public class MainExceptionAdvice {
         return new ErrorApiResponse(HttpStatus.BAD_REQUEST.value(), defaultMessage, code, exceptionName);
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidRequestStateException.class)
     public ApiResponse invalidToken(InvalidRequestStateException e) {
         log.error(e.getMessage());
         return new ErrorApiResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), "401", e.getClass().getSimpleName());
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ApiResponse serverError(Exception e) {
         return new ErrorApiResponse(
