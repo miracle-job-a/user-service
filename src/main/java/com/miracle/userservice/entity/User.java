@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -51,4 +52,16 @@ public class User extends BaseEntity {
     )
     @Column(name = "post_id", nullable = false)
     private final Set<Long> scrapPostIdSet = new HashSet<>();
+
+    public User(String email, int password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public static User check(UserLoginRequestDto dto) {
+        String email = dto.getEmail();
+        int password = dto.getPassword().hashCode();
+
+        return new User(email, password);
+    }
 }
