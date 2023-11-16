@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -24,12 +23,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, HttpServletRequest request) {
+    public ApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         log.debug("dto={}", dto);
 
         userService.join(dto);
 
-        String message = "회원가입 성공";
+        String message = "회원 가입 성공";
         return new SuccessApiResponse<>(HttpStatus.OK.value(), message, null);
     }
 }
