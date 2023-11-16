@@ -1,9 +1,7 @@
 package com.miracle.userservice.entity;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +10,8 @@ import java.util.Set;
 
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
