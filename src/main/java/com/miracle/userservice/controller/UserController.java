@@ -7,12 +7,8 @@ import com.miracle.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -23,13 +19,14 @@ public class UserController {
 
     private final UserService userService;
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
-    public ApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, HttpServletRequest request) {
+    public ApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         log.debug("dto={}", dto);
 
         userService.join(dto);
 
-        String message = "회원가입 성공";
+        String message = "회원 가입 성공";
         return new SuccessApiResponse<>(HttpStatus.OK.value(), message, null);
     }
 }
