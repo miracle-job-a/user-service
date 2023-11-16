@@ -7,10 +7,7 @@ import com.miracle.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,6 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
     public ApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         log.debug("dto={}", dto);
