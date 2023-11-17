@@ -1,6 +1,6 @@
 package com.miracle.userservice.exception.handler;
 
-import com.miracle.userservice.dto.response.ApiResponse;
+import com.miracle.userservice.dto.response.CommonApiResponse;
 import com.miracle.userservice.dto.response.ErrorApiResponse;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class MainExceptionAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResponse invalidRequest(MethodArgumentNotValidException e, BindingResult bindingResult) {
+    public CommonApiResponse invalidRequest(MethodArgumentNotValidException e, BindingResult bindingResult) {
         FieldError fieldError = bindingResult.getFieldError();
         Objects.requireNonNull(fieldError);
 
@@ -36,14 +36,14 @@ public class MainExceptionAdvice {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidRequestStateException.class)
-    public ApiResponse invalidToken(InvalidRequestStateException e) {
+    public CommonApiResponse invalidToken(InvalidRequestStateException e) {
         log.error(e.getMessage());
         return new ErrorApiResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), "401", e.getClass().getSimpleName());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ApiResponse serverError(Exception e) {
+    public CommonApiResponse serverError(Exception e) {
         return new ErrorApiResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
