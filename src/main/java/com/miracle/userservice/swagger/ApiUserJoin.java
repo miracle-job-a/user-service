@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller.swagger;
+package com.miracle.userservice.swagger;
 
 import com.miracle.userservice.dto.response.ErrorApiResponse;
 import com.miracle.userservice.dto.response.SuccessApiResponse;
