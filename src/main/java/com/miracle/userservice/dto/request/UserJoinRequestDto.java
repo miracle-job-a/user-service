@@ -1,6 +1,7 @@
 package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.Birth;
+import com.miracle.userservice.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 public class UserJoinRequestDto {
@@ -51,5 +53,23 @@ public class UserJoinRequestDto {
         this.phone = phone;
         this.birth = birth;
         this.address = address;
+    }
+
+    public User transformToUser() {
+        String name = this.name;
+        String email = this.email;
+        int password = Objects.requireNonNull(this.password, "Password is null").hashCode();
+        String phone = this.phone;
+        String address = this.address;
+        LocalDate birth = this.birth;
+
+        return User.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .phone(phone)
+                .address(address)
+                .birth(birth)
+                .build();
     }
 }

@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void join(UserJoinRequestDto dto) {
         Objects.requireNonNull(dto);
-        User user = User.create(dto);
+        User user = dto.transformToUser();
         userRepository.save(user);
     }
 }

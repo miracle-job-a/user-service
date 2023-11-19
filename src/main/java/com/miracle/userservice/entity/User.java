@@ -1,6 +1,5 @@
 package com.miracle.userservice.entity;
 
-import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.util.Set;
 
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 @Entity
 @Table(name = "users")
@@ -62,23 +61,5 @@ public class User extends BaseEntity {
         this.phone = phone;
         this.birth = birth;
         this.address = address;
-    }
-
-    public static User create(UserJoinRequestDto dto) {
-        String name = dto.getName();
-        String email = dto.getEmail();
-        int password = dto.getPassword().hashCode();
-        String phone = dto.getPhone();
-        String address = dto.getAddress();
-        LocalDate birth = dto.getBirth();
-
-        return User.builder()
-                .name(name)
-                .email(email)
-                .password(password)
-                .phone(phone)
-                .address(address)
-                .birth(birth)
-                .build();
     }
 }
