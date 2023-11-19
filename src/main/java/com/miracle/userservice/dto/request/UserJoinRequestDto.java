@@ -1,7 +1,7 @@
 package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.Birth;
-import com.miracle.userservice.dto.util.ValidationDefaultMsgUtil;
+import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +19,8 @@ public class UserJoinRequestDto {
             required = true,
             example = "youremail@naver.com"
     )
-    @Email(message = ValidationDefaultMsgUtil.EMAIL)
-    @NotBlank(message = ValidationDefaultMsgUtil.EMAIL)
+    @Email(message = ValidationDefaultMsgUtil.UserJoin.EMAIL)
+    @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.EMAIL)
     private final String email;
 
     @Schema(
@@ -28,8 +28,8 @@ public class UserJoinRequestDto {
             required = true,
             example = "오스틴"
     )
-    @Pattern(regexp = "^[가-힣]{2,}$", message = ValidationDefaultMsgUtil.NAME)
-    @NotBlank(message = ValidationDefaultMsgUtil.NAME)
+    @Pattern(regexp = "^[가-힣]{2,}$", message = ValidationDefaultMsgUtil.UserJoin.NAME)
+    @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.NAME)
     private final String name;
 
     @Schema(
@@ -37,8 +37,8 @@ public class UserJoinRequestDto {
             required = true,
             example = "ostin123!"
     )
-    @Pattern(regexp = "^(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{6,}$", message = ValidationDefaultMsgUtil.PASSWORD)
-    @NotBlank(message = ValidationDefaultMsgUtil.PASSWORD)
+    @Pattern(regexp = "^(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{6,}$", message = ValidationDefaultMsgUtil.UserJoin.PASSWORD)
+    @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.PASSWORD)
     private final String password;
 
     @Schema(
@@ -46,8 +46,8 @@ public class UserJoinRequestDto {
             required = true,
             example = "01012345678"
     )
-    @Pattern(regexp = "^010(\\d{8})$", message = ValidationDefaultMsgUtil.PHONE)
-    @NotBlank(message = ValidationDefaultMsgUtil.PHONE)
+    @Pattern(regexp = "^010(\\d{8})$", message = ValidationDefaultMsgUtil.UserJoin.PHONE)
+    @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.PHONE)
     private final String phone;
 
     @Schema(
@@ -55,7 +55,7 @@ public class UserJoinRequestDto {
             required = true,
             example = "2017-01-01"
     )
-    @Birth(message = ValidationDefaultMsgUtil.BIRTH)
+    @Birth(message = ValidationDefaultMsgUtil.UserJoin.BIRTH)
     private final LocalDate birth;
 
     @Schema(
@@ -63,7 +63,7 @@ public class UserJoinRequestDto {
             required = true,
             example = "서울특별시 서초구 효령로 113"
     )
-    @NotBlank(message = ValidationDefaultMsgUtil.ADDRESS)
+    @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.ADDRESS)
     private final String address;
 
     public UserJoinRequestDto() {
