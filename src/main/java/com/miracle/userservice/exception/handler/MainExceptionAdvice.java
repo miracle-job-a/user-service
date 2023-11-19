@@ -46,7 +46,7 @@ public class MainExceptionAdvice {
     public CommonApiResponse serverError(Exception e) {
         return new ErrorApiResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                e.getMessage(),
                 "500",
                 e.getClass().getSimpleName());
     }
