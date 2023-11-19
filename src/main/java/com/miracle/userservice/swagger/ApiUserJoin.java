@@ -2,6 +2,7 @@ package com.miracle.userservice.swagger;
 
 import com.miracle.userservice.dto.response.ErrorApiResponse;
 import com.miracle.userservice.dto.response.SuccessApiResponse;
+import com.miracle.userservice.swagger.util.SwaggerMsgUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -21,10 +22,10 @@ import static java.lang.annotation.ElementType.METHOD;
         description = "유저의 회원 가입 요청을 처리하는 API. 성공 시 DB에 유저의 정보가 저장됨",
         responses = {
                 @ApiResponse(
-                        responseCode = "200",
+                        responseCode = SwaggerMsgUtil.ResponseCode.OK,
                         description = "회원 가입 성공",
                         content = @Content(
-                                mediaType = "application/json",
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
                                 examples = @ExampleObject(
                                         name = "성공",
                                         value = """
@@ -39,10 +40,10 @@ import static java.lang.annotation.ElementType.METHOD;
                         )
                 ),
                 @ApiResponse(
-                        responseCode = "400",
+                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
                         description = "데이터 검증 실패",
                         content = @Content(
-                                mediaType = "application/json",
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
                                 examples = {
                                         @ExampleObject(
                                                 name = "이메일 검증 실패",
@@ -115,10 +116,10 @@ import static java.lang.annotation.ElementType.METHOD;
                         )
                 ),
                 @ApiResponse(
-                        responseCode = "401",
+                        responseCode = SwaggerMsgUtil.ResponseCode.UNAUTHORIZED,
                         description = "비정상적인 요청",
                         content = @Content(
-                                mediaType = "application/json",
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
                                 examples = @ExampleObject(
                                         name = "토큰 검증 실패",
                                         value = """
