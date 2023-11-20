@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = BirthValidator.class)
-@Past(message = "400_5:생년월일 형식이 올바르지 않습니다.")
+@Past
 public @interface Birth {
 
-    String message() default "400_5:생년월일 형식이 올바르지 않습니다.";
+    String message() default "";
     Class[] groups() default {};
     Class[] payload() default {};
 }

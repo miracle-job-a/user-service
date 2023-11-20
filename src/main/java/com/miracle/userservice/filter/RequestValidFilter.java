@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Order(1)
 @WebFilter("/v1/*")
@@ -20,6 +21,11 @@ public class RequestValidFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String sessionId = request.getHeader("sessionId");
+        if (Objects.isNull(sessionId)) {
+            response.sendRedirect("/error/invalid-request");
+            return;
+        }
+
         int hashCode = request.getIntHeader("miracle");
         String key = sessionId + PRIVATE_KEY;
         int h = key.hashCode();

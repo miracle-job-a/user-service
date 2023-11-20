@@ -18,7 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void join(UserJoinRequestDto dto) {
-        Objects.requireNonNull(dto);
+        String errorMessage = "UserJoinRequestDto is null";
+        Objects.requireNonNull(dto, errorMessage);
+
         User user = User.create(dto);
         userRepository.save(user);
     }
