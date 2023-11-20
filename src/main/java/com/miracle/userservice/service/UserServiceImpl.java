@@ -1,13 +1,15 @@
 package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
+import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -15,6 +17,16 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    @Override
+    public boolean login(UserLoginRequestDto dto) {
+        String errorMessage = "UserLoginRequestDto is null";
+        Objects.requireNonNull(dto, errorMessage);
+
+        Optional<User> user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword().hashCode());
+
+        return user.isPresent();
+    }
 
     @Override
     public void join(UserJoinRequestDto dto) {

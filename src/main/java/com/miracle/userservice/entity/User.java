@@ -1,5 +1,7 @@
 package com.miracle.userservice.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import lombok.*;
 
