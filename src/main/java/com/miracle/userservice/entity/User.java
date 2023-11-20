@@ -57,11 +57,4 @@ public class User extends BaseEntity {
         this.email = email;
         this.password = password;
     }
-
-    public static User check(UserLoginRequestDto dto) {
-        String email = dto.getEmail();
-        int password = dto.getPassword().hashCode();
-
-        return new User(email, password);
-    }
 }
