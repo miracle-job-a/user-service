@@ -1,6 +1,8 @@
 package com.miracle.userservice.controller;
 
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.swagger.ApiUserJoin;
+import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.response.CommonApiResponse;
 import com.miracle.userservice.dto.response.SuccessApiResponse;
 import com.miracle.userservice.service.UserService;
@@ -15,8 +17,8 @@ import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
 @RequestMapping("/v1/user")
+@RestController
 public class UserController {
 
     private final UserService userService;
@@ -33,17 +35,29 @@ public class UserController {
         int httpStatus;
         Boolean data;
 
-        if(login) {
+        if (login) {
             message = "로그인에 성공했습니다.";
             httpStatus = HttpStatus.OK.value();
             data = null;
-            response.setStatus(httpStatus);
         } else {
             message = "로그인에 실패했습니다.";
             httpStatus = HttpStatus.BAD_REQUEST.value();
             data = false;
-            response.setStatus(httpStatus);
         }
+        response.setStatus(httpStatus);
         return new SuccessApiResponse<>(httpStatus, message, data);
+    }
+
+    @ApiUserJoin
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/join")
+    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, HttpServletRequest request) {
+        String sessionId = request.getHeader("sessionId");
+        log.debug("sessionId={}, dto={}", sessionId, dto);
+
+        userService.join(dto);
+
+        String message = "회원 가입 성공";
+        return new SuccessApiResponse<>(HttpStatus.OK.value(), message, null);
     }
 }

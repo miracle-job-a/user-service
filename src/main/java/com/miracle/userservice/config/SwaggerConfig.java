@@ -1,5 +1,8 @@
 package com.miracle.userservice.config;
 
+import com.fasterxml.classmate.TypeResolver;
+import com.miracle.userservice.dto.response.ErrorApiResponse;
+import com.miracle.userservice.dto.response.SuccessApiResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,8 +24,13 @@ public class SwaggerConfig {
     private static final String VERSION = "1.0";
 
     @Bean
-    public Docket docket() {
+    public Docket docket(TypeResolver typeResolver) {
         return new Docket(DocumentationType.OAS_30)
+                .additionalModels(
+                        typeResolver.resolve(SuccessApiResponse.class),
+                        typeResolver.resolve(ErrorApiResponse.class)
+                )
+                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
@@ -37,5 +45,4 @@ public class SwaggerConfig {
                 .version(VERSION)
                 .build();
     }
-
 }

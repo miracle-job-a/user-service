@@ -1,5 +1,6 @@
 package com.miracle.userservice.service;
 
+import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.repository.UserRepository;
@@ -25,5 +26,14 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword().hashCode());
 
         return user.isPresent();
+    }
+
+    @Override
+    public void join(UserJoinRequestDto dto) {
+        String errorMessage = "UserJoinRequestDto is null";
+        Objects.requireNonNull(dto, errorMessage);
+
+        User user = User.create(dto);
+        userRepository.save(user);
     }
 }
