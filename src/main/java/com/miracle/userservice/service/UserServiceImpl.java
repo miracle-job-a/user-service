@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         String errorMessage = "UserJoinRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        User user = User.create(dto);
+        User user = dto.transformToUser();
         userRepository.save(user);
     }
 }
