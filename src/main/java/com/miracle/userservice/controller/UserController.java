@@ -38,7 +38,7 @@ public class UserController {
         if (login) {
             message = "로그인에 성공했습니다.";
             httpStatus = HttpStatus.OK.value();
-            data = null;
+            data = true;
         } else {
             message = "로그인에 실패했습니다.";
             httpStatus = HttpStatus.BAD_REQUEST.value();
