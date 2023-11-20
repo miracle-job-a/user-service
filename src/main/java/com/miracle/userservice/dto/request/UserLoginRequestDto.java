@@ -2,7 +2,6 @@ package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -29,11 +28,5 @@ public class UserLoginRequestDto {
     public UserLoginRequestDto() {
         this.email = null;
         this.password = null;
-    }
-
-    @Builder
-    public UserLoginRequestDto(String email, String password) {
-        this.email = email;
-        this.password = password;
     }
 }

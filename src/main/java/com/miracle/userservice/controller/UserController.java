@@ -38,11 +38,11 @@ public class UserController {
         if (login) {
             message = "로그인에 성공했습니다.";
             httpStatus = HttpStatus.OK.value();
-            data = true;
+            data = Boolean.TRUE;
         } else {
             message = "로그인에 실패했습니다.";
             httpStatus = HttpStatus.BAD_REQUEST.value();
-            data = false;
+            data = Boolean.FALSE;
         }
         response.setStatus(httpStatus);
         return new SuccessApiResponse<>(httpStatus, message, data);
