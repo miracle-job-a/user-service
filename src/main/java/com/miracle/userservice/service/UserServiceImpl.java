@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -17,9 +18,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public void login(UserLoginRequestDto dto) {
-        Objects.requireNonNull(dto);
-        User user = User.check(dto);
-        userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+    public boolean login(UserLoginRequestDto dto) {
+        String errorMessage = "UserLoginRequestDto is null";
+        Objects.requireNonNull(dto, errorMessage);
+
+        Optional<User> user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword().hashCode());
+
+        return user.isPresent();
     }
 }
