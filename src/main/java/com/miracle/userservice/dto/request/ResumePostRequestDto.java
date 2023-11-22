@@ -21,6 +21,7 @@ public class ResumePostRequestDto {
     private final String education;
 
     @Size(max = 100, message = ValidationDefaultMsgUtil.ResumePost.GIT_LINK)
+    @Pattern(regexp = "^https://github.com/")
     private final String gitLink;
 
     @Size(max = 50, message = ValidationDefaultMsgUtil.ResumePost.PHOTO)
