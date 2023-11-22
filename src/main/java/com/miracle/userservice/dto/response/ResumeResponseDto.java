@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class ResumeResponseDto {
     private final String title;
     private final String photo;
     private final int career;
-    private final LocalDate birth;
+    private final String birth;
     private final String phone;
     private final String education;
     private final String gitLink;
@@ -30,7 +31,7 @@ public class ResumeResponseDto {
         this.title = title;
         this.photo = photo;
         this.career = career;
-        this.birth = birth;
+        this.birth = birth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.phone = phone;
         this.education = education;
         this.gitLink = gitLink;
