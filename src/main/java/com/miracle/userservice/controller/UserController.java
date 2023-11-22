@@ -5,6 +5,7 @@ import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.response.CommonApiResponse;
 import com.miracle.userservice.dto.response.SuccessApiResponse;
 import com.miracle.userservice.service.UserService;
+import com.miracle.userservice.swagger.ApiUserLogin;
 import com.miracle.userservice.swagger.ApiUserJoin;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @ApiUserLogin
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto dto, @RequestHeader String sessionId, HttpServletResponse response) {
