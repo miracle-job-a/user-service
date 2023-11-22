@@ -54,7 +54,25 @@ public class UserController {
 
         userService.join(dto);
 
+        int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 성공";
-        return new SuccessApiResponse<>(HttpStatus.OK.value(), message, null);
+        return new SuccessApiResponse<>(httpStatus, message, null);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/check-email/{email}")
+    public CommonApiResponse checkDuplicateEmail(@PathVariable String email) {
+        String message;
+        Boolean data;
+        if (userService.checkDuplicate(email)) {
+            message = "사용할 수 없는 이메일입니다.";
+            data = Boolean.TRUE;
+        } else {
+            message = "사용 가능한 이메일입니다.";
+            data = Boolean.FALSE;
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        return new SuccessApiResponse<>(httpStatus, message, data);
     }
 }

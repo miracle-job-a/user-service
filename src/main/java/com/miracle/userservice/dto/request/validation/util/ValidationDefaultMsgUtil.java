@@ -16,4 +16,9 @@ public class ValidationDefaultMsgUtil {
         public static final String BIRTH = "400_5:생년월일 형식이 올바르지 않습니다.";
         public static final String ADDRESS = "400_6:주소 형식이 올바르지 않습니다.";
     }
+
+    public static abstract class CheckDuplicate {
+
+        public static final String EMAIL = "400:이메일 형식이 올바르지 않습니다.";
+    }
 }
