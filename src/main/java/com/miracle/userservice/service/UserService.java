@@ -23,4 +23,14 @@ public interface UserService {
      * @author chocola
      */
     void join(UserJoinRequestDto dto);
+
+    /**
+     * 이메일 중복 확인을 처리하는 메서드
+     * 해당 이메일이 DB에 저장되어 있는지 확인한다. 저장되어 있다면 true, 그렇지 않으면 false를 반환한다.
+     *
+     * @param email 유저 이메일
+     * @return {@code email}이 기 저장되어 있다면 true, 그렇지 않으면 false를 반환
+     * @author chocola
+     */
+    boolean checkDuplicate(String email);
 }

@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         User user = dto.transformToUser();
         userRepository.save(user);
     }
+
+    @Override
+    public boolean checkDuplicate(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
