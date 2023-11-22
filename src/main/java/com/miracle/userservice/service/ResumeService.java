@@ -1,7 +1,10 @@
 package com.miracle.userservice.service;
 
+import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.exception.NoSuchResumeException;
+
+import java.util.NoSuchElementException;
 
 public interface ResumeService {
 
@@ -15,4 +18,15 @@ public interface ResumeService {
      * @author chocola
      */
     ResumeResponseDto getResumeDetail(Long id);
+
+    /**
+     * 회원의 이력서를 저장
+     *
+     * @param dto 이력서 정보
+     * @return true
+     * @throws NullPointerException If {@code dto} is null
+     * @throws NoSuchElementException If user doesn't exist
+     * @author chocola
+     */
+    boolean postResume(ResumePostRequestDto dto);
 }
