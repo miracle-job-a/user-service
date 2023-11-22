@@ -2,6 +2,7 @@ package com.miracle.userservice.exception.handler;
 
 import com.miracle.userservice.dto.response.CommonApiResponse;
 import com.miracle.userservice.dto.response.ErrorApiResponse;
+import com.miracle.userservice.exception.DuplicateEmailException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,28 +27,48 @@ public class MainExceptionAdvice {
 
         String field = fieldError.getField();
         String[] s = fieldError.getDefaultMessage().split(":");
+        int httpStatus = HttpStatus.BAD_REQUEST.value();
         String defaultMessage = s[1];
         String code = s[0];
-        String exceptionName = e.getClass().getSimpleName();
+        String exceptionName = getClassSimpleName(e);
 
         log.error("{} : {}", field, defaultMessage);
-        return new ErrorApiResponse(HttpStatus.BAD_REQUEST.value(), defaultMessage, code, exceptionName);
+        return new ErrorApiResponse(httpStatus, defaultMessage, code, exceptionName);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidRequestStateException.class)
     public CommonApiResponse invalidToken(InvalidRequestStateException e) {
-        log.error(e.getMessage());
-        return new ErrorApiResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), "401", e.getClass().getSimpleName());
+        String message = e.getMessage();
+        log.error(message);
+        int httpStatus = HttpStatus.UNAUTHORIZED.value();
+        String code = "401";
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateEmailException.class)
+    public CommonApiResponse duplicateEmail(DuplicateEmailException e) {
+        String message = e.getMessage();
+        log.error(message);
+        int httpStatus = HttpStatus.BAD_REQUEST.value();
+        String code = "400";
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public CommonApiResponse serverError(Exception e) {
-        return new ErrorApiResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                e.getMessage(),
-                "500",
-                e.getClass().getSimpleName());
+        int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        String message = e.getMessage();
+        String code = "500";
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
+    }
+
+    private String getClassSimpleName(Object obj) {
+        return obj.getClass().getSimpleName();
     }
 }

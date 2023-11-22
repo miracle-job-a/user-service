@@ -2,6 +2,7 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
+import com.miracle.userservice.exception.DuplicateEmailException;
 
 public interface UserService {
 
@@ -16,10 +17,13 @@ public interface UserService {
     boolean login(UserLoginRequestDto dto);
 
     /**
-     * 회원 가입 요청을 처리하는 메서드.
+     * 회원 가입 요청을 처리하는 메서드
+     * 이메일 중복 체크가 선행되며, 기 등록된 이메일이 아닐 경우 회원 가입이 진행된다.
+     * 이미 등록된 이메일인 경우 {@code DuplicateEmailException}이 발생한다.
      *
      * @param dto 회원 가입 정보
      * @throws NullPointerException {@code dto}가 null일 경우
+     * @throws DuplicateEmailException 기 등록된 이메일인 경우
      * @author chocola
      */
     void join(UserJoinRequestDto dto);
