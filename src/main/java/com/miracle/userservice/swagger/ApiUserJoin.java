@@ -40,7 +40,7 @@ import static java.lang.annotation.ElementType.METHOD;
                         )
                 ),
                 @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
+                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST_1,
                         description = "데이터 검증 실패",
                         content = @Content(
                                 mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
@@ -112,6 +112,25 @@ import static java.lang.annotation.ElementType.METHOD;
                                                         """
                                         )
                                 },
+                                schema = @Schema(implementation = ErrorApiResponse.class)
+                        )
+                ),
+                @ApiResponse(
+                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST_2,
+                        description = "회원 가입 실패",
+                        content = @Content(
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
+                                examples = @ExampleObject(
+                                        name = "이메일 중복",
+                                        value = """
+                                                {
+                                                  "httpStatus": 400,
+                                                  "message": "이메일 중복입니다.",
+                                                  "code": "400",
+                                                  "exception": DuplicateEmailException"
+                                                }
+                                                """
+                                ),
                                 schema = @Schema(implementation = ErrorApiResponse.class)
                         )
                 ),
