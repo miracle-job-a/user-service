@@ -8,6 +8,7 @@ import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.UserService;
+import com.miracle.userservice.swagger.ApiCheckEmail;
 import com.miracle.userservice.swagger.ApiUserJoin;
 import com.miracle.userservice.swagger.ApiUserLogin;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +70,26 @@ public class UserController {
 
         userService.join(dto);
 
+        int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 성공";
-        return new SuccessApiResponse<>(HttpStatus.OK.value(), message, null);
+        return new SuccessApiResponse<>(httpStatus, message, null);
+    }
+
+    @ApiCheckEmail
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/check-email/{email}")
+    public CommonApiResponse checkDuplicateEmail(@PathVariable String email) {
+        String message;
+        Boolean data;
+        if (userService.checkDuplicate(email)) {
+            message = "사용할 수 없는 이메일입니다.";
+            data = Boolean.TRUE;
+        } else {
+            message = "사용 가능한 이메일입니다.";
+            data = Boolean.FALSE;
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        return new SuccessApiResponse<>(httpStatus, message, data);
     }
 }
