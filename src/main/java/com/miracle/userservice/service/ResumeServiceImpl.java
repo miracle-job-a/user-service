@@ -31,7 +31,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResumeResponseDto.builder()
                 .id(resume.getId())
                 .title(resume.getTitle())
-                .phone(resume.getPhoto())
+                .photo(resume.getPhoto())
                 .career(resume.getCareer())
                 .birth(resume.getUser().getBirth())
                 .phone(resume.getUser().getPhone())
