@@ -1,18 +1,17 @@
 package com.miracle.userservice.controller;
 
-import com.miracle.userservice.dto.request.UserLoginRequestDto;
-import com.miracle.userservice.swagger.ApiUserJoin;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
+import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.response.CommonApiResponse;
 import com.miracle.userservice.dto.response.SuccessApiResponse;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.ApiUserLogin;
+import com.miracle.userservice.swagger.ApiUserJoin;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -27,8 +26,7 @@ public class UserController {
     @ApiUserLogin
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto dto, HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = request.getHeader("sessionId");
+    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto dto, @RequestHeader String sessionId, HttpServletResponse response) {
         log.debug("sessionId = {}, dto = {}", sessionId, dto);
 
         boolean login = userService.login(dto);
@@ -53,8 +51,7 @@ public class UserController {
     @ApiUserJoin
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
-    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, HttpServletRequest request) {
-        String sessionId = request.getHeader("sessionId");
+    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, @RequestHeader String sessionId) {
         log.debug("sessionId={}, dto={}", sessionId, dto);
 
         userService.join(dto);

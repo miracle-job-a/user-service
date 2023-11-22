@@ -6,6 +6,8 @@ public abstract class SwaggerMsgUtil {
 
         public static final String OK = "200";
         public static final String BAD_REQUEST = "400";
+        public static final String BAD_REQUEST_1 = "400_1";
+        public static final String BAD_REQUEST_2 = "400_2";
         public static final String UNAUTHORIZED = "401";
     }
 
