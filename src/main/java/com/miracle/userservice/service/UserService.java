@@ -1,8 +1,11 @@
 package com.miracle.userservice.service;
 
-import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
+import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -11,10 +14,10 @@ public interface UserService {
      *
      * @param dto 로그인 정보(이메일, 비밀번호)
      * @throws NullPointerException {@code dto}가 null일 경우
-     * @author hazzokko
-     * @return DB에 로그인 정보 존재 시 true
+     * @author hazzokko, chocola
+     * @return 로그인에 성공했을 경우 해당 User 객체를 {@code Optional}로 감싸서 반환
      * */
-    boolean login(UserLoginRequestDto dto);
+    Optional<User> login(UserLoginRequestDto dto);
 
     /**
      * 회원 가입 요청을 처리하는 메서드
