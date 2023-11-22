@@ -1,7 +1,7 @@
 package com.miracle.userservice.exception.handler;
 
-import com.miracle.userservice.dto.response.CommonApiResponse;
-import com.miracle.userservice.dto.response.ErrorApiResponse;
+import com.miracle.userservice.controller.response.CommonApiResponse;
+import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;

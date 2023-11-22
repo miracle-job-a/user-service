@@ -1,4 +1,4 @@
-package com.miracle.userservice.dto.response;
+package com.miracle.userservice.controller.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

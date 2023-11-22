@@ -1,8 +1,8 @@
 package com.miracle.userservice.config;
 
 import com.fasterxml.classmate.TypeResolver;
-import com.miracle.userservice.dto.response.ErrorApiResponse;
-import com.miracle.userservice.dto.response.SuccessApiResponse;
+import com.miracle.userservice.controller.response.ErrorApiResponse;
+import com.miracle.userservice.controller.response.SuccessApiResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
