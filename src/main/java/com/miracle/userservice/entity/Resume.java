@@ -35,19 +35,18 @@ public class Resume extends BaseEntity {
     private String photo;
 
     private int career;
-    private boolean openStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
+    @Column(name = "open_status")
+    private boolean open;
+
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<ResumeCareerDetail> careerDetailList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
-    private final List<ResumeProject> careerProjectList = new ArrayList<>();
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ResumeProject> projectList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
-    private final List<ResumeEtc> careerEtcList = new ArrayList<>();
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ResumeEtc> etcList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(

@@ -2,7 +2,6 @@ package com.miracle.userservice.exception.handler;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.ErrorApiResponse;
-import com.miracle.userservice.exception.DuplicateEmailException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,8 +47,8 @@ public class MainExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(DuplicateEmailException.class)
-    public CommonApiResponse duplicateEmail(DuplicateEmailException e) {
+    @ExceptionHandler(RuntimeException.class)
+    public CommonApiResponse commonBadRequest(RuntimeException e) {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = HttpStatus.BAD_REQUEST.value();

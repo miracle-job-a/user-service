@@ -16,4 +16,8 @@ public class ResumeEtc extends BaseEntity {
 
     @Column(nullable = false)
     private String content;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
 }
