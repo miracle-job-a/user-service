@@ -1,8 +1,8 @@
 package com.miracle.userservice.controller;
 
-import com.miracle.userservice.dto.response.CommonApiResponse;
+import com.miracle.userservice.controller.response.CommonApiResponse;
+import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
-import com.miracle.userservice.dto.response.SuccessApiResponse;
 import com.miracle.userservice.service.CoverLetterService;
 import com.miracle.userservice.swagger.ApiGetCoverLetterList;
 import lombok.RequiredArgsConstructor;
