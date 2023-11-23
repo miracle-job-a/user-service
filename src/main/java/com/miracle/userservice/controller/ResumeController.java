@@ -38,6 +38,7 @@ public class ResumeController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody ResumePostRequestDto dto) {
         boolean success = resumeService.updateResume(id, dto);
@@ -46,6 +47,7 @@ public class ResumeController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public CommonApiResponse deleteResume(@PathVariable Long id) {
         boolean success = resumeService.deleteResume(id);
