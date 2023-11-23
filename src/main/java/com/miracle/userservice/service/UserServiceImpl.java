@@ -22,13 +22,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public boolean login(UserLoginRequestDto dto) {
+    public Optional<User> login(UserLoginRequestDto dto) {
         String errorMessage = "UserLoginRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        Optional<User> user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword().hashCode());
-
-        return user.isPresent();
+        String email = dto.getEmail();
+        int password = dto.getPassword().hashCode();
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
