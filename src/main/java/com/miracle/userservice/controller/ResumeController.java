@@ -37,4 +37,20 @@ public class ResumeController {
         String message = "이력서 저장 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
+
+    @PutMapping("/{id}")
+    public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody ResumePostRequestDto dto) {
+        boolean success = resumeService.updateResume(id, dto);
+        int httpStatus = HttpStatus.OK.value();
+        String message = "이력서 수정 성공";
+        return new SuccessApiResponse<>(httpStatus, message, success);
+    }
+
+    @DeleteMapping("/{id}")
+    public CommonApiResponse deleteResume(@PathVariable Long id) {
+        boolean success = resumeService.deleteResume(id);
+        int httpStatus = HttpStatus.OK.value();
+        String message = "이력서 삭제 성공";
+        return new SuccessApiResponse<>(httpStatus, message, success);
+    }
 }

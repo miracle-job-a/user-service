@@ -1,5 +1,6 @@
 package com.miracle.userservice.service;
 
+import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.exception.NoSuchResumeException;
@@ -27,9 +28,32 @@ public interface ResumeService {
      *
      * @param dto 이력서 정보
      * @return true
-     * @throws NullPointerException If {@code dto} is null
-     * @throws NoSuchElementException If user doesn't exist
+     * @throws NullPointerException   If {@code dto} is null
+     * @throws NoSuchElementException If resume doesn't exist
      * @author chocola
      */
     boolean postResume(ResumePostRequestDto dto);
+
+    /**
+     * 회원의 이력서를 수정
+     *
+     * @param id  이력서 아이디
+     * @param dto 이력서 정보
+     * @return true
+     * @throws NullPointerException   If {@code id}, {@code dto} is null
+     * @throws NoSuchElementException If resume doesn't exist
+     * @author chocola
+     */
+    boolean updateResume(Long id, ResumePostRequestDto dto);
+
+    /**
+     * 회원의 이력서를 삭제
+     *
+     * @param id 이력서 id
+     * @return true
+     * @throws NullPointerException  If {@code id} is null
+     * @throws NoSuchResumeException If resume doesn't exist
+     * @author chocola
+     */
+    boolean deleteResume(Long id);
 }

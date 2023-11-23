@@ -65,8 +65,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public boolean postResume(ResumePostRequestDto dto) {
-        String message = "ResumePostRequestDto is null";
-        Objects.requireNonNull(dto, message);
+        Objects.requireNonNull(dto, "ResumePostRequestDto is null");
 
         Long userId = dto.getUserId();
         User user = userRepository.findById(userId).orElseThrow();
@@ -89,6 +88,47 @@ public class ResumeServiceImpl implements ResumeService {
         dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
 
         resumeRepository.save(resume);
+        return true;
+    }
+
+    @Override
+    public boolean updateResume(Long id, ResumePostRequestDto dto) {
+        Objects.requireNonNull(id, "Resume id is null");
+
+        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
+
+        resume.setTitle(dto.getTitle());
+        resume.setEducation(dto.getEducation());
+        resume.setGitLink(dto.getGitLink());
+        resume.setPhoto(dto.getPhoto());
+        resume.setCareer(dto.getCareer());
+        resume.setOpen(dto.isOpen());
+
+        resume.getStackIdSet().clear();
+        resume.getJobIdSet().clear();
+        resume.addStackIdAll(dto.getStackIdSet());
+        resume.addJobIdAll(dto.getJobIdSet());
+
+        resume.getCareerDetailList().clear();
+        resume.getProjectList().clear();
+        resume.getEtcList().clear();
+        dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
+        dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
+        dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
+
+        resumeRepository.save(resume);
+        return true;
+    }
+
+    @Override
+    public boolean deleteResume(Long id) throws NoSuchResumeException {
+        Objects.requireNonNull(id, "Resume id is null");
+
+        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
+
+        resumeRepository.delete(resume);
         return true;
     }
 }
