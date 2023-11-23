@@ -19,12 +19,12 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Operation(
-        summary = "이력서 수정",
-        description = "유저의 이력서를 수정하는 API",
+        summary = "특정 유저의 이력서 목록 조회",
+        description = "특정 유저가 보유하고 있는 이력서 목록을 반환하는 API",
         responses = {
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.OK,
-                        description = "이력서 수정 성공",
+                        description = "이력서 목록 조회 성공",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
@@ -32,8 +32,23 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         value = """
                                                 {
                                                   "httpStatus": 200,
-                                                  "message": "이력서 수정 성공",
-                                                  "data": true
+                                                  "message": "이력서 목록 조회 성공",
+                                                  "data": [
+                                                    {
+                                                      "id": 1,
+                                                      "title": "Software Engineer",
+                                                      "jobIdSet": [1, 2],
+                                                      "modifiedAt": "2023-10-31-12-30-45",
+                                                      "open": true
+                                                    },
+                                                    {
+                                                      "id": 2,
+                                                      "title": "Data Scientist",
+                                                      "jobIdSet": [3],
+                                                      "modifiedAt": "2023-10-31-13-45-00",
+                                                      "open": false
+                                                    }
+                                                  ]
                                                 }
                                                 """
                                 ),
@@ -41,27 +56,8 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                         )
                 ),
                 @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "이력서 수정 실패",
-                        content = @Content(
-                                mediaType = APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "이력서가 존재하지 않음",
-                                        value = """
-                                                {
-                                                  "httpStatus": 400,
-                                                  "message": "이력서가 존재하지 않습니다.",
-                                                  "code": "400",
-                                                  "exception": "NoSuchResumeException"
-                                                }
-                                                """
-                                ),
-                                schema = @Schema(implementation = ErrorApiResponse.class)
-                        )
-                ),
-                @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.UNAUTHORIZED,
-                        description = "비정상적인 요청",
+                        description = "인증 실패",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
@@ -69,9 +65,9 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         value = """
                                                 {
                                                   "httpStatus": 401,
-                                                  "message": "올바르지 않은 요청입니다.",
+                                                  "message": "토큰 검증에 실패했습니다.",
                                                   "code": "401",
-                                                  "exception": "InvalidRequestStateException"
+                                                  "exception": "TokenValidationException"
                                                 }
                                                 """
                                 ),
@@ -80,5 +76,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiResumeUpdate {
+public @interface ApiGetUserResumes {
 }

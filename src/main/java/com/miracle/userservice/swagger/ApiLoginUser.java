@@ -114,5 +114,5 @@ import static java.lang.annotation.ElementType.METHOD;
                 )
         }
 )
-public @interface ApiUserLogin {
+public @interface ApiLoginUser {
 }
