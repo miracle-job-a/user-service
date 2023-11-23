@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/v1/cover-letter")
+@RequestMapping("/v1/user/{id}/cover-letter")
 @RestController
 public class CoverLetterController {
 
