@@ -19,12 +19,12 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Operation(
-        summary = "이력서 수정",
-        description = "유저의 이력서를 수정하는 API",
+        summary = "이력서 등록",
+        description = "유저의 이력서를 등록하는 API",
         responses = {
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.OK,
-                        description = "이력서 수정 성공",
+                        description = "이력서 등록 성공",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
@@ -32,31 +32,12 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         value = """
                                                 {
                                                   "httpStatus": 200,
-                                                  "message": "이력서 수정 성공",
+                                                  "message": "이력서 등록 성공",
                                                   "data": true
                                                 }
                                                 """
                                 ),
                                 schema = @Schema(implementation = SuccessApiResponse.class)
-                        )
-                ),
-                @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "이력서 수정 실패",
-                        content = @Content(
-                                mediaType = APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "이력서가 존재하지 않음",
-                                        value = """
-                                                {
-                                                  "httpStatus": 400,
-                                                  "message": "이력서가 존재하지 않습니다.",
-                                                  "code": "400",
-                                                  "exception": "NoSuchResumeException"
-                                                }
-                                                """
-                                ),
-                                schema = @Schema(implementation = ErrorApiResponse.class)
                         )
                 ),
                 @ApiResponse(
@@ -80,5 +61,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiResumeUpdate {
+public @interface ApiPostResume {
 }

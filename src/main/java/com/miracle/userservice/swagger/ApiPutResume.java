@@ -19,12 +19,12 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Operation(
-        summary = "이력서 삭제",
-        description = "유저의 이력서를 삭제하는 API. 삭제된 이력서는 복구할 수 없음",
+        summary = "이력서 수정",
+        description = "유저의 이력서를 수정하는 API",
         responses = {
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.OK,
-                        description = "이력서 삭제 성공",
+                        description = "이력서 수정 성공",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
@@ -32,7 +32,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         value = """
                                                 {
                                                   "httpStatus": 200,
-                                                  "message": "이력서 삭제 성공",
+                                                  "message": "이력서 수정 성공",
                                                   "data": true
                                                 }
                                                 """
@@ -42,7 +42,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 ),
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "이력서 삭제 실패",
+                        description = "이력서 수정 실패",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
@@ -80,5 +80,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiResumeDelete {
+public @interface ApiPutResume {
 }

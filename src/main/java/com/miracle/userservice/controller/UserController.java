@@ -12,8 +12,8 @@ import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.ApiCheckEmail;
 import com.miracle.userservice.swagger.ApiGetUserResumes;
-import com.miracle.userservice.swagger.ApiUserJoin;
-import com.miracle.userservice.swagger.ApiUserLogin;
+import com.miracle.userservice.swagger.ApiJoinUser;
+import com.miracle.userservice.swagger.ApiLoginUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class UserController {
     private final UserService userService;
     private final ResumeService resumeService;
 
-    @ApiUserLogin
+    @ApiLoginUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, @RequestHeader String sessionId, HttpServletResponse response) {
@@ -67,7 +67,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, userLoginResponseDto);
     }
 
-    @ApiUserJoin
+    @ApiJoinUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, @RequestHeader String sessionId) {
