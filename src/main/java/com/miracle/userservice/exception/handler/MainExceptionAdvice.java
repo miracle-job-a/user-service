@@ -2,6 +2,7 @@ package com.miracle.userservice.exception.handler;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.ErrorApiResponse;
+import com.sun.jdi.request.DuplicateRequestException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Slf4j
@@ -47,8 +49,8 @@ public class MainExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(RuntimeException.class)
-    public CommonApiResponse commonBadRequest(RuntimeException e) {
+    @ExceptionHandler({NullPointerException.class, DuplicateRequestException.class, NoSuchElementException.class})
+    public CommonApiResponse nullPointer(NullPointerException e) {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = HttpStatus.BAD_REQUEST.value();
@@ -61,7 +63,8 @@ public class MainExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public CommonApiResponse serverError(Exception e) {
         int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
-        String message = e.getMessage();
+        log.error(e.getMessage());
+        String message = "일시적인 서버 오류입니다.";
         String code = "500";
         String exceptionName = getClassSimpleName(e);
         return new ErrorApiResponse(httpStatus, message, code, exceptionName);
