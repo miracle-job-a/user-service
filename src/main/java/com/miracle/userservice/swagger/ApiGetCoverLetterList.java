@@ -32,7 +32,12 @@ import static java.lang.annotation.ElementType.METHOD;
                                                 {
                                                   "httpStatus": 200,
                                                   "message": "자기소개서 목록 출력 성공",
-                                                  "data": coverLetterList
+                                                  "data": {
+                                                    "id": 1,
+                                                    "userId": 1,
+                                                    "title": "한 달 만에 채용 사이트를 구현할 수 있었던 비결",
+                                                    "modifiedAt": "2023-11-22"
+                                                  }
                                                 }
                                                 """
                                 ),
