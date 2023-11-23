@@ -40,7 +40,7 @@ public class ResumeController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody ResumePostRequestDto dto) {
+    public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody @Valid ResumePostRequestDto dto) {
         boolean success = resumeService.updateResume(id, dto);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 수정 성공";
