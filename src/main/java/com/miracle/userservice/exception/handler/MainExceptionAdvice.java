@@ -2,6 +2,7 @@ package com.miracle.userservice.exception.handler;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.ErrorApiResponse;
+import com.miracle.userservice.exception.InvalidEmailException;
 import com.sun.jdi.request.DuplicateRequestException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
@@ -26,23 +27,30 @@ public class MainExceptionAdvice {
         FieldError fieldError = bindingResult.getFieldError();
         Objects.requireNonNull(fieldError);
 
-        String field = fieldError.getField();
         String[] s = fieldError.getDefaultMessage().split(":");
         int httpStatus = HttpStatus.BAD_REQUEST.value();
         String defaultMessage = s[1];
         String code = s[0];
         String exceptionName = getClassSimpleName(e);
-
-        log.error("{} : {}", field, defaultMessage);
         return new ErrorApiResponse(httpStatus, defaultMessage, code, exceptionName);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidEmailException.class)
+    public CommonApiResponse invalidEmail(InvalidEmailException e) {
+        int httpStatus = HttpStatus.BAD_REQUEST.value();
+        String[] split = e.getMessage().split(":");
+        String message = split[1];
+        String code = split[0];
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidRequestStateException.class)
     public CommonApiResponse invalidToken(InvalidRequestStateException e) {
-        String message = e.getMessage();
-        log.error(message);
         int httpStatus = HttpStatus.UNAUTHORIZED.value();
+        String message = e.getMessage();
         String code = "401";
         String exceptionName = getClassSimpleName(e);
         return new ErrorApiResponse(httpStatus, message, code, exceptionName);

@@ -2,8 +2,10 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
+import com.miracle.userservice.exception.InvalidEmailException;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public boolean login(UserLoginRequestDto dto) {
+    public Optional<User> login(UserLoginRequestDto dto) {
         String errorMessage = "UserLoginRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        Optional<User> user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword().hashCode());
-
-        return user.isPresent();
+        String email = dto.getEmail();
+        int password = dto.getPassword().hashCode();
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
@@ -41,5 +43,19 @@ public class UserServiceImpl implements UserService {
 
         User user = dto.transformToUser();
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkDuplicate(String email) {
+        validEmail(email);
+        return userRepository.existsByEmail(email);
+    }
+
+    private void validEmail(String email) {
+        boolean match = email.matches("^[\\w.-]+@[a-zA-Z\\d.-]+\\.[a-zA-Z]{2,}$");
+
+        if (!match) {
+            throw new InvalidEmailException(ValidationDefaultMsgUtil.CheckDuplicate.EMAIL);
+        }
     }
 }

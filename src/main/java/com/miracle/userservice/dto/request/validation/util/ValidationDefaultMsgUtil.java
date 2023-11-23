@@ -27,4 +27,9 @@ public class ValidationDefaultMsgUtil {
         public static final String CAREER = "400_6:경력이 음수입니다.";
         public static final String COLLECTION = "400_7:Collection이 null입니다.";
     }
+
+    public static abstract class CheckDuplicate {
+
+        public static final String EMAIL = "400:이메일 형식이 올바르지 않습니다.";
+    }
 }
