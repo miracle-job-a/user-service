@@ -57,8 +57,30 @@ public class MainExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({NullPointerException.class, DuplicateRequestException.class, NoSuchElementException.class})
+    @ExceptionHandler(NullPointerException.class)
     public CommonApiResponse nullPointer(NullPointerException e) {
+        String message = e.getMessage();
+        log.error(message);
+        int httpStatus = HttpStatus.BAD_REQUEST.value();
+        String code = "400";
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateRequestException.class)
+    public CommonApiResponse duplicateRequest(DuplicateRequestException e) {
+        String message = e.getMessage();
+        log.error(message);
+        int httpStatus = HttpStatus.BAD_REQUEST.value();
+        String code = "400";
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchElementException.class)
+    public CommonApiResponse noSuchElement(NoSuchElementException e) {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = HttpStatus.BAD_REQUEST.value();
