@@ -1,5 +1,6 @@
 package com.miracle.userservice.service;
 
+import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.entity.*;
@@ -21,12 +22,14 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeRepository resumeRepository;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     @Override
-    public ResumeResponseDto getResumeDetail(Long id) {
-        String message = "Resume id is null";
-        Objects.requireNonNull(id, message);
+    public ResumeResponseDto getResumeDetail(Long id, Requester requester) {
+        Objects.requireNonNull(id, "Resume id is null");
 
-        Optional<Resume> resumeOpt = resumeRepository.findById(id).filter(Resume::isOpen);
+        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        if (requester == Requester.COMPANY) resumeOpt = resumeOpt.filter(Resume::isOpen);
+
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
         return ResumeResponseDto.builder()
                 .id(resume.getId())

@@ -22,8 +22,8 @@ public class ResumeController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public CommonApiResponse getResume(@PathVariable Long id) {
-        ResumeResponseDto dto = resumeService.getResumeDetail(id);
+    public CommonApiResponse getResume(@PathVariable Long id, @RequestParam Requester requester) {
+        ResumeResponseDto dto = resumeService.getResumeDetail(id, requester);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, dto);
