@@ -23,8 +23,19 @@ public interface CoverLetterService {
      * @param id 자기소개서 ID
      * @return 자기소개서 상세 데이터 {@code CoverLetterResponseDto}를 반환
      * @throws NullPointerException If {@code id} is null
-     * @throws NoSuchCoverLetterException If CoverLetter doesn't exist
+     * @throws NoSuchCoverLetterException If coverLetter doesn't exist
      * @author hazzokko
      * */
     CoverLetterResponseDto getCoverLetterDetail(Long id);
+
+    /**
+     * 유저의 자기소개서를 삭제
+     *
+     * @param id 자기소개서 ID
+     * @return true
+     * @throws NullPointerException If {@code id} is null
+     * @throws NoSuchCoverLetterException If coverLetter doesn't exist
+     * @author hazzokko
+     * */
+    boolean deleteCoverLetter(Long id);
 }

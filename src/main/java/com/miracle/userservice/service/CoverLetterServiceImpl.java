@@ -61,4 +61,17 @@ public class CoverLetterServiceImpl implements CoverLetterService{
                 )
                 .build();
     }
+
+    @Override
+    public boolean deleteCoverLetter(Long id) {
+        String errorMessage = "CoverLetter id is null";
+        Objects.requireNonNull(id, errorMessage);
+
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(()-> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
+
+        coverLetterRepository.delete(coverLetter);
+
+        return true;
+    }
 }

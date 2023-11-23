@@ -5,6 +5,7 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.service.CoverLetterService;
+import com.miracle.userservice.swagger.ApiCoverLetterDelete;
 import com.miracle.userservice.swagger.ApiCoverLetterRead;
 import com.miracle.userservice.swagger.ApiGetCoverLetterList;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,16 @@ public class CoverLetterController {
         int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ApiCoverLetterDelete
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{id}")
+    public CommonApiResponse deleteCoverLetter(@PathVariable Long id) {
+        boolean result = coverLetterService.deleteCoverLetter(id);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "자기소개서 삭제 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }
