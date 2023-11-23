@@ -100,7 +100,7 @@ public class UserController {
 
     @ApiGetUserResumes
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}/resume")
+    @GetMapping("/{id}/resumes")
     public CommonApiResponse getUserResumes(@PathVariable Long id) {
         List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(id);
 
