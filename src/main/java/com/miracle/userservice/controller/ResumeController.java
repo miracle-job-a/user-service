@@ -5,6 +5,10 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.service.ResumeService;
+import com.miracle.userservice.swagger.ApiResumeDelete;
+import com.miracle.userservice.swagger.ApiResumeRead;
+import com.miracle.userservice.swagger.ApiResumeCreate;
+import com.miracle.userservice.swagger.ApiResumeUpdate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ public class ResumeController {
 
     private final ResumeService resumeService;
 
+    @ApiResumeRead
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public CommonApiResponse getResume(@PathVariable Long id, @RequestParam Requester requester) {
@@ -29,6 +34,7 @@ public class ResumeController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @ApiResumeCreate
     @ResponseStatus(HttpStatus.OK)
     @PostMapping
     public CommonApiResponse postResume(@RequestBody @Valid ResumePostRequestDto dto) {
@@ -38,6 +44,7 @@ public class ResumeController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @ApiResumeUpdate
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody @Valid ResumePostRequestDto dto) {
@@ -47,6 +54,7 @@ public class ResumeController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @ApiResumeDelete
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public CommonApiResponse deleteResume(@PathVariable Long id) {
