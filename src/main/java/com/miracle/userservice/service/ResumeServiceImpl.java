@@ -2,6 +2,7 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
+import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.entity.*;
 import com.miracle.userservice.exception.NoSuchResumeException;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,6 +33,10 @@ public class ResumeServiceImpl implements ResumeService {
         if (requester == Requester.COMPANY) resumeOpt = resumeOpt.filter(Resume::isOpen);
 
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
+        return getResumeResponseDto(resume);
+    }
+
+    private ResumeResponseDto getResumeResponseDto(Resume resume) {
         return ResumeResponseDto.builder()
                 .id(resume.getId())
                 .title(resume.getTitle())
@@ -67,18 +73,7 @@ public class ResumeServiceImpl implements ResumeService {
     public boolean postResume(ResumePostRequestDto dto) {
         Objects.requireNonNull(dto, "ResumePostRequestDto is null");
 
-        Long userId = dto.getUserId();
-        User user = userRepository.findById(userId).orElseThrow();
-
-        Resume resume = Resume.builder()
-                .user(user)
-                .title(dto.getTitle())
-                .education(dto.getEducation())
-                .gitLink(dto.getGitLink())
-                .photo(dto.getPhoto())
-                .career(dto.getCareer())
-                .open(dto.isOpen())
-                .build();
+        Resume resume = getResume(dto);
 
         resume.addStackIdAll(dto.getStackIdSet());
         resume.addJobIdAll(dto.getJobIdSet());
@@ -91,6 +86,20 @@ public class ResumeServiceImpl implements ResumeService {
         return true;
     }
 
+    private Resume getResume(ResumePostRequestDto dto) {
+        Long userId = dto.getUserId();
+        User user = userRepository.findById(userId).orElseThrow();
+        return Resume.builder()
+                .user(user)
+                .title(dto.getTitle())
+                .education(dto.getEducation())
+                .gitLink(dto.getGitLink())
+                .photo(dto.getPhoto())
+                .career(dto.getCareer())
+                .open(dto.isOpen())
+                .build();
+    }
+
     @Override
     public boolean updateResume(Long id, ResumePostRequestDto dto) {
         Objects.requireNonNull(id, "Resume id is null");
@@ -98,6 +107,13 @@ public class ResumeServiceImpl implements ResumeService {
         Optional<Resume> resumeOpt = resumeRepository.findById(id);
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
 
+        update(resume, dto);
+
+        resumeRepository.save(resume);
+        return true;
+    }
+
+    private void update(Resume resume, ResumePostRequestDto dto) {
         resume.setTitle(dto.getTitle());
         resume.setEducation(dto.getEducation());
         resume.setGitLink(dto.getGitLink());
@@ -116,9 +132,6 @@ public class ResumeServiceImpl implements ResumeService {
         dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
         dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
         dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
-
-        resumeRepository.save(resume);
-        return true;
     }
 
     @Override
@@ -130,5 +143,26 @@ public class ResumeServiceImpl implements ResumeService {
 
         resumeRepository.delete(resume);
         return true;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ResumeListResponseDto> getUserResumes(Long userId) {
+        Objects.requireNonNull(userId, "User id is null");
+        List<Resume> userResumes = resumeRepository.findByUserId(userId);
+
+        return userResumes.stream()
+                .map(this::mapToResumeListResponseDto)
+                .toList();
+    }
+
+    private ResumeListResponseDto mapToResumeListResponseDto(Resume resume) {
+        return ResumeListResponseDto.builder()
+                .id(resume.getId())
+                .title(resume.getTitle())
+                .jobIdSet(resume.getJobIdSet())
+                .modifiedAt(resume.getModifiedAt())
+                .open(resume.isOpen())
+                .build();
     }
 }
