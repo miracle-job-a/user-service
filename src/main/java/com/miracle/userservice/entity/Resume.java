@@ -1,19 +1,17 @@
 package com.miracle.userservice.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Resume extends BaseEntity {
 
+    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,19 +33,18 @@ public class Resume extends BaseEntity {
     private String photo;
 
     private int career;
-    private boolean openStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
+    @Column(name = "open_status")
+    private boolean open;
+
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<ResumeCareerDetail> careerDetailList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
-    private final List<ResumeProject> careerProjectList = new ArrayList<>();
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ResumeProject> projectList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "resume_id")
-    private final List<ResumeEtc> careerEtcList = new ArrayList<>();
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ResumeEtc> etcList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(
@@ -64,4 +61,35 @@ public class Resume extends BaseEntity {
     )
     @Column(nullable = false, name = "job_id")
     private final Set<Long> jobIdSet = new HashSet<>();
+
+    @Builder
+    public Resume(User user, String title, String education, String gitLink, String photo, int career, boolean open) {
+        this.user = user;
+        this.title = title;
+        this.education = education;
+        this.gitLink = gitLink;
+        this.photo = photo;
+        this.career = career;
+        this.open = open;
+    }
+
+    public void addStackIdAll(Collection<Long> collection) {
+        stackIdSet.addAll(collection);
+    }
+
+    public void addJobIdAll(Collection<Long> collection) {
+        jobIdSet.addAll(collection);
+    }
+
+    public void addCareerDetail(ResumeCareerDetail resumeCareerDetail) {
+        careerDetailList.add(resumeCareerDetail);
+    }
+
+    public void addProject(ResumeProject resumeProject) {
+        projectList.add(resumeProject);
+    }
+
+    public void addEtc(ResumeEtc resumeEtc) {
+        etcList.add(resumeEtc);
+    }
 }

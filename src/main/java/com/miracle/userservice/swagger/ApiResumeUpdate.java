@@ -9,61 +9,50 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.METHOD;
+import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPLICATION_JSON;
 
-@Target(METHOD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Operation(
-        summary = "이메일 중복 체크",
-        description = "이메일 중복 체크 요청을 처리하는 API. 중복인 경우 true, 그렇지 않은 경우 false를 반환함",
+        summary = "이력서 수정",
+        description = "유저의 이력서를 수정하는 API",
         responses = {
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.OK,
-                        description = "응답 성공",
+                        description = "이력서 수정 성공",
                         content = @Content(
-                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
-                                examples = {
-                                        @ExampleObject(
-                                                name = "이메일 중복 X",
-                                                value = """
-                                                        {
-                                                          "httpStatus": 200,
-                                                          "message": "사용 가능한 이메일입니다.",
-                                                          "data": false
-                                                        }
-                                                        """
-                                        ),
-                                        @ExampleObject(
-                                                name = "이메일 중복 O",
-                                                value = """
-                                                        {
-                                                          "httpStatus": 200,
-                                                          "message": "사용할 수 없는 이메일입니다.",
-                                                          "data": true
-                                                        }
-                                                        """
-                                        )
-                                },
+                                mediaType = APPLICATION_JSON,
+                                examples = @ExampleObject(
+                                        name = "성공",
+                                        value = """
+                                                {
+                                                  "httpStatus": 200,
+                                                  "message": "이력서 수정 성공",
+                                                  "data": true
+                                                }
+                                                """
+                                ),
                                 schema = @Schema(implementation = SuccessApiResponse.class)
                         )
                 ),
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "이메일 검증",
+                        description = "이력서 수정 실패",
                         content = @Content(
-                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
+                                mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
-                                        name = "이메일 검증 실패",
+                                        name = "이력서가 존재하지 않음",
                                         value = """
                                                 {
                                                   "httpStatus": 400,
-                                                  "message": "이메일 형식이 올바르지 않습니다.",
+                                                  "message": "이력서가 존재하지 않습니다.",
                                                   "code": "400",
-                                                  "exception": "InvalidEmailException"
+                                                  "exception": "NoSuchResumeException"
                                                 }
                                                 """
                                 ),
@@ -74,7 +63,7 @@ import static java.lang.annotation.ElementType.METHOD;
                         responseCode = SwaggerMsgUtil.ResponseCode.UNAUTHORIZED,
                         description = "비정상적인 요청",
                         content = @Content(
-                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
+                                mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
                                         name = "토큰 검증 실패",
                                         value = """
@@ -91,6 +80,5 @@ import static java.lang.annotation.ElementType.METHOD;
                 )
         }
 )
-
-public @interface ApiCheckEmail {
+public @interface ApiResumeUpdate {
 }

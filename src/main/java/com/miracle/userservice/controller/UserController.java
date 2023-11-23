@@ -1,9 +1,9 @@
 package com.miracle.userservice.controller;
 
+import com.miracle.userservice.controller.response.CommonApiResponse;
+import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
-import com.miracle.userservice.dto.response.CommonApiResponse;
-import com.miracle.userservice.dto.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
