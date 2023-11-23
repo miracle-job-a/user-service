@@ -3,7 +3,9 @@ package com.miracle.userservice.controller;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
+import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.service.CoverLetterService;
+import com.miracle.userservice.swagger.ApiCoverLetterRead;
 import com.miracle.userservice.swagger.ApiGetCoverLetterList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/v1/cover-letter")
+@RequestMapping("/v1/user/{userId}/cover-letter")
 @RestController
 public class CoverLetterController {
 
@@ -26,7 +28,19 @@ public class CoverLetterController {
     public CommonApiResponse getCoverLetterList(@RequestParam Long userId) {
         List<CoverLetterListResponseDto> coverLetterList = coverLetterService.getCoverLetterList(userId);
 
+        int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 목록 출력 성공";
-        return new SuccessApiResponse<>(HttpStatus.OK.value(), message, coverLetterList);
+        return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
+    }
+
+    @ApiCoverLetterRead
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/detail/{id}")
+    public CommonApiResponse getCoverLetterDetail(@PathVariable Long id) {
+        CoverLetterResponseDto dto = coverLetterService.getCoverLetterDetail(id);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "자기소개서 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 }
