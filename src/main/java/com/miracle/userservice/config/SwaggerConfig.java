@@ -35,6 +35,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .globalRequestParameters(requestParameterList())
                 .additionalModels(
+                        typeResolver.resolve(SuccessApiResponse.class),
                         typeResolver.resolve(SuccessApiResponse.class, Boolean.class),
                         typeResolver.resolve(SuccessApiResponse.class, ResumeResponseDto.class),
                         typeResolver.resolve(ErrorApiResponse.class)
