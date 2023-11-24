@@ -1,5 +1,6 @@
 package com.miracle.userservice.filter;
 
+import com.miracle.userservice.util.Const;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -20,13 +21,13 @@ public class RequestValidFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String sessionId = request.getHeader("sessionId");
+        String sessionId = request.getHeader(Const.RequestHeader.SESSION_ID);
         if (Objects.isNull(sessionId)) {
             response.sendRedirect("/error/invalid-request");
             return;
         }
 
-        int hashCode = request.getIntHeader("miracle");
+        int hashCode = request.getIntHeader(Const.RequestHeader.MIRACLE);
         String key = sessionId + PRIVATE_KEY;
         int h = key.hashCode();
 

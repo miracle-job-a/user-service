@@ -5,6 +5,7 @@ import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
+import com.miracle.userservice.util.Const;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -53,18 +54,24 @@ public class SwaggerConfig {
     private List<RequestParameter> requestParameterList() {
         List<RequestParameter> requestParameterList = new ArrayList<>();
         RequestParameter sessionId = new RequestParameterBuilder()
-                .name("sessionId")
+                .name(Const.RequestHeader.SESSION_ID)
                 .in(ParameterType.HEADER)
                 .required(Boolean.TRUE)
                 .build();
         RequestParameter miracle = new RequestParameterBuilder()
-                .name("miracle")
+                .name(Const.RequestHeader.MIRACLE)
                 .in(ParameterType.HEADER)
                 .required(Boolean.TRUE)
                 .build();
+        RequestParameter userId = new RequestParameterBuilder()
+                .name(Const.RequestHeader.USER_ID)
+                .in(ParameterType.HEADER)
+                .required(Boolean.TRUE)
+                .build();
+
         requestParameterList.add(sessionId);
         requestParameterList.add(miracle);
-
+        requestParameterList.add(userId);
         return requestParameterList;
     }
 
