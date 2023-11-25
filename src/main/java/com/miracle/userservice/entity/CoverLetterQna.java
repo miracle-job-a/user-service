@@ -16,4 +16,14 @@ public class CoverLetterQna extends BaseEntity {
 
     @Embedded
     private Qna qna;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cover_letter_id")
+    private CoverLetter coverLetter;
+
+    public CoverLetterQna(Long id, Qna qna) {
+        this.id = id;
+        this.qna = qna;
+        coverLetter.addQna(this);
+    }
 }
