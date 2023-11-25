@@ -80,5 +80,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiCoverLetterDelete {
+public @interface ApiDeleteCoverLetter {
 }

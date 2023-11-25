@@ -5,8 +5,8 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.service.CoverLetterService;
-import com.miracle.userservice.swagger.ApiCoverLetterDelete;
-import com.miracle.userservice.swagger.ApiCoverLetterRead;
+import com.miracle.userservice.swagger.ApiDeleteCoverLetter;
+import com.miracle.userservice.swagger.ApiGetCoverLetter;
 import com.miracle.userservice.swagger.ApiGetCoverLetterList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
     }
 
-    @ApiCoverLetterRead
+    @ApiGetCoverLetter
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/detail/{id}")
     public CommonApiResponse getCoverLetterDetail(@PathVariable Long id) {
@@ -45,7 +45,7 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
-    @ApiCoverLetterDelete
+    @ApiDeleteCoverLetter
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public CommonApiResponse deleteCoverLetter(@PathVariable Long id) {

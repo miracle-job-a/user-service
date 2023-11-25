@@ -95,5 +95,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiCoverLetterRead {
+public @interface ApiGetCoverLetter {
 }
