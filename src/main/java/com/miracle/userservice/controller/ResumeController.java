@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/v1/user/{id}/resume")
+@RequestMapping("/v1/user/{userId}/resume")
 @RestController
 public class ResumeController {
 
