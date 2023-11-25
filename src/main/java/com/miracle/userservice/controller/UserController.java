@@ -36,9 +36,7 @@ public class UserController {
     @ApiLoginUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, @RequestHeader String sessionId, HttpServletResponse response) {
-        log.debug("sessionId = {}, userLoginRequestDto = {}", sessionId, userLoginRequestDto);
-
+    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletResponse response) {
         Optional<User> userOpt = userService.login(userLoginRequestDto);
         boolean success = userOpt.isPresent();
         int httpStatus;
@@ -70,9 +68,7 @@ public class UserController {
     @ApiJoinUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
-    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, @RequestHeader String sessionId) {
-        log.debug("sessionId={}, dto={}", sessionId, dto);
-
+    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);
 
         int httpStatus = HttpStatus.OK.value();
