@@ -2,22 +2,20 @@ package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
+import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.service.CoverLetterService;
-import com.miracle.userservice.swagger.ApiCoverLetterDelete;
-import com.miracle.userservice.swagger.ApiCoverLetterRead;
-import com.miracle.userservice.swagger.ApiGetCoverLetterList;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/v1/user/{id}/cover-letter")
+@RequestMapping("/v1/user/{userId}/cover-letter")
 @RestController
 public class CoverLetterController {
 
@@ -34,9 +32,9 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
     }
 
-    @ApiCoverLetterRead
+    @ApiGetCoverLetter
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}")
     public CommonApiResponse getCoverLetterDetail(@PathVariable Long id) {
         CoverLetterResponseDto dto = coverLetterService.getCoverLetterDetail(id);
 
@@ -45,7 +43,30 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
-    @ApiCoverLetterDelete
+    @ApiPostCoverLetter
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping
+    public CommonApiResponse postCoverLetter(@Valid @RequestBody CoverLetterPostRequestDto dto) {
+        boolean result = coverLetterService.postCoverLetter(dto);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "자기소개서 등록 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
+    @ApiPutCoverLetter
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public CommonApiResponse updateCoverLetter(@PathVariable Long id, @Valid @RequestBody CoverLetterPostRequestDto dto) {
+        boolean result = coverLetterService.updateCoverLetter(id, dto);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "자기소개서 수정 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
+    @ApiDeleteCoverLetter
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public CommonApiResponse deleteCoverLetter(@PathVariable Long id) {
