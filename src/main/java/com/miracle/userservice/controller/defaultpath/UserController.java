@@ -4,11 +4,13 @@ import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.ApiGetCheckEmail;
+import com.miracle.userservice.swagger.ApiGetUserBaseInfo;
 import com.miracle.userservice.swagger.ApiJoinUser;
 import com.miracle.userservice.swagger.ApiLoginUser;
 import lombok.RequiredArgsConstructor;
@@ -87,5 +89,16 @@ public class UserController {
 
         int httpStatus = HttpStatus.OK.value();
         return new SuccessApiResponse<>(httpStatus, message, data);
+    }
+
+    @ApiGetUserBaseInfo
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{userId}/base-info")
+    public CommonApiResponse getUserBaseInfo(@PathVariable Long userId) {
+        UserBaseInfoResponseDto dto = userService.getUserBaseInfo(userId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "유저 기본 정보 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 }
