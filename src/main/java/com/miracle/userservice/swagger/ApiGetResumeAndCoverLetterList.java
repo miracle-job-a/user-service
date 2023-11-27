@@ -81,25 +81,6 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                 },
                                 schema = @Schema(implementation = ErrorApiResponse.class)
                         )
-                ),
-                @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.UNAUTHORIZED,
-                        description = "인증 실패",
-                        content = @Content(
-                                mediaType = APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "토큰 검증 실패",
-                                        value = """
-                                                {
-                                                  "httpStatus": 401,
-                                                  "message": "토큰 검증에 실패했습니다.",
-                                                  "code": "401",
-                                                  "exception": "TokenValidationException"
-                                                }
-                                                """
-                                ),
-                                schema = @Schema(implementation = ErrorApiResponse.class)
-                        )
                 )
         }
 )

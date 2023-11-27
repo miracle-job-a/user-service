@@ -133,25 +133,6 @@ import static java.lang.annotation.ElementType.METHOD;
                                 ),
                                 schema = @Schema(implementation = ErrorApiResponse.class)
                         )
-                ),
-                @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.UNAUTHORIZED,
-                        description = "비정상적인 요청",
-                        content = @Content(
-                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "토큰 검증 실패",
-                                        value = """
-                                                {
-                                                  "httpStatus": 401,
-                                                  "message": "올바르지 않은 요청입니다.",
-                                                  "code": "401",
-                                                  "exception": "InvalidRequestStateException"
-                                                }
-                                                """
-                                ),
-                                schema = @Schema(implementation = ErrorApiResponse.class)
-                        )
                 )
         }
 )

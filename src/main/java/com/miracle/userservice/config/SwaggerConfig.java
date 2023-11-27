@@ -8,14 +8,15 @@ import com.miracle.userservice.swagger.UserPathDocket;
 import com.miracle.userservice.util.Const;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import springfox.documentation.RequestHandler;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ParameterType;
 import springfox.documentation.service.RequestParameter;
+import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -53,6 +54,10 @@ public class SwaggerConfig {
     private Docket baseDocket(TypeResolver typeResolver, String groupName) {
         return new Docket(DocumentationType.OAS_30)
                 .globalRequestParameters(globalRequestParameterList())
+                .globalResponses(HttpMethod.GET, globalResponse())
+                .globalResponses(HttpMethod.POST, globalResponse())
+                .globalResponses(HttpMethod.PUT, globalResponse())
+                .globalResponses(HttpMethod.DELETE, globalResponse())
                 .additionalModels(
                         typeResolver.resolve(SuccessApiResponse.class),
                         typeResolver.resolve(ErrorApiResponse.class)
@@ -101,6 +106,31 @@ public class SwaggerConfig {
 
         requestParameterList.add(userId);
         return requestParameterList;
+    }
+
+    private List<Response> globalResponse() {
+        List<Response> responseList = new ArrayList<>();
+        Response response = new ResponseBuilder()
+                .code("401")
+                .description("비정상적인 요청")
+                .isDefault(true)
+                .examples(
+                        List.of(new ExampleBuilder()
+                                .id("1")
+                                .mediaType("application/json")
+                                .summary("토큰 인증 실패")
+                                .value(new ErrorApiResponse(
+                                        HttpStatus.UNAUTHORIZED.value(),
+                                        "올바르지 않은 요청입니다.",
+                                        "401",
+                                        "InvalidRequestStateException"))
+                                .build()
+                        )
+                )
+                .build();
+
+        responseList.add(response);
+        return responseList;
     }
 
     private Predicate<RequestHandler> withAnnotation(Class<? extends Annotation> annotation) {
