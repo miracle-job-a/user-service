@@ -3,6 +3,7 @@ package com.miracle.userservice.service;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
+import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.miracle.userservice.exception.InvalidEmailException;
@@ -57,5 +58,10 @@ public class UserServiceImpl implements UserService {
         if (!match) {
             throw new InvalidEmailException(ValidationDefaultMsgUtil.CheckDuplicate.EMAIL);
         }
+    }
+
+    @Override
+    public UserBaseInfoResponseDto getUserBaseInfo(Long id) {
+        return userRepository.findUserBaseInfoResponseDtoById(id);
     }
 }

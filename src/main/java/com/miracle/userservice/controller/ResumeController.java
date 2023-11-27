@@ -26,7 +26,7 @@ public class ResumeController {
 
     @ApiGetResume
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
+    @GetMapping("/{resumeId}")
     public CommonApiResponse getResume(@PathVariable Long id, @RequestParam Requester requester) {
         ResumeResponseDto dto = resumeService.getResumeDetail(id, requester);
         int httpStatus = HttpStatus.OK.value();
@@ -46,7 +46,7 @@ public class ResumeController {
 
     @ApiPutResume
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
+    @PutMapping("/{resumeId}")
     public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody @Valid ResumePostRequestDto dto) {
         boolean success = resumeService.updateResume(id, dto);
         int httpStatus = HttpStatus.OK.value();
@@ -56,7 +56,7 @@ public class ResumeController {
 
     @ApiDeleteResume
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{resumeId}")
     public CommonApiResponse deleteResume(@PathVariable Long id) {
         boolean success = resumeService.deleteResume(id);
         int httpStatus = HttpStatus.OK.value();
