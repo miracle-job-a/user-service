@@ -42,7 +42,7 @@ public class UserIdCheckInterceptor implements HandlerInterceptor {
         long userId = Long.parseLong(userIdStr);
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isEmpty()) {
-            throw new NoSuchUserException("해당 유저를 찾을 수 없습니다.");
+            throw new NoSuchUserException("해당 유저를 찾을 수 없습니다.", "400");
         }
 
         return true;

@@ -66,7 +66,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                 {
                                                   "httpStatus": 400,
                                                   "message": "자기소개서가 존재하지 않습니다.",
-                                                  "code": "400",
+                                                  "code": "400_1",
                                                   "exception": "NoSuchCoverLetterException"
                                                 }
                                                 """

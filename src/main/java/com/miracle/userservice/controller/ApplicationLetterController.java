@@ -5,10 +5,12 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
 import com.miracle.userservice.swagger.ApiGetResumeAndCoverLetterList;
+import com.miracle.userservice.swagger.UserPathDocket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@UserPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user/{userId}/application-letter")
 @RestController

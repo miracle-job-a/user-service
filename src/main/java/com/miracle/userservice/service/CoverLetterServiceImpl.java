@@ -52,7 +52,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
         Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
 
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
 
         return CoverLetterResponseDto.builder()
                 .id(coverLetter.getId())
@@ -95,7 +95,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         Objects.requireNonNull(id, errorMessage);
 
         Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
 
         coverLetter.setTitle(dto.getTitle());
         coverLetter.getQnaList().clear();
@@ -112,7 +112,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         Objects.requireNonNull(id, errorMessage);
 
         Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
 
         coverLetterRepository.delete(coverLetter);
 

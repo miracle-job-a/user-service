@@ -1,9 +1,8 @@
 package com.miracle.userservice.exception;
 
-import java.util.NoSuchElementException;
+public class NoSuchCoverLetterException extends MiracleException {
 
-public class NoSuchCoverLetterException extends NoSuchElementException {
-    public NoSuchCoverLetterException(String msg) {
-        super(msg);
+    public NoSuchCoverLetterException(String msg, String code) {
+        super(msg, code);
     }
 }

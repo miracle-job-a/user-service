@@ -1,10 +1,8 @@
 package com.miracle.userservice.exception;
 
-import java.util.NoSuchElementException;
+public class NoSuchUserException extends MiracleException {
 
-public class NoSuchUserException extends NoSuchElementException {
-
-    public NoSuchUserException(String msg) {
-        super(msg);
+    public NoSuchUserException(String msg, String code) {
+        super(msg, code);
     }
 }

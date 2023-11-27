@@ -3,8 +3,8 @@ package com.miracle.userservice.exception.handler;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.exception.InvalidEmailException;
+import com.miracle.userservice.exception.MiracleException;
 import com.miracle.userservice.exception.UserIdMismatchException;
-import com.sun.jdi.request.DuplicateRequestException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
@@ -59,12 +58,12 @@ public class MainExceptionAdvice {
     }
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({NullPointerException.class, DuplicateRequestException.class, NoSuchElementException.class})
-    public CommonApiResponse runtimeError(RuntimeException e) {
+    @ExceptionHandler(MiracleException.class)
+    public CommonApiResponse miracleError(MiracleException e) {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = BAD_REQUEST.value();
-        String code = "400";
+        String code = e.getCode();
         String exceptionName = getClassSimpleName(e);
         return new ErrorApiResponse(httpStatus, message, code, exceptionName);
     }

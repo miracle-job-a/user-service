@@ -1,10 +1,8 @@
 package com.miracle.userservice.exception;
 
-import com.sun.jdi.request.DuplicateRequestException;
+public class DuplicateEmailException extends MiracleException {
 
-public class DuplicateEmailException extends DuplicateRequestException {
-
-    public DuplicateEmailException(String msg) {
-        super(msg);
+    public DuplicateEmailException(String msg, String code) {
+        super(msg, code);
     }
 }
