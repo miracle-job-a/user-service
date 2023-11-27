@@ -155,5 +155,5 @@ import static java.lang.annotation.ElementType.METHOD;
                 )
         }
 )
-public @interface ApiJoinUser {
+public @interface ApiPostUserJoin {
 }

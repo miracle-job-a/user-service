@@ -26,7 +26,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @ApiLoginUser
+    @ApiPostUserLogin
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletResponse response) {
@@ -58,7 +58,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, userLoginResponseDto);
     }
 
-    @ApiJoinUser
+    @ApiPostUserJoin
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/join")
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
