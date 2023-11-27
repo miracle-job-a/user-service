@@ -60,7 +60,7 @@ public class MainExceptionAdvice {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler({NullPointerException.class, DuplicateRequestException.class, NoSuchElementException.class})
-    public CommonApiResponse nullPointer(NullPointerException e) {
+    public CommonApiResponse runtimeError(RuntimeException e) {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = BAD_REQUEST.value();
