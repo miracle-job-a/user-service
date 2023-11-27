@@ -3,10 +3,12 @@ package com.miracle.userservice.controller;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.service.ApplicationLetterService;
+import com.miracle.userservice.swagger.DefaultPathDocket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@DefaultPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/post/{postId}")
 @RestController

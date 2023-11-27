@@ -1,7 +1,7 @@
 package com.miracle.userservice.swagger;
 
 import com.miracle.userservice.controller.response.ErrorApiResponse;
-import com.miracle.userservice.dto.response.ResumeResponseDto;
+import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.swagger.util.SwaggerMsgUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,17 +51,29 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                 }
                                                 """
                                 ),
-                                schema = @Schema(implementation = ResumeResponseDto.class)
+                                schema = @Schema(implementation = SuccessApiResponse.class)
                         )
                 ),
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "이력서 조회 실패",
+                        description = "잘못된 요청",
                         content = @Content(
-                                mediaType = APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "이력서가 존재하지 않음",
-                                        value = """
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
+                                examples = {
+                                        @ExampleObject(
+                                                name = "유저가 존재하지 않음",
+                                                value = """
+                                                {
+                                                  "httpStatus": 400,
+                                                  "message": "해당 유저를 찾을 수 없습니다.",
+                                                  "code": "400",
+                                                  "exception": "NoSuchUserException"
+                                                }
+                                                """
+                                        ),
+                                        @ExampleObject(
+                                                name = "이력서가 존재하지 않음",
+                                                value = """
                                                 {
                                                   "httpStatus": 400,
                                                   "message": "이력서가 존재하지 않습니다.",
@@ -69,7 +81,8 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                   "exception": "NoSuchResumeException"
                                                 }
                                                 """
-                                ),
+                                        )
+                                },
                                 schema = @Schema(implementation = ErrorApiResponse.class)
                         )
                 ),

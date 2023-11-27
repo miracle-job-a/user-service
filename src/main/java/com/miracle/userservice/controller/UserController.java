@@ -4,32 +4,27 @@ import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
-import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
-import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+@DefaultPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user")
 @RestController
 public class UserController {
 
     private final UserService userService;
-    private final ResumeService resumeService;
 
     @ApiLoginUser
     @ResponseStatus(HttpStatus.OK)
@@ -92,17 +87,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, data);
     }
 
-    @ApiGetUserResumes
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{userId}/resumes")
-    public CommonApiResponse getUserResumes(@PathVariable Long userId) {
-        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(userId);
-
-        int httpStatus = HttpStatus.OK.value();
-        String message = "이력서 조회 성공";
-        return new SuccessApiResponse<>(httpStatus, message, resumeList);
-    }
-
+    @UserPathDocket
     @ApiGetUserBaseInfo
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{userId}/base-info")

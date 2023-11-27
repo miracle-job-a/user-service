@@ -14,12 +14,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CoverLetterServiceImpl implements CoverLetterService{
+public class CoverLetterServiceImpl implements CoverLetterService {
 
     private final CoverLetterRepository coverLetterRepository;
     private final UserRepository userRepository;
@@ -110,7 +112,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
         Objects.requireNonNull(id, errorMessage);
 
         Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(()-> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다."));
 
         coverLetterRepository.delete(coverLetter);
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@UserPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user/{userId}/cover-letter")
 @RestController
