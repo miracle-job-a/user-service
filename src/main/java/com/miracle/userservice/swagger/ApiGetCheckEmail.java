@@ -92,5 +92,5 @@ import static java.lang.annotation.ElementType.METHOD;
         }
 )
 
-public @interface ApiCheckEmail {
+public @interface ApiGetCheckEmail {
 }
