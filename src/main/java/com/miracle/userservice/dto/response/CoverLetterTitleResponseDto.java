@@ -7,10 +7,10 @@ import lombok.Getter;
 public class CoverLetterTitleResponseDto {
 
     @Schema(description = "자기소개서 ID")
-    private Long id;
+    private final Long id;
 
     @Schema(description = "자기소개서 제목")
-    private String title;
+    private final String title;
 
     public CoverLetterTitleResponseDto(Long id, String title) {
         this.id = id;

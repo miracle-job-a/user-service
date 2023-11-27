@@ -7,10 +7,10 @@ import lombok.Getter;
 public class ResumeTitleResponseDto {
 
     @Schema(description = "이력서 ID")
-    private Long id;
+    private final Long id;
 
     @Schema(description = "이력서 제목")
-    private String title;
+    private final String title;
 
     public ResumeTitleResponseDto(Long id, String title) {
         this.id = id;

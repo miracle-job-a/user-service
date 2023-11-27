@@ -19,10 +19,8 @@ public interface ApplicationLetterService {
      * 공고 상세 페이지의 지원하기 팝업에서 유저의 이력서 및 자소서 제목 목록 조회
      *
      * @param userId 유저 ID
-     * @return
+     * @return 이력서 및 자기소개서 목록 데이터 {@code ApplicationLetterResponseDto}를 반환
      * @throws NullPointerException If {@code userId} is null
-     * @throws NoSuchResumeException If resume doesn't exist
-     * @throws NoSuchCoverLetterException If coverLetter doesn't exist
      * @author hazzokko
      * */
     ApplicationLetterResponseDto getResumeAndCoverLetterList(Long userId);
