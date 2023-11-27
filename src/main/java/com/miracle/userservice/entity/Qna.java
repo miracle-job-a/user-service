@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Qna {
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String question;
 
     @Column(nullable = false, columnDefinition = "TEXT")

@@ -21,9 +21,9 @@ public class CoverLetterQna extends BaseEntity {
     @JoinColumn(name = "cover_letter_id")
     private CoverLetter coverLetter;
 
-    public CoverLetterQna(Long id, Qna qna) {
-        this.id = id;
+    public CoverLetterQna(Qna qna, CoverLetter coverLetter) {
         this.qna = qna;
+        this.coverLetter = coverLetter;
         coverLetter.addQna(this);
     }
 }
