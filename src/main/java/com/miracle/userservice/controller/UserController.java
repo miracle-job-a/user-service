@@ -11,10 +11,7 @@ import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginRespon
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
-import com.miracle.userservice.swagger.ApiGetCheckEmail;
-import com.miracle.userservice.swagger.ApiGetUserResumes;
-import com.miracle.userservice.swagger.ApiJoinUser;
-import com.miracle.userservice.swagger.ApiLoginUser;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -106,6 +103,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, resumeList);
     }
 
+    @ApiGetUserBaseInfo
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{userId}/base-info")
     public CommonApiResponse getUserBaseInfo(@PathVariable Long userId) {
