@@ -5,15 +5,13 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
+import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
-import com.miracle.userservice.swagger.ApiGetCheckEmail;
-import com.miracle.userservice.swagger.ApiGetUserResumes;
-import com.miracle.userservice.swagger.ApiJoinUser;
-import com.miracle.userservice.swagger.ApiLoginUser;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -96,12 +94,23 @@ public class UserController {
 
     @ApiGetUserResumes
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}/resumes")
-    public CommonApiResponse getUserResumes(@PathVariable Long id) {
-        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(id);
+    @GetMapping("/{userId}/resumes")
+    public CommonApiResponse getUserResumes(@PathVariable Long userId) {
+        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(userId);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, resumeList);
+    }
+
+    @ApiGetUserBaseInfo
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{userId}/base-info")
+    public CommonApiResponse getUserBaseInfo(@PathVariable Long userId) {
+        UserBaseInfoResponseDto dto = userService.getUserBaseInfo(userId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "유저 기본 정보 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 }

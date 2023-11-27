@@ -5,6 +5,8 @@ import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
+import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.util.Const;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +43,8 @@ public class SwaggerConfig {
                         typeResolver.resolve(SuccessApiResponse.class, Boolean.class),
                         typeResolver.resolve(SuccessApiResponse.class, ResumeResponseDto.class),
                         typeResolver.resolve(SuccessApiResponse.class, ResumeListResponseDto.class),
+                        typeResolver.resolve(SuccessApiResponse.class, UserBaseInfoResponseDto.class),
+                        typeResolver.resolve(SuccessApiResponse.class, UserLoginResponseDto.class),
                         typeResolver.resolve(ErrorApiResponse.class)
                 )
                 .useDefaultResponseMessages(false)
