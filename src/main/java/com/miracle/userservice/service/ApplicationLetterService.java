@@ -1,16 +1,14 @@
 package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
-import com.miracle.userservice.exception.NoSuchCoverLetterException;
-import com.miracle.userservice.exception.NoSuchResumeException;
 
 public interface ApplicationLetterService {
 
     /**
-     * 특정 공고의 지원자수를 반환하는 메서드
+     * 특정 공고의 지원자 수를 반환하는 메서드
      *
      * @param postId 공고 ID
-     * @return 해당 공고의 지원자수
+     * @return 해당 공고의 지원자 수
      * @author chocola
      */
     long getNumberOfApplicant(Long postId);
