@@ -34,9 +34,9 @@ public class CoverLetterController {
 
     @ApiGetCoverLetter
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
-    public CommonApiResponse getCoverLetterDetail(@PathVariable Long id) {
-        CoverLetterResponseDto dto = coverLetterService.getCoverLetterDetail(id);
+    @GetMapping("/{coverLetterId}")
+    public CommonApiResponse getCoverLetterDetail(@PathVariable Long coverLetterId) {
+        CoverLetterResponseDto dto = coverLetterService.getCoverLetterDetail(coverLetterId);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 조회 성공";
@@ -57,9 +57,9 @@ public class CoverLetterController {
 
     @ApiPutCoverLetter
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    public CommonApiResponse updateCoverLetter(@PathVariable Long id, @Valid @RequestBody CoverLetterPostRequestDto dto) {
-        boolean result = coverLetterService.updateCoverLetter(id, dto);
+    @PutMapping("/{coverLetterId}")
+    public CommonApiResponse updateCoverLetter(@PathVariable Long coverLetterId, @Valid @RequestBody CoverLetterPostRequestDto dto) {
+        boolean result = coverLetterService.updateCoverLetter(coverLetterId, dto);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 수정 성공";
@@ -68,9 +68,9 @@ public class CoverLetterController {
 
     @ApiDeleteCoverLetter
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{id}")
-    public CommonApiResponse deleteCoverLetter(@PathVariable Long id) {
-        boolean result = coverLetterService.deleteCoverLetter(id);
+    @DeleteMapping("/{coverLetterId}")
+    public CommonApiResponse deleteCoverLetter(@PathVariable Long coverLetterId) {
+        boolean result = coverLetterService.deleteCoverLetter(coverLetterId);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 삭제 성공";
