@@ -73,10 +73,10 @@ public class CoverLetterServiceImpl implements CoverLetterService{
         Objects.requireNonNull(dto, errorMessage);
 
         Long userId = dto.getUserId();
-        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        Optional<User> user = userRepository.findById(userId);
 
         CoverLetter coverLetter = CoverLetter.builder()
-                .user(user)
+                .user(user.get())
                 .title(dto.getTitle())
                 .build();
 
