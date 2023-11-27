@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @ApiJoinUser
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/join")
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);

@@ -35,7 +35,7 @@ public class ResumeController {
     }
 
     @ApiPostResume
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public CommonApiResponse postResume(@RequestBody @Valid ResumePostRequestDto dto) {
         boolean success = resumeService.postResume(dto);
