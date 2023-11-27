@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * 클래스 레벨보다 메서드 레벨이 우선순위가 더 높다.
  *
  * @author chocola
- * @link {@link UserPathDocket}
+ * @see UserPathDocket
  */
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
