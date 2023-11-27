@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,12 @@ public class CoverLetter extends BaseEntity {
 
     @OneToMany(mappedBy = "coverLetter", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<CoverLetterQna> qnaList = new ArrayList<>();
+
+    @Builder
+    public CoverLetter(User user, String title) {
+        this.user = user;
+        this.title = title;
+    }
 
     public void addQna(CoverLetterQna coverLetterQna) {
         qnaList.add(coverLetterQna);
