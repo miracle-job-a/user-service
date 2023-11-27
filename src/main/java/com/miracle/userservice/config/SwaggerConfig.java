@@ -45,7 +45,11 @@ public class SwaggerConfig {
     @Bean
     public Docket userPathDocket(TypeResolver typeResolver) {
         return baseDocket(typeResolver, "user-path")
-                .globalRequestParameters(userPathRequestParameterList())
+                .globalRequestParameters(userPathGlobalRequestParameterList())
+                .globalResponses(HttpMethod.GET, userPathGlobalResponse())
+                .globalResponses(HttpMethod.POST, userPathGlobalResponse())
+                .globalResponses(HttpMethod.PUT, userPathGlobalResponse())
+                .globalResponses(HttpMethod.DELETE, userPathGlobalResponse())
                 .select()
                 .apis(withAnnotation(UserPathDocket.class))
                 .build();
@@ -96,7 +100,7 @@ public class SwaggerConfig {
         return requestParameterList;
     }
 
-    private List<RequestParameter> userPathRequestParameterList() {
+    private List<RequestParameter> userPathGlobalRequestParameterList() {
         List<RequestParameter> requestParameterList = new ArrayList<>();
         RequestParameter userId = new RequestParameterBuilder()
                 .name(Const.RequestHeader.USER_ID)
@@ -130,6 +134,51 @@ public class SwaggerConfig {
                 .build();
 
         responseList.add(response);
+        return responseList;
+    }
+
+    private List<Response> userPathGlobalResponse() {
+        List<Response> responseList = globalResponse();
+        Response userForbidden = new ResponseBuilder()
+                .code("403")
+                .description("비정상적인 요청")
+                .isDefault(true)
+                .examples(
+                        List.of(new ExampleBuilder()
+                                .id("1")
+                                .mediaType("application/json")
+                                .summary("유저 검증 실패")
+                                .value(new ErrorApiResponse(
+                                        HttpStatus.FORBIDDEN.value(),
+                                        "허가되지 않는 요청입니다.",
+                                        "403",
+                                        "UserIdMismatchException"))
+                                .build()
+                        )
+                )
+                .build();
+
+        Response userBadRequest = new ResponseBuilder()
+                .code("400")
+                .description("잘못된 요청")
+                .isDefault(true)
+                .examples(
+                        List.of(new ExampleBuilder()
+                                .id("1")
+                                .mediaType("application/json")
+                                .summary("유저가 존재하지 않음")
+                                .value(new ErrorApiResponse(
+                                        HttpStatus.BAD_REQUEST.value(),
+                                        "해당 유저를 찾을 수 없습니다.",
+                                        "400",
+                                        "NoSuchUserException"))
+                                .build()
+                        )
+                )
+                .build();
+
+        responseList.add(userForbidden);
+        responseList.add(userBadRequest);
         return responseList;
     }
 

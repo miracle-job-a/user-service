@@ -1,6 +1,5 @@
 package com.miracle.userservice.swagger;
 
-import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.swagger.util.SwaggerMsgUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,25 +42,6 @@ import static java.lang.annotation.ElementType.METHOD;
                                                 """
                                 ),
                                 schema = @Schema(implementation = SuccessApiResponse.class)
-                        )
-                ),
-                @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
-                        description = "유저가 존재하지 않음",
-                        content = @Content(
-                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
-                                examples = @ExampleObject(
-                                        name = "유저가 존재하지 않음",
-                                        value = """
-                                                {
-                                                  "httpStatus": 400,
-                                                  "message": "해당 유저를 찾을 수 없습니다.",
-                                                  "code": "400",
-                                                  "exception": "NoSuchUserException"
-                                                }
-                                                """
-                                ),
-                                schema = @Schema(implementation = ErrorApiResponse.class)
                         )
                 )
         }
