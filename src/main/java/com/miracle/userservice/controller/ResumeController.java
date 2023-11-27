@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller.userpath;
+package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
@@ -8,14 +8,13 @@ import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Slf4j
+@UserPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user/{userId}/resume")
 @RestController

@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller.userpath;
+package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
@@ -8,14 +8,14 @@ import com.miracle.userservice.service.CoverLetterService;
 import com.miracle.userservice.swagger.ApiDeleteCoverLetter;
 import com.miracle.userservice.swagger.ApiGetCoverLetter;
 import com.miracle.userservice.swagger.ApiGetCoverLetterList;
+import com.miracle.userservice.swagger.UserPathDocket;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
+@UserPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user/{id}/cover-letter")
 @RestController

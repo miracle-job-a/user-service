@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller.defaultpath;
+package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
@@ -9,12 +9,8 @@ import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.UserService;
-import com.miracle.userservice.swagger.ApiGetCheckEmail;
-import com.miracle.userservice.swagger.ApiGetUserBaseInfo;
-import com.miracle.userservice.swagger.ApiJoinUser;
-import com.miracle.userservice.swagger.ApiLoginUser;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Optional;
 
-@Slf4j
+@DefaultPathDocket
 @RequiredArgsConstructor
 @RequestMapping("/v1/user")
 @RestController
@@ -91,6 +87,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, data);
     }
 
+    @UserPathDocket
     @ApiGetUserBaseInfo
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{userId}/base-info")
