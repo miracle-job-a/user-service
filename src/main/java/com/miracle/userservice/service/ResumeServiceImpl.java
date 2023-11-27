@@ -26,10 +26,10 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResumeResponseDto getResumeDetail(Long id, Requester requester) {
-        Objects.requireNonNull(id, "Resume id is null");
+    public ResumeResponseDto getResumeDetail(Long resumeId, Requester requester) {
+        Objects.requireNonNull(resumeId, "Resume id is null");
 
-        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
         if (requester == Requester.COMPANY) resumeOpt = resumeOpt.filter(Resume::isOpen);
 
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
@@ -101,10 +101,10 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public boolean updateResume(Long id, ResumePostRequestDto dto) {
-        Objects.requireNonNull(id, "Resume id is null");
+    public boolean updateResume(Long resumeId, ResumePostRequestDto dto) {
+        Objects.requireNonNull(resumeId, "Resume id is null");
 
-        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
 
         update(resume, dto);
@@ -135,10 +135,10 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public boolean deleteResume(Long id) throws NoSuchResumeException {
-        Objects.requireNonNull(id, "Resume id is null");
+    public boolean deleteResume(Long resumeId) {
+        Objects.requireNonNull(resumeId, "Resume id is null");
 
-        Optional<Resume> resumeOpt = resumeRepository.findById(id);
+        Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
         Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다."));
 
         resumeRepository.delete(resume);

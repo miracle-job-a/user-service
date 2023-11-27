@@ -15,14 +15,14 @@ public interface ResumeService {
      * 유저가 조회했을 경우, 비공개 이력서도 조회 되어야함
      * 기업이 조회했을 경우, 공개 이력서만 조회 되어야함
      *
-     * @param id        이력서 ID
+     * @param resumeId        이력서 ID
      * @param requester 이력서 조회를 요청한 멤버의 타입
      * @return 이력서 상세 데이터
-     * @throws NullPointerException  If {@code id} is null
+     * @throws NullPointerException  If {@code resumeId} is null
      * @throws NoSuchResumeException If resume doesn't exist
      * @author chocola
      */
-    ResumeResponseDto getResumeDetail(Long id, Requester requester);
+    ResumeResponseDto getResumeDetail(Long resumeId, Requester requester);
 
     /**
      * 유저의 이력서를 저장
@@ -37,25 +37,25 @@ public interface ResumeService {
     /**
      * 유저의 특정 이력서를 수정
      *
-     * @param id  이력서 ID
+     * @param resumeId  이력서 ID
      * @param dto 이력서 정보
      * @return true
-     * @throws NullPointerException  If {@code id}, {@code dto} is null
+     * @throws NullPointerException  If {@code resumeId}, {@code dto} is null
      * @throws NoSuchResumeException If resume doesn't exist
      * @author chocola
      */
-    boolean updateResume(Long id, ResumePostRequestDto dto);
+    boolean updateResume(Long resumeId, ResumePostRequestDto dto);
 
     /**
      * 유저의 특정 이력서를 삭제
      *
-     * @param id 이력서 ID
+     * @param resumeId 이력서 ID
      * @return true
-     * @throws NullPointerException  If {@code id} is null
+     * @throws NullPointerException  If {@code resumeId} is null
      * @throws NoSuchResumeException If resume doesn't exist
      * @author chocola
      */
-    boolean deleteResume(Long id);
+    boolean deleteResume(Long resumeId);
 
     /**
      * 특정 유저의 전체 이력서 목록을 조회

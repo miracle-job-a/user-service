@@ -7,7 +7,6 @@ import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
-import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.ApiGetCheckEmail;
 import com.miracle.userservice.swagger.ApiJoinUser;
@@ -28,7 +27,6 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final ResumeService resumeService;
 
     @ApiLoginUser
     @ResponseStatus(HttpStatus.OK)

@@ -26,8 +26,8 @@ public class ResumeController {
     @ApiGetResumes
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public CommonApiResponse getResumes(@PathVariable Long id) {
-        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(id);
+    public CommonApiResponse getResumes(@PathVariable Long userId) {
+        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(userId);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, resumeList);
@@ -36,8 +36,8 @@ public class ResumeController {
     @ApiGetResume
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{resumeId}")
-    public CommonApiResponse getResume(@PathVariable Long id, @RequestParam Requester requester) {
-        ResumeResponseDto dto = resumeService.getResumeDetail(id, requester);
+    public CommonApiResponse getResume(@PathVariable Long resumeId, @RequestParam Requester requester) {
+        ResumeResponseDto dto = resumeService.getResumeDetail(resumeId, requester);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, dto);
@@ -56,8 +56,8 @@ public class ResumeController {
     @ApiPutResume
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{resumeId}")
-    public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody @Valid ResumePostRequestDto dto) {
-        boolean success = resumeService.updateResume(id, dto);
+    public CommonApiResponse updateResume(@PathVariable Long resumeId, @RequestBody @Valid ResumePostRequestDto dto) {
+        boolean success = resumeService.updateResume(resumeId, dto);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 수정 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
@@ -66,8 +66,8 @@ public class ResumeController {
     @ApiDeleteResume
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{resumeId}")
-    public CommonApiResponse deleteResume(@PathVariable Long id) {
-        boolean success = resumeService.deleteResume(id);
+    public CommonApiResponse deleteResume(@PathVariable Long resumeId) {
+        boolean success = resumeService.deleteResume(resumeId);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 삭제 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
