@@ -10,7 +10,7 @@ import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginRespon
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
-import com.miracle.userservice.swagger.ApiCheckEmail;
+import com.miracle.userservice.swagger.ApiGetCheckEmail;
 import com.miracle.userservice.swagger.ApiGetUserResumes;
 import com.miracle.userservice.swagger.ApiJoinUser;
 import com.miracle.userservice.swagger.ApiLoginUser;
@@ -36,9 +36,7 @@ public class UserController {
     @ApiLoginUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, @RequestHeader String sessionId, HttpServletResponse response) {
-        log.debug("sessionId = {}, userLoginRequestDto = {}", sessionId, userLoginRequestDto);
-
+    public CommonApiResponse login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletResponse response) {
         Optional<User> userOpt = userService.login(userLoginRequestDto);
         boolean success = userOpt.isPresent();
         int httpStatus;
@@ -70,9 +68,7 @@ public class UserController {
     @ApiJoinUser
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
-    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto, @RequestHeader String sessionId) {
-        log.debug("sessionId={}, dto={}", sessionId, dto);
-
+    public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);
 
         int httpStatus = HttpStatus.OK.value();
@@ -80,7 +76,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, null);
     }
 
-    @ApiCheckEmail
+    @ApiGetCheckEmail
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/check-email/{email}")
     public CommonApiResponse checkDuplicateEmail(@PathVariable String email) {
