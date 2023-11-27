@@ -64,7 +64,7 @@ public class UserController {
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);
 
-        int httpStatus = HttpStatus.OK.value();
+        int httpStatus = HttpStatus.NO_CONTENT.value();
         String message = "회원 가입 성공";
         return new SuccessApiResponse<>(httpStatus, message, null);
     }

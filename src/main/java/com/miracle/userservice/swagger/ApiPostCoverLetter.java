@@ -23,7 +23,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
         description = "유저의 자기소개서를 등록하는 API",
         responses = {
                 @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.OK,
+                        responseCode = SwaggerMsgUtil.ResponseCode.CREATED,
                         description = "자기소개서 등록 성공",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
@@ -31,7 +31,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         name = "성공",
                                         value = """
                                                 {
-                                                  "httpStatus": 200,
+                                                  "httpStatus": 201,
                                                   "message": "자기소개서 등록 성공",
                                                   "data": true
                                                 }

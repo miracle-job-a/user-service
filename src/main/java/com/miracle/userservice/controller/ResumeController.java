@@ -47,7 +47,7 @@ public class ResumeController {
     @PostMapping
     public CommonApiResponse postResume(@RequestBody @Valid ResumePostRequestDto dto) {
         boolean success = resumeService.postResume(dto);
-        int httpStatus = HttpStatus.OK.value();
+        int httpStatus = HttpStatus.CREATED.value();
         String message = "이력서 저장 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
