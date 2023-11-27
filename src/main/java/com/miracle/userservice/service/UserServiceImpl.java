@@ -10,8 +10,8 @@ import com.miracle.userservice.exception.InvalidEmailException;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean checkDuplicate(String email) {
         validEmail(email);
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserBaseInfoResponseDto getUserBaseInfo(Long id) {
         return userRepository.findUserBaseInfoResponseDtoById(id);
