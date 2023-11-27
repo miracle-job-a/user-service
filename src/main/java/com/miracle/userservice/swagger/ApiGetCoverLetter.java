@@ -2,7 +2,7 @@ package com.miracle.userservice.swagger;
 
 
 import com.miracle.userservice.controller.response.ErrorApiResponse;
-import com.miracle.userservice.dto.response.ResumeResponseDto;
+import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.swagger.util.SwaggerMsgUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -52,7 +52,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                 }
                                                 """
                                 ),
-                                schema = @Schema(implementation = ResumeResponseDto.class)
+                                schema = @Schema(implementation = SuccessApiResponse.class)
                         )
                 ),
                 @ApiResponse(

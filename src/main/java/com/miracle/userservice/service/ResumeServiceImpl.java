@@ -1,6 +1,6 @@
 package com.miracle.userservice.service;
 
-import com.miracle.userservice.controller.Requester;
+import com.miracle.userservice.controller.userpath.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;

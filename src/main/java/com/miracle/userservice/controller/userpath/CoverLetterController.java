@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller;
+package com.miracle.userservice.controller.userpath;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;

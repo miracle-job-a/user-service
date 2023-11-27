@@ -76,5 +76,5 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                 )
         }
 )
-public @interface ApiGetUserResumes {
+public @interface ApiGetResumes {
 }

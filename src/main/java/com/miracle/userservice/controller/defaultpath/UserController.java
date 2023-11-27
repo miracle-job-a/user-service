@@ -1,17 +1,15 @@
-package com.miracle.userservice.controller;
+package com.miracle.userservice.controller.defaultpath;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
-import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.ResumeService;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.ApiGetCheckEmail;
-import com.miracle.userservice.swagger.ApiGetUserResumes;
 import com.miracle.userservice.swagger.ApiJoinUser;
 import com.miracle.userservice.swagger.ApiLoginUser;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -92,16 +89,5 @@ public class UserController {
 
         int httpStatus = HttpStatus.OK.value();
         return new SuccessApiResponse<>(httpStatus, message, data);
-    }
-
-    @ApiGetUserResumes
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}/resumes")
-    public CommonApiResponse getUserResumes(@PathVariable Long id) {
-        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(id);
-
-        int httpStatus = HttpStatus.OK.value();
-        String message = "이력서 조회 성공";
-        return new SuccessApiResponse<>(httpStatus, message, resumeList);
     }
 }

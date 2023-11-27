@@ -1,20 +1,19 @@
-package com.miracle.userservice.controller;
+package com.miracle.userservice.controller.userpath;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
+import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.service.ResumeService;
-import com.miracle.userservice.swagger.ApiDeleteResume;
-import com.miracle.userservice.swagger.ApiGetResume;
-import com.miracle.userservice.swagger.ApiPostResume;
-import com.miracle.userservice.swagger.ApiPutResume;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,9 +23,19 @@ public class ResumeController {
 
     private final ResumeService resumeService;
 
+    @ApiGetResumes
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public CommonApiResponse getResumes(@PathVariable Long id) {
+        List<ResumeListResponseDto> resumeList = resumeService.getUserResumes(id);
+        int httpStatus = HttpStatus.OK.value();
+        String message = "이력서 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, resumeList);
+    }
+
     @ApiGetResume
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
+    @GetMapping("/{resumeId}")
     public CommonApiResponse getResume(@PathVariable Long id, @RequestParam Requester requester) {
         ResumeResponseDto dto = resumeService.getResumeDetail(id, requester);
         int httpStatus = HttpStatus.OK.value();
@@ -46,7 +55,7 @@ public class ResumeController {
 
     @ApiPutResume
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
+    @PutMapping("/{resumeId}")
     public CommonApiResponse updateResume(@PathVariable Long id, @RequestBody @Valid ResumePostRequestDto dto) {
         boolean success = resumeService.updateResume(id, dto);
         int httpStatus = HttpStatus.OK.value();
@@ -56,7 +65,7 @@ public class ResumeController {
 
     @ApiDeleteResume
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{resumeId}")
     public CommonApiResponse deleteResume(@PathVariable Long id) {
         boolean success = resumeService.deleteResume(id);
         int httpStatus = HttpStatus.OK.value();
