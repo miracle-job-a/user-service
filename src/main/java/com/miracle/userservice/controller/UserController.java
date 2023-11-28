@@ -59,12 +59,12 @@ public class UserController {
     }
 
     @ApiPostUserJoin
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);
 
-        int httpStatus = HttpStatus.NO_CONTENT.value();
+        int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 성공";
         return new SuccessApiResponse<>(httpStatus, message, null);
     }
