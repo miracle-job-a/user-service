@@ -18,6 +18,10 @@ public class Interview extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_letter_id")
+    private ApplicationLetter applicationLetter;
+
     @Column(nullable = false)
     private String question;
 
