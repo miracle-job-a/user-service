@@ -3,6 +3,7 @@ package com.miracle.userservice.service;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.miracle.userservice.exception.InvalidEmailException;
@@ -48,9 +49,19 @@ public interface UserService {
      * 특정 유저의 기본 정보를 반환하는 메서드
      * 기본 정보에는 이메일, 이름, 전화번호, 생년월일, 주소를 포함한다.
      *
-     * @param id 유저의 ID
+     * @param userId 유저의 ID
      * @return 유저의 기본 정보가 담긴 DTO(email, name, phone, birth, address)
      * @author chocola
      */
-    UserBaseInfoResponseDto getUserBaseInfo(Long id);
+    UserBaseInfoResponseDto getUserBaseInfo(Long userId);
+
+    /**
+     * 특정 유저의 정보를 반환하는 메서드
+     * 유저 정보에는 아이디, 이름, 생년월일, 비밀번호, 전화번호, 주소, 스택 아이디 목록을 포함한다.
+     *
+     * @param userId 유저의 ID
+     * @return 유저의 정보가 담긴 DTO(id, name, birth, password, phone, address, stackIdSet)
+     * @author chocola
+     */
+    UserInfoResponseDto getUserInfo(Long userId);
 }

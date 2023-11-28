@@ -4,6 +4,7 @@ import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.miracle.userservice.exception.InvalidEmailException;
@@ -63,7 +64,22 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserBaseInfoResponseDto getUserBaseInfo(Long id) {
-        return userRepository.findUserBaseInfoResponseDtoById(id);
+    public UserBaseInfoResponseDto getUserBaseInfo(Long userId) {
+        return userRepository.findUserBaseInfoResponseDtoById(userId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public UserInfoResponseDto getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).get();
+        return UserInfoResponseDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .password(user.getPassword())
+                .phone(user.getPhone())
+                .birth(user.getBirth())
+                .address(user.getAddress())
+                .stackIdSet(user.getStackIdSet())
+                .build();
     }
 }
