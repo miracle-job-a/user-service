@@ -100,6 +100,8 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @UserPathDocket
+    @ApiPutUserInfo
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{userId}")
     public CommonApiResponse updateUserInfo(@PathVariable Long userId, @Valid @RequestBody UserUpdateInfoRequestDto dto) {
