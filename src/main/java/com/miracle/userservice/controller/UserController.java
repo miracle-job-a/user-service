@@ -100,6 +100,8 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @UserPathDocket
+    @ApiGetUserInfo
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{userId}")
     public CommonApiResponse getUserInfo(@PathVariable Long userId) {
