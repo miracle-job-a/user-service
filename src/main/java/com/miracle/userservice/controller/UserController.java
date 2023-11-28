@@ -4,6 +4,7 @@ import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
@@ -97,5 +98,15 @@ public class UserController {
         int httpStatus = HttpStatus.OK.value();
         String message = "유저 기본 정보 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{userId}")
+    public CommonApiResponse updateUserInfo(@PathVariable Long userId, @Valid @RequestBody UserUpdateInfoRequestDto dto) {
+        boolean success = userService.updateUserInfo(userId, dto);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "유저 정보 수정 성공";
+        return new SuccessApiResponse<>(httpStatus, message, success);
     }
 }
