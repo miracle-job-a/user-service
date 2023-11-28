@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
         String email = dto.getEmail();
         if (userRepository.existsByEmail(email)) {
-            throw new DuplicateEmailException("이메일 중복입니다.", "400_1");
+            throw new DuplicateEmailException("400_1", "이메일 중복입니다.");
         }
 
         User user = dto.transformToUser();
