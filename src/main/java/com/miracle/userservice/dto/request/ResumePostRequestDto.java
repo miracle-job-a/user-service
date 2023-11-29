@@ -36,7 +36,7 @@ public class ResumePostRequestDto {
     private final String education;
 
     @Size(max = 100, message = ValidationDefaultMsgUtil.ResumePost.GIT_LINK)
-    @Pattern(regexp = "^https://github.com/")
+    @Pattern(regexp = "^https://github\\.com/.*$", message = ValidationDefaultMsgUtil.ResumePost.GIT_LINK)
     @Schema(
             description = "GitHub 링크",
             example = "https://github.com/user"
