@@ -38,7 +38,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                     "password": -1518854684,
                                                     "phone": "01012345678",
                                                     "address": "서울특별시 서초구 효령로 113",
-                                                    "stackIdSet": []
+                                                    "stackIdSet": [1, 3, 5]
                                                   }
                                                 }
                                                 """
