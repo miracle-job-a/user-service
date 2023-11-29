@@ -125,6 +125,8 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @UserPathDocket
+    @ApiDeleteUser
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{userId}")
     public CommonApiResponse deleteUser(@PathVariable Long userId) {
