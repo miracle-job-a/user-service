@@ -6,6 +6,7 @@ import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
@@ -60,12 +61,12 @@ public class UserController {
     }
 
     @ApiPostUserJoin
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/join")
     public CommonApiResponse join(@Valid @RequestBody UserJoinRequestDto dto) {
         userService.join(dto);
 
-        int httpStatus = HttpStatus.NO_CONTENT.value();
+        int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 성공";
         return new SuccessApiResponse<>(httpStatus, message, null);
     }
@@ -101,6 +102,17 @@ public class UserController {
     }
 
     @UserPathDocket
+    @ApiGetUserInfo
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{userId}")
+    public CommonApiResponse getUserInfo(@PathVariable Long userId) {
+        UserInfoResponseDto dto = userService.getUserInfo(userId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "유저 정보 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
     @ApiPutUserInfo
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{userId}")

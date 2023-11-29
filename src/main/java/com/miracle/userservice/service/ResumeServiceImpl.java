@@ -32,7 +32,7 @@ public class ResumeServiceImpl implements ResumeService {
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
         if (requester == Requester.COMPANY) resumeOpt = resumeOpt.filter(Resume::isOpen);
 
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
         return getResumeResponseDto(resume);
     }
 
@@ -105,7 +105,7 @@ public class ResumeServiceImpl implements ResumeService {
         Objects.requireNonNull(resumeId, "Resume id is null");
 
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
 
         update(resume, dto);
 
@@ -139,7 +139,7 @@ public class ResumeServiceImpl implements ResumeService {
         Objects.requireNonNull(resumeId, "Resume id is null");
 
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
 
         resumeRepository.delete(resume);
         return true;
