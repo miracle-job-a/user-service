@@ -2,6 +2,7 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
@@ -81,5 +82,15 @@ public class UserServiceImpl implements UserService {
                 .address(user.getAddress())
                 .stackIdSet(user.getStackIdSet())
                 .build();
+    }
+
+    @Override
+    public boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) return false;
+
+        User user = userOpt.get();
+        user.update(dto);
+        return true;
     }
 }

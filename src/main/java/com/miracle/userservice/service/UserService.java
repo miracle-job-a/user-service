@@ -2,6 +2,7 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.entity.User;
@@ -64,4 +65,14 @@ public interface UserService {
      * @author chocola
      */
     UserInfoResponseDto getUserInfo(Long userId);
+
+    /**
+     * 특정 유저의 정보를 수정하는 메서드
+     *
+     * @param userId 유저의 ID
+     * @param dto 유저 정보 수정 데이터
+     * @return true
+     * @author chocola
+     */
+    boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto);
 }

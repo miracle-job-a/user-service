@@ -38,4 +38,13 @@ public class ValidationDefaultMsgUtil {
         public static final String TITLE = "400_2:제목이 없거나 글자 제한 수를 초과했습니다.";
         public static final String QNA = "400_3:질문 및 답변이 없습니다.";
     }
+
+    public static abstract class UserUpdateInfo {
+
+        public static final String PASSWORD = "400_1:비밀번호 형식이 올바르지 않습니다.";
+        public static final String PHOTO = "400_2:사진 경로가 너무 깁니다.";
+        public static final String COLLECTION = "400_3:Collection이 null입니다.";
+        public static final String PHONE = "400_4:전화번호 형식이 올바르지 않습니다.";
+        public static final String ADDRESS = "400_5:주소 형식이 올바르지 않습니다.";
+    }
 }

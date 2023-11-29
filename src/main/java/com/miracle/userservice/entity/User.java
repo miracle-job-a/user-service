@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -61,5 +62,13 @@ public class User extends BaseEntity {
         this.phone = phone;
         this.birth = birth;
         this.address = address;
+    }
+
+    public void update(UserUpdateInfoRequestDto dto) {
+        this.password = dto.getPassword().hashCode();
+        this.phone = dto.getPhone();
+        this.address = dto.getAddress();
+        stackIdSet.clear();
+        stackIdSet.addAll(dto.getStackIdSet());
     }
 }
