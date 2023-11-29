@@ -8,13 +8,11 @@ import java.util.List;
 
 @Data
 public class CoverLetterInApplicationLetterResponseDto {
-    private final Long id;
     private final String coverLetterTitle;
     private final List<Qna> qnaList;
 
     @Builder
-    public CoverLetterInApplicationLetterResponseDto(Long id, String coverLetterTitle, List<Qna> qnaList) {
-        this.id = id;
+    public CoverLetterInApplicationLetterResponseDto(String coverLetterTitle, List<Qna> qnaList) {
         this.coverLetterTitle = coverLetterTitle;
         this.qnaList = List.copyOf(qnaList);
     }
