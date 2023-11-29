@@ -34,7 +34,6 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                   "httpStatus": 200,
                                                   "message": "지원한 자기소개서 조회 성공",
                                                   "data": {
-                                                    "id": 1,
                                                     "coverLetterTitle": "한 달 만에 채용사이트를 구현할 수 있었던 비결",
                                                     "qnaList": [
                                                         {
@@ -64,7 +63,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                 {
                                                   "httpStatus": 400,
                                                   "message": "지원서가 존재하지 않습니다.",
-                                                  "code": "400",
+                                                  "code": "400_1",
                                                   "exception": "NoSuchApplicationLetterException"
                                                 }
                                                 """
