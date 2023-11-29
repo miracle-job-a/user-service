@@ -3,7 +3,9 @@ package com.miracle.userservice.controller;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
+import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
+import com.miracle.userservice.swagger.ApiGetCoverLetterInApplicationLetter;
 import com.miracle.userservice.swagger.ApiGetResumeAndCoverLetterList;
 import com.miracle.userservice.swagger.UserPathDocket;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,16 @@ public class ApplicationLetterController {
         ApplicationLetterResponseDto dto = applicationLetterService.getResumeAndCoverLetterList(userId);
         int httpStatus = HttpStatus.OK.value();
         String message = "이력서 및 자기소개서 목록 출력 성공";
+        return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ApiGetCoverLetterInApplicationLetter
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{applicationLetterId}/cover-letter")
+    public CommonApiResponse getCoverLetter(@PathVariable Long applicationLetterId) {
+        CoverLetterInApplicationLetterResponseDto dto = applicationLetterService.getCoverLetter(applicationLetterId);
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원한 자기소개서 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 }

@@ -1,6 +1,8 @@
 package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
+import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
+import com.miracle.userservice.exception.NoSuchApplicationLetterException;
 
 public interface ApplicationLetterService {
 
@@ -22,4 +24,15 @@ public interface ApplicationLetterService {
      * @author hazzokko
      * */
     ApplicationLetterResponseDto getResumeAndCoverLetterList(Long userId);
+
+    /**
+     * 지원서 중 자기소개서 정보를 반환하는 메서드
+     *
+     * @param applicationLetterId 지원서 ID
+     * @return 자기소개서 데이터 {@code CoverLetterInApplicationLetterResponseDto} 를 반환
+     * @throws NullPointerException If {@code applicationLetterId} is null
+     * @throws NoSuchApplicationLetterException If applicationLetter doesn't exist
+     * @author hazzokko
+     * */
+    CoverLetterInApplicationLetterResponseDto getCoverLetter(Long applicationLetterId);
 }
