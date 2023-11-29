@@ -93,4 +93,10 @@ public class UserServiceImpl implements UserService {
         user.update(dto);
         return true;
     }
+
+    @Override
+    public boolean deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+        return true;
+    }
 }

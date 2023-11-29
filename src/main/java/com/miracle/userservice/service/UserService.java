@@ -75,4 +75,13 @@ public interface UserService {
      * @author chocola
      */
     boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto);
+
+    /**
+     * 특정 유저 회원 탈퇴 메서드
+     *
+     * @param userId 유저의 ID
+     * @return true
+     * @author chocola
+     */
+    boolean deleteUser(Long userId);
 }
