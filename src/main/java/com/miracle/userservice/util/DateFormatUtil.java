@@ -1,4 +1,4 @@
-package com.miracle.userservice.swagger.util;
+package com.miracle.userservice.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

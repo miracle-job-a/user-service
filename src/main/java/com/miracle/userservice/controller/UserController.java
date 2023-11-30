@@ -5,16 +5,15 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
-import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
-import com.miracle.userservice.exception.InvalidParameterException;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.*;
+import com.miracle.userservice.util.ParameterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -153,7 +152,7 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "5") int endPage,
             @RequestParam(required = false, defaultValue = "10") int pageSize
     ) {
-        checkParameterWhenPaging(startPage, endPage, pageSize);
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize);
 
         startPage--;
         endPage--;
@@ -167,17 +166,5 @@ public class UserController {
         int httpStatus = HttpStatus.OK.value();
         String message = "회원 목록 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, result);
-    }
-
-    private void checkParameterWhenPaging(int startPage, int endPage, int pageSize) {
-        checkPositive(startPage);
-        checkPositive(endPage);
-        checkPositive(pageSize);
-
-        if (endPage < startPage) throw new InvalidParameterException("400_2", ValidationDefaultMsgUtil.UserList.INVERSION);
-    }
-
-    private void checkPositive(int i) {
-        if (i <= 0) throw new InvalidParameterException("400_1", ValidationDefaultMsgUtil.UserList.POSITIVE);
     }
 }
