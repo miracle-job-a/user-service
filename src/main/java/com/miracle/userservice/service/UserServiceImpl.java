@@ -6,11 +6,14 @@ import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
+import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.miracle.userservice.exception.InvalidEmailException;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,5 +95,11 @@ public class UserServiceImpl implements UserService {
         User user = userOpt.get();
         user.update(dto);
         return true;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<UserListResponseDto> getUserList(Pageable pageable) {
+        return userRepository.findAllUserList(pageable);
     }
 }
