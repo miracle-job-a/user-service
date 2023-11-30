@@ -4,6 +4,7 @@ import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.response.ApplicantListResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
+import com.miracle.userservice.swagger.ApiGetApplicantList;
 import com.miracle.userservice.swagger.ApiGetApplicantNumber;
 import com.miracle.userservice.swagger.DefaultPathDocket;
 import com.miracle.userservice.util.ParameterValidator;
@@ -35,6 +36,7 @@ public class PostController {
         return new SuccessApiResponse<>(httpStatus, message, count);
     }
 
+    @ApiGetApplicantList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/applicant/list")
     public CommonApiResponse getListOfApplicant(
