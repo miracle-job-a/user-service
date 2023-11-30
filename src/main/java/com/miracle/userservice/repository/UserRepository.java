@@ -1,7 +1,10 @@
 package com.miracle.userservice.repository;
 
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +23,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
            WHERE u.id = :id
            """)
     UserBaseInfoResponseDto findUserBaseInfoResponseDtoById(@Param("id") Long userId);
+
+    @Query("""
+           SELECT new com.miracle.userservice.dto.response.UserListResponseDto(u.id, u.email, u.name, u.address, u.createdAt)
+           FROM User u
+           ORDER BY u.createdAt DESC
+           """)
+    Page<UserListResponseDto> findAllUserList(Pageable pageable);
 }

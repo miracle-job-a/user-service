@@ -47,4 +47,10 @@ public class ValidationDefaultMsgUtil {
         public static final String PHONE = "400_4:전화번호 형식이 올바르지 않습니다.";
         public static final String ADDRESS = "400_5:주소 형식이 올바르지 않습니다.";
     }
+
+    public static abstract class UserList {
+
+        public static final String POSITIVE = "페이징 파라미터는 양수여야 합니다.";
+        public static final String INVERSION = "끝 페이지는 시작 페이지보다 커야합니다.";
+    }
 }
