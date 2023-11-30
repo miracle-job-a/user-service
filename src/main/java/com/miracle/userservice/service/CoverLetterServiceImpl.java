@@ -46,11 +46,11 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
     @Transactional(readOnly = true)
     @Override
-    public CoverLetterResponseDto getCoverLetterDetail(Long id) {
+    public CoverLetterResponseDto getCoverLetterDetail(Long coverLetterId) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
 
         CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
@@ -70,15 +70,14 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     }
 
     @Override
-    public boolean postCoverLetter(CoverLetterPostRequestDto dto) {
+    public boolean postCoverLetter(Long userId, CoverLetterPostRequestDto dto) {
         String errorMessage = "CoverLetterPostRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        Long userId = dto.getUserId();
-        Optional<User> user = userRepository.findById(userId);
+        User user = userRepository.findById(userId).orElseThrow();
 
         CoverLetter coverLetter = CoverLetter.builder()
-                .user(user.get())
+                .user(user)
                 .title(dto.getTitle())
                 .build();
 
@@ -90,11 +89,11 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     }
 
     @Override
-    public boolean updateCoverLetter(Long id, CoverLetterPostRequestDto dto) {
+    public boolean updateCoverLetter(Long coverLetterId, CoverLetterPostRequestDto dto) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
         CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         coverLetter.setTitle(dto.getTitle());
@@ -107,11 +106,11 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     }
 
     @Override
-    public boolean deleteCoverLetter(Long id) {
+    public boolean deleteCoverLetter(Long coverLetterId) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
         CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         coverLetterRepository.delete(coverLetter);
