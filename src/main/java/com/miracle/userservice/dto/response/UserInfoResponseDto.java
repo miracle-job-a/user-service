@@ -1,6 +1,6 @@
 package com.miracle.userservice.dto.response;
 
-import com.miracle.userservice.swagger.util.DateFormatUtil;
+import com.miracle.userservice.util.DateFormatUtil;
 import lombok.Builder;
 import lombok.Data;
 
