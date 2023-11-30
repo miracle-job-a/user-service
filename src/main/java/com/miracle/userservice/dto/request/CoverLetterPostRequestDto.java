@@ -7,20 +7,11 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
 public class CoverLetterPostRequestDto {
-
-    @Positive(message = ValidationDefaultMsgUtil.CoverLetterPost.USER_ID)
-    @Schema(
-            description = "유저 ID",
-            required = true,
-            example = "1"
-    )
-    private final Long userId;
 
     @Size(max = 50, message = ValidationDefaultMsgUtil.CoverLetterPost.TITLE)
     @NotBlank(message = ValidationDefaultMsgUtil.CoverLetterPost.TITLE)
@@ -40,7 +31,6 @@ public class CoverLetterPostRequestDto {
     private final List<Qna> qnaList;
 
     public CoverLetterPostRequestDto() {
-        this.userId = null;
         this.title = null;
         this.qnaList = null;
     }

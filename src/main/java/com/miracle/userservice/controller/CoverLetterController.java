@@ -47,8 +47,8 @@ public class CoverLetterController {
     @ApiPostCoverLetter
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CommonApiResponse postCoverLetter(@Valid @RequestBody CoverLetterPostRequestDto dto) {
-        boolean result = coverLetterService.postCoverLetter(dto);
+    public CommonApiResponse postCoverLetter(@PathVariable Long userId, @Valid @RequestBody CoverLetterPostRequestDto dto) {
+        boolean result = coverLetterService.postCoverLetter(userId, dto);
 
         int httpStatus = HttpStatus.CREATED.value();
         String message = "자기소개서 등록 성공";

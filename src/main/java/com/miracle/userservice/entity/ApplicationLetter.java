@@ -39,6 +39,12 @@ public class ApplicationLetter extends BaseEntity {
     private ApplicationStatus applicationStatus;
 
     @Column(nullable = false, length = 50)
+    private String resumeTitle;
+
+    @Column(nullable = false, length = 50)
+    private String coverLetterTitle;
+
+    @Column(nullable = false, length = 50)
     private String userEmail;
 
     @Column(nullable = false, length = 30)
@@ -88,7 +94,6 @@ public class ApplicationLetter extends BaseEntity {
             name = "application_letter_answer",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Embedded
     private final List<Qna> qnaList = new ArrayList<>();
 
     @ElementCollection

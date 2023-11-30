@@ -97,6 +97,12 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+        return true;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Page<UserListResponseDto> getUserList(Pageable pageable) {

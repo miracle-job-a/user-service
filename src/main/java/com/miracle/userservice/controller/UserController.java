@@ -119,6 +119,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @UserPathDocket
     @ApiPutUserInfo
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{userId}")
@@ -127,6 +128,18 @@ public class UserController {
 
         int httpStatus = HttpStatus.OK.value();
         String message = "유저 정보 수정 성공";
+        return new SuccessApiResponse<>(httpStatus, message, success);
+    }
+
+    @UserPathDocket
+    @ApiDeleteUser
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{userId}")
+    public CommonApiResponse deleteUser(@PathVariable Long userId) {
+        boolean success = userService.deleteUser(userId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "유저 탈퇴 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 

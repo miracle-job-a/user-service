@@ -70,10 +70,10 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public boolean postResume(ResumePostRequestDto dto) {
+    public boolean postResume(Long userId, ResumePostRequestDto dto) {
         Objects.requireNonNull(dto, "ResumePostRequestDto is null");
 
-        Resume resume = getResume(dto);
+        Resume resume = getResume(userId, dto);
 
         resume.addStackIdAll(dto.getStackIdSet());
         resume.addJobIdAll(dto.getJobIdSet());
@@ -86,8 +86,7 @@ public class ResumeServiceImpl implements ResumeService {
         return true;
     }
 
-    private Resume getResume(ResumePostRequestDto dto) {
-        Long userId = dto.getUserId();
+    private Resume getResume(Long userId, ResumePostRequestDto dto) {
         User user = userRepository.findById(userId).orElseThrow();
         return Resume.builder()
                 .user(user)

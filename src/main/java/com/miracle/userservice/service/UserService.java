@@ -80,6 +80,15 @@ public interface UserService {
     boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto);
 
     /**
+     * 특정 유저 회원 탈퇴 메서드
+     *
+     * @param userId 유저의 ID
+     * @return true
+     * @author chocola
+     */
+    boolean deleteUser(Long userId);
+
+    /**
      * 유저 목록을 조회하는 메서드
      *
      * @param pageable 유저 목록 페이징 정보
