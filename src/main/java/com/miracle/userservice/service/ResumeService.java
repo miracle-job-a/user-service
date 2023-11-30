@@ -27,12 +27,13 @@ public interface ResumeService {
     /**
      * 유저의 이력서를 저장
      *
-     * @param dto 이력서 정보
+     * @param userId 유저 ID
+     * @param dto    이력서 정보
      * @return true
      * @throws NullPointerException If {@code dto} is null
      * @author chocola
      */
-    boolean postResume(ResumePostRequestDto dto);
+    boolean postResume(Long userId, ResumePostRequestDto dto);
 
     /**
      * 유저의 특정 이력서를 수정

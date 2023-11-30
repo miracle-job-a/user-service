@@ -11,14 +11,6 @@ import java.util.Set;
 @Data
 public class ResumePostRequestDto {
 
-    @Positive(message = ValidationDefaultMsgUtil.ResumePost.USER_ID)
-    @Schema(
-            description = "유저 ID",
-            required = true,
-            example = "1"
-    )
-    private final Long userId;
-
     @Size(max = 50, message = ValidationDefaultMsgUtil.ResumePost.TITLE)
     @NotBlank(message = ValidationDefaultMsgUtil.ResumePost.TITLE)
     @Schema(
@@ -104,7 +96,6 @@ public class ResumePostRequestDto {
     private final List<String> etcList;
 
     public ResumePostRequestDto() {
-        this.userId = null;
         this.title = null;
         this.education = null;
         this.gitLink = null;
