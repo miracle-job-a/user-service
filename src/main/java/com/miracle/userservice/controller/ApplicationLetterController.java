@@ -37,7 +37,7 @@ public class ApplicationLetterController {
     @ApiGetResumeInApplicationLetter
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{applicationLetterId}/resume")
-    public CommonApiResponse getResume(Long applicationLetterId, @PathVariable Long userId) {
+    public CommonApiResponse getResume(@PathVariable Long applicationLetterId, @PathVariable Long userId) {
         ResumeInApplicationLetterResponseDto dto = applicationLetterService.getResume(applicationLetterId, userId);
 
         int httpStatus = HttpStatus.OK.value();
