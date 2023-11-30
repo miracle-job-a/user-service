@@ -100,17 +100,8 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return applicationLetterRepository.findAllApplicantListByPostId(postId, pageable);
     }
 
-    private List<ResumeTitleResponseDto> getResumeList(Long userId) {
-        List<Resume> resumeList = resumeRepository.findByUserId(userId);
-        return resumeList.stream()
-                .map(resume -> new ResumeTitleResponseDto(resume.getId(), resume.getTitle()))
-                .toList();
-    }
-
-    private List<CoverLetterTitleResponseDto> getCoverLetterList(Long userId) {
-        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
-        return coverLetterList.stream()
-                .map(coverLetter -> new CoverLetterTitleResponseDto(coverLetter.getId(), coverLetter.getTitle()))
-                .toList();
+    @Override
+    public Page<ApplicationLetterListResponseDto> getApplicationLetterList(Long userId, Pageable pageable) {
+        return applicationLetterRepository.findAllApplicationLetterListByUserId(userId, pageable);
     }
 }
