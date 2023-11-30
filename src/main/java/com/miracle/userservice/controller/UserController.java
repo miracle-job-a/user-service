@@ -145,6 +145,7 @@ public class UserController {
         return new SuccessApiResponse<>(httpStatus, message, success);
     }
 
+    @ApiGetUserList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public CommonApiResponse getUserList(
