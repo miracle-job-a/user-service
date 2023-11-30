@@ -28,6 +28,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                 mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
                                 examples = @ExampleObject(
                                         name = "성공",
+                                        description = "회원 가입일을 기준으로 내림차순 정렬됨",
                                         value = """
                                                 {
                                                      "httpStatus": 200,
@@ -46,7 +47,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                                  "email": "youremail27@naver.com",
                                                                  "name": "오스틴",
                                                                  "address": "서울특별시 서초구 효령로 113",
-                                                                 "joinDate": "2023-11-30"
+                                                                 "joinDate": "2023-11-29"
                                                              }
                                                          ],
                                                          [
@@ -55,14 +56,14 @@ import static java.lang.annotation.ElementType.METHOD;
                                                                  "email": "youremail25@naver.com",
                                                                  "name": "오스틴",
                                                                  "address": "서울특별시 서초구 효령로 113",
-                                                                 "joinDate": "2023-11-30"
+                                                                 "joinDate": "2023-11-28"
                                                              },
                                                              {
                                                                  "id": 27,
                                                                  "email": "youremail26@naver.com",
                                                                  "name": "오스틴",
                                                                  "address": "서울특별시 서초구 효령로 113",
-                                                                 "joinDate": "2023-11-30"
+                                                                 "joinDate": "2023-11-25"
                                                              }
                                                          ],
                                                          [
@@ -71,14 +72,14 @@ import static java.lang.annotation.ElementType.METHOD;
                                                                  "email": "youremail24@naver.com",
                                                                  "name": "오스틴",
                                                                  "address": "서울특별시 서초구 효령로 113",
-                                                                 "joinDate": "2023-11-30"
+                                                                 "joinDate": "2023-11-18"
                                                              },
                                                              {
                                                                  "id": 24,
                                                                  "email": "youremail23@naver.com",
                                                                  "name": "오스틴",
                                                                  "address": "서울특별시 서초구 효령로 113",
-                                                                 "joinDate": "2023-11-30"
+                                                                 "joinDate": "2023-11-11"
                                                              }
                                                          ]
                                                      ]
