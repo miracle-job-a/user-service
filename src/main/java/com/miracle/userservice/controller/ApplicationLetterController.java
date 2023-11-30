@@ -7,10 +7,7 @@ import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
-import com.miracle.userservice.swagger.ApiGetCoverLetterInApplicationLetter;
-import com.miracle.userservice.swagger.ApiGetResumeAndCoverLetterList;
-import com.miracle.userservice.swagger.ApiGetResumeInApplicationLetter;
-import com.miracle.userservice.swagger.UserPathDocket;
+import com.miracle.userservice.swagger.*;
 import com.miracle.userservice.util.ParameterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -66,6 +63,7 @@ public class ApplicationLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @ApiGetApplicationLetterList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public CommonApiResponse getApplicationLetterList(
