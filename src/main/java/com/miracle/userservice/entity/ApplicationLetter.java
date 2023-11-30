@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -103,4 +104,43 @@ public class ApplicationLetter extends BaseEntity {
     )
     @Column(name = "stack_id", nullable = false)
     private final Set<Long> stackIdSet = new HashSet<>();
+
+    @Builder
+    public ApplicationLetter(PostType postType, User user, Long postId, LocalDateTime submitDate, ApplicationStatus applicationStatus, String resumeTitle, String coverLetterTitle, String userEmail, String userName, String userPhone, String userEducation, String userJob, String userGitLink, LocalDate userBirth, int userCareer) {
+        this.postType = postType;
+        this.user = user;
+        this.postId = postId;
+        this.submitDate = submitDate;
+        this.applicationStatus = applicationStatus;
+        this.resumeTitle = resumeTitle;
+        this.coverLetterTitle = coverLetterTitle;
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userEducation = userEducation;
+        this.userJob = userJob;
+        this.userGitLink = userGitLink;
+        this.userBirth = userBirth;
+        this.userCareer = userCareer;
+    }
+
+    public void addCareerDetail(String careerDetail) {
+        careerDetailList.add(careerDetail);
+    }
+
+    public void addProject(String project) {
+        projectList.add(project);
+    }
+
+    public void addEtc(String etc) {
+        etcList.add(etc);
+    }
+
+    public void addQna(Qna qna) {
+        qnaList.add(qna);
+    }
+
+    public void addStack(Long stackId) {
+        stackIdSet.add(stackId);
+    }
 }

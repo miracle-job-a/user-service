@@ -47,4 +47,13 @@ public class ValidationDefaultMsgUtil {
         public static final String PHONE = "400_4:전화번호 형식이 올바르지 않습니다.";
         public static final String ADDRESS = "400_5:주소 형식이 올바르지 않습니다.";
     }
+
+    public static abstract class ApplicationLetterPost {
+
+        public static final String POST_TYPE = "400_1:공고 타입이 없거나 형식이 올바르지 않습니다.";
+        public static final String POST_ID = "400_2:공고 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String SUBMIT_DATE = "400_3:지원 일자 값이 없거나 형식이 올바르지 않습니다.";
+        public static final String APPLICATION_STATUS = "400_4:지원 상태 값이 없거나 형식이 올바르지 않습니다.";
+        public static final String USER_JOB = "400_5:유저 직무가 글자 제한 수를 초과했습니다.";
+    }
 }
