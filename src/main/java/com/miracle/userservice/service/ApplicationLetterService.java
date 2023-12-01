@@ -61,4 +61,15 @@ public interface ApplicationLetterService {
      * @author chocola
      */
     Page<ApplicantListResponseDto> getApplicantList(Long postId, Pageable pageable);
+
+    /**
+     * 유저의 지원서를 삭제하는 메서드
+     *
+     * @param applicationLetterId 지원서 ID
+     * @return true
+     * @throws NullPointerException If {@code applicationLetterId} is null
+     * @throws NoSuchApplicationLetterException If applicationLetter doesn't exist
+     * @author hazzokko
+     * */
+    boolean deleteApplicationLetter(Long applicationLetterId);
 }

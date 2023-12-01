@@ -6,10 +6,7 @@ import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
-import com.miracle.userservice.swagger.ApiGetCoverLetterInApplicationLetter;
-import com.miracle.userservice.swagger.ApiGetResumeAndCoverLetterList;
-import com.miracle.userservice.swagger.ApiGetResumeInApplicationLetter;
-import com.miracle.userservice.swagger.UserPathDocket;
+import com.miracle.userservice.swagger.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +53,17 @@ public class ApplicationLetterController {
         String message = "지원한 자기소개서 조회 성공";
 
         return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ApiDeleteApplicationLetter
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{applicationLetterId}")
+    public CommonApiResponse deleteApplicationLetter(@PathVariable Long applicationLetterId) {
+        boolean result = applicationLetterService.deleteApplicationLetter(applicationLetterId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 삭제 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }
