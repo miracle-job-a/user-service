@@ -37,11 +37,8 @@ public class ApplicationLetterController {
     @ApiPostApplicationLetter
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CommonApiResponse postApplicationLetter(@PathVariable Long userId,
-                                                   @RequestParam Long resumeId,
-                                                   @RequestParam Long coverLetterId,
-                                                   @Valid @RequestBody ApplicationLetterPostRequestDto dto) {
-        boolean result = applicationLetterService.postApplicationLetter(userId, resumeId, coverLetterId, dto);
+    public CommonApiResponse postApplicationLetter(@PathVariable Long userId, @Valid @RequestBody ApplicationLetterPostRequestDto dto) {
+        boolean result = applicationLetterService.postApplicationLetter(userId, dto);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "지원서 등록 성공";

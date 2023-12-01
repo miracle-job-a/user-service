@@ -14,12 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import static java.time.LocalDateTime.now;
 
 @RequiredArgsConstructor
 @Transactional
@@ -49,15 +46,13 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
     }
 
     @Override
-    public boolean postApplicationLetter(Long userId, Long resumeId, Long coverLetterId, ApplicationLetterPostRequestDto dto) {
+    public boolean postApplicationLetter(Long userId, ApplicationLetterPostRequestDto dto) {
         Objects.requireNonNull(userId, "UserId is null");
-        Objects.requireNonNull(resumeId, "ResumeId is null");
-        Objects.requireNonNull(coverLetterId, "CoverLetter id is null");
         Objects.requireNonNull(dto, "ApplicationLetterPostRequestDto is null");
 
         User user = userRepository.findById(userId).orElseThrow();
-        Resume resume = resumeRepository.findById(resumeId).orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
-        CoverLetter coverLetter = coverLetterRepository.findById(coverLetterId).orElseThrow(() -> new NoSuchCoverLetterException("400_2", "자기소개서가 존재하지 않습니다."));
+        Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_2", "자기소개서가 존재하지 않습니다."));
 
         ApplicationLetter applicationLetter = ApplicationLetter.builder()
                         .postType(dto.getPostType())
