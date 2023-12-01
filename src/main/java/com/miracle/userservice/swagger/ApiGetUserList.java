@@ -96,23 +96,12 @@ import static java.lang.annotation.ElementType.METHOD;
                                 mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
                                 examples = {
                                         @ExampleObject(
-                                                name = "파라미터 부호 검증 실패",
+                                                name = "페이징 파라미터 형식 오류",
                                                 value = """
                                                         {
                                                             "httpStatus": 400,
-                                                            "message": "페이징 파라미터는 양수여야 합니다.",
+                                                            "message": "페이징 파라미터 형식이 올바르지 않습니다.",
                                                             "code": "400_1",
-                                                            "exception": "InvalidParameterException"
-                                                        }
-                                                        """
-                                        ),
-                                        @ExampleObject(
-                                                name = "파라미터 오류",
-                                                value = """
-                                                        {
-                                                            "httpStatus": 400,
-                                                            "message": "끝 페이지는 시작 페이지보다 커야합니다.",
-                                                            "code": "400_2",
                                                             "exception": "InvalidParameterException"
                                                         }
                                                         """
