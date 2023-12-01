@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ApplicationLetterServiceImpl implements ApplicationLetterService {
 
@@ -35,7 +35,6 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return applicationLetterRepository.countByPostId(postId);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ApplicationLetterResponseDto getResumeAndCoverLetterList(Long userId) {
         String errorMessage = "UserId is null";
@@ -47,7 +46,20 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return new ApplicationLetterResponseDto(resumeList, coverLetterList);
     }
 
-    @Transactional(readOnly = true)
+    private List<ResumeTitleResponseDto> getResumeList(Long userId) {
+        List<Resume> resumeList = resumeRepository.findByUserId(userId);
+        return resumeList.stream()
+                .map(resume -> new ResumeTitleResponseDto(resume.getId(), resume.getTitle()))
+                .toList();
+    }
+
+    private List<CoverLetterTitleResponseDto> getCoverLetterList(Long userId) {
+        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
+        return coverLetterList.stream()
+                .map(coverLetter -> new CoverLetterTitleResponseDto(coverLetter.getId(), coverLetter.getTitle()))
+                .toList();
+    }
+
     @Override
     public ResumeInApplicationLetterResponseDto getResume(Long applicationLetterId, Long userId) {
         Optional<ApplicationLetter> applicationLetterOpt = applicationLetterRepository.findById(applicationLetterId);
@@ -72,7 +84,6 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public CoverLetterInApplicationLetterResponseDto getCoverLetter(Long applicationLetterId) {
         Optional<ApplicationLetter> applicationLetterOpt = applicationLetterRepository.findById(applicationLetterId);
@@ -89,17 +100,8 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return applicationLetterRepository.findAllApplicantListByPostId(postId, pageable);
     }
 
-    private List<ResumeTitleResponseDto> getResumeList(Long userId) {
-        List<Resume> resumeList = resumeRepository.findByUserId(userId);
-        return resumeList.stream()
-                .map(resume -> new ResumeTitleResponseDto(resume.getId(), resume.getTitle()))
-                .toList();
-    }
-
-    private List<CoverLetterTitleResponseDto> getCoverLetterList(Long userId) {
-        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
-        return coverLetterList.stream()
-                .map(coverLetter -> new CoverLetterTitleResponseDto(coverLetter.getId(), coverLetter.getTitle()))
-                .toList();
+    @Override
+    public Page<ApplicationLetterListResponseDto> getApplicationLetterList(Long userId, Pageable pageable) {
+        return applicationLetterRepository.findAllApplicationLetterListByUserId(userId, pageable);
     }
 }

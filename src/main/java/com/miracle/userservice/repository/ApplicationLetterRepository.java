@@ -1,6 +1,7 @@
 package com.miracle.userservice.repository;
 
 import com.miracle.userservice.dto.response.ApplicantListResponseDto;
+import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
 import com.miracle.userservice.entity.ApplicationLetter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,12 @@ public interface ApplicationLetterRepository extends JpaRepository<ApplicationLe
            FROM ApplicationLetter al
            """)
     Page<ApplicantListResponseDto> findAllApplicantListByPostId(Long postId, Pageable pageable);
+
+    @Query("""
+           SELECT new com.miracle.userservice.dto.response.ApplicationLetterListResponseDto(
+               al.id, al.postId, al.interview.id, al.postType, al.submitDate, al.applicationStatus, al.userJob
+           )
+           FROM ApplicationLetter al
+           """)
+    Page<ApplicationLetterListResponseDto> findAllApplicationLetterListByUserId(Long userId, Pageable pageable);
 }

@@ -1,9 +1,9 @@
 package com.miracle.userservice.dto.response;
 
+import com.miracle.userservice.util.DateFormatUtil;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 public class CoverLetterListResponseDto {
@@ -17,11 +17,6 @@ public class CoverLetterListResponseDto {
         this.id = id;
         this.userId = userId;
         this.title = title;
-        this.modifiedAt = formatDateTime(modifiedAt);
-    }
-
-    private String formatDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return dateTime.format(formatter);
+        this.modifiedAt = DateFormatUtil.dateToString(modifiedAt);
     }
 }

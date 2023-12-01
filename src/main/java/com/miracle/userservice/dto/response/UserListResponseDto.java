@@ -19,6 +19,6 @@ public class UserListResponseDto {
         this.email = email;
         this.name = name;
         this.address = address;
-        this.joinDate = DateFormatUtil.dateToString(createdAt, "yyyy-MM-dd");
+        this.joinDate = DateFormatUtil.dateToString(createdAt);
     }
 }
