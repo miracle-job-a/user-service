@@ -7,17 +7,24 @@ import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
+import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.*;
+import com.miracle.userservice.util.ParameterValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @DefaultPathDocket
@@ -135,5 +142,29 @@ public class UserController {
         int httpStatus = HttpStatus.OK.value();
         String message = "유저 탈퇴 성공";
         return new SuccessApiResponse<>(httpStatus, message, success);
+    }
+
+    @ApiGetUserList
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public CommonApiResponse getUserList(
+            @RequestParam(required = false, defaultValue = "1") int startPage,
+            @RequestParam(required = false, defaultValue = "5") int endPage,
+            @RequestParam(required = false, defaultValue = "10") int pageSize
+    ) {
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize);
+
+        startPage--;
+        endPage--;
+        List<List<UserListResponseDto>> result = new ArrayList<>();
+        for (int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<UserListResponseDto> page = userService.getUserList(pageable);
+            result.add(page.getContent());
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "회원 목록 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }

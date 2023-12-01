@@ -40,5 +40,5 @@ import static java.lang.annotation.ElementType.METHOD;
                 )
         }
 )
-public @interface ApiGetPostApplicant {
+public @interface ApiGetApplicantNumber {
 }

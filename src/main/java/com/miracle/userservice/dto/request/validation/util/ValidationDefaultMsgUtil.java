@@ -58,4 +58,10 @@ public class ValidationDefaultMsgUtil {
         public static final String APPLICATION_STATUS = "400_8:지원 상태 값이 없거나 형식이 올바르지 않습니다.";
         public static final String USER_JOB = "400_9:유저 직무가 글자 제한 수를 초과했습니다.";
     }
+
+    public static abstract class UserList {
+
+        public static final String POSITIVE = "페이징 파라미터는 양수여야 합니다.";
+        public static final String INVERSION = "끝 페이지는 시작 페이지보다 커야합니다.";
+    }
 }

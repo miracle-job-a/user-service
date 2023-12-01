@@ -11,6 +11,8 @@ import com.miracle.userservice.repository.CoverLetterRepository;
 import com.miracle.userservice.repository.ResumeRepository;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,6 +120,11 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
                 .coverLetterTitle(applicationLetter.getCoverLetterTitle())
                 .qnaList(applicationLetter.getQnaList())
                 .build();
+    }
+
+    @Override
+    public Page<ApplicantListResponseDto> getApplicantList(Long postId, Pageable pageable) {
+        return applicationLetterRepository.findAllApplicantListByPostId(postId, pageable);
     }
 
     private List<ResumeTitleResponseDto> getResumeList(Long userId) {
