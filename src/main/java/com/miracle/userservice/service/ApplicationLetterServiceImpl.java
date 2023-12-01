@@ -45,6 +45,7 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return new ApplicationLetterResponseDto(resumeList, coverLetterList);
     }
 
+    @Transactional
     @Override
     public boolean postApplicationLetter(Long userId, ApplicationLetterPostRequestDto dto) {
         Objects.requireNonNull(userId, "UserId is null");
