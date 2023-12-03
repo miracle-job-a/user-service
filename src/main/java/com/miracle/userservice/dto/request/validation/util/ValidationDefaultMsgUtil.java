@@ -48,6 +48,17 @@ public class ValidationDefaultMsgUtil {
         public static final String ADDRESS = "400_5:주소 형식이 올바르지 않습니다.";
     }
 
+    public static abstract class ApplicationLetterPost {
+
+        public static final String RESUME_ID = "400_3:이력서 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String COVER_LETTER_ID = "400_4:자기소개서 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String POST_TYPE = "400_5:공고 타입이 없거나 형식이 올바르지 않습니다.";
+        public static final String POST_ID = "400_6:공고 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String SUBMIT_DATE = "400_7:지원 일자 값이 없습니다.";
+        public static final String APPLICATION_STATUS = "400_8:지원 상태 값이 없거나 형식이 올바르지 않습니다.";
+        public static final String USER_JOB = "400_9:유저 직무가 글자 제한 수를 초과했습니다.";
+    }
+
     public static abstract class UserList {
 
         public static final String POSITIVE = "페이징 파라미터는 양수여야 합니다.";
