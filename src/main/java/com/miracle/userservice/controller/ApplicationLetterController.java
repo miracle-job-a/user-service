@@ -2,17 +2,24 @@ package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
+import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
+import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
-import com.miracle.userservice.swagger.ApiGetCoverLetterInApplicationLetter;
-import com.miracle.userservice.swagger.ApiGetResumeAndCoverLetterList;
-import com.miracle.userservice.swagger.ApiGetResumeInApplicationLetter;
-import com.miracle.userservice.swagger.UserPathDocket;
+import com.miracle.userservice.swagger.*;
+import com.miracle.userservice.util.ParameterValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @UserPathDocket
 @RequiredArgsConstructor
@@ -34,11 +41,23 @@ public class ApplicationLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @ApiPostApplicationLetter
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public CommonApiResponse postApplicationLetter(@PathVariable Long userId, @Valid @RequestBody ApplicationLetterPostRequestDto dto) {
+        boolean result = applicationLetterService.postApplicationLetter(userId, dto);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 등록 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
     @ApiGetResumeInApplicationLetter
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{applicationLetterId}/resume")
-    public CommonApiResponse getResume(@PathVariable Long applicationLetterId, @PathVariable Long userId) {
-        ResumeInApplicationLetterResponseDto dto = applicationLetterService.getResume(applicationLetterId, userId);
+    public CommonApiResponse getResume(@PathVariable Long applicationLetterId) {
+        ResumeInApplicationLetterResponseDto dto = applicationLetterService.getResume(applicationLetterId);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "지원한 이력서 조회 성공";
@@ -56,5 +75,30 @@ public class ApplicationLetterController {
         String message = "지원한 자기소개서 조회 성공";
 
         return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ApiGetApplicationLetterList
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public CommonApiResponse getApplicationLetterList(
+            @PathVariable Long userId,
+            @RequestParam(required = false, defaultValue = "1") int startPage,
+            @RequestParam(required = false, defaultValue = "5") int endPage,
+            @RequestParam(required = false, defaultValue = "10") int pageSize
+    ) {
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize);
+
+        startPage--;
+        endPage--;
+        List<List<ApplicationLetterListResponseDto>> result = new ArrayList<>();
+        for (int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<ApplicationLetterListResponseDto> page = applicationLetterService.getApplicationLetterList(userId, pageable);
+            result.add(page.getContent());
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 목록 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }

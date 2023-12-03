@@ -18,7 +18,7 @@ public class UserBaseInfoResponseDto {
         this.email = email;
         this.name = name;
         this.phone = phone;
-        this.birth = DateFormatUtil.dateToString(birth, "yyyy-MM-dd");
+        this.birth = DateFormatUtil.dateToString(birth);
         this.address = address;
     }
 }
