@@ -5,6 +5,7 @@ import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
+import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
 import com.miracle.userservice.dto.response.UserListResponseDto;
@@ -152,7 +153,7 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "5") int endPage,
             @RequestParam(required = false, defaultValue = "10") int pageSize
     ) {
-        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize);
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.UserList.PAGING);
 
         startPage--;
         endPage--;

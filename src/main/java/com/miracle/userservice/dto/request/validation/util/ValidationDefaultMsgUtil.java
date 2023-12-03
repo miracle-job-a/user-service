@@ -61,7 +61,12 @@ public class ValidationDefaultMsgUtil {
 
     public static abstract class UserList {
 
-        public static final String POSITIVE = "페이징 파라미터는 양수여야 합니다.";
-        public static final String INVERSION = "끝 페이지는 시작 페이지보다 커야합니다.";
+        public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
+    }
+
+    public static abstract class ApplicantList {
+
+        public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
+        public static final String SORT = "400_2:정렬 파라미터 형식이 올바르지 않습니다. 값이 ('NAME', 'SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC') 중 하나여야 합니다.";
     }
 }
