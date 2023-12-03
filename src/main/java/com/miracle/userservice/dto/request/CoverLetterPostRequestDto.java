@@ -2,6 +2,7 @@ package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.entity.Qna;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -23,10 +24,12 @@ public class CoverLetterPostRequestDto {
     private final String title;
 
     @NotEmpty(message = ValidationDefaultMsgUtil.CoverLetterPost.QNA)
-    @Schema(
-            description = "질문 및 답변 목록",
-            required = true,
-            implementation = Qna.class
+    @ArraySchema(
+            schema = @Schema(
+                    description = "질문 및 답변 목록",
+                    required = true,
+                    implementation = Qna.class
+            )
     )
     private final List<Qna> qnaList;
 

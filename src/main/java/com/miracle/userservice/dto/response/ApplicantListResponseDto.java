@@ -19,6 +19,6 @@ public class ApplicantListResponseDto {
         this.resumeTitle = resumeTitle;
         this.name = name;
         this.address = address;
-        this.submitDate = DateFormatUtil.dateToString(submitDate, "yyyy-MM-dd");
+        this.submitDate = DateFormatUtil.dateToString(submitDate);
     }
 }

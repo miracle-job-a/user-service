@@ -1,10 +1,7 @@
 package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
-import com.miracle.userservice.dto.response.ApplicantListResponseDto;
-import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
-import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
-import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
+import com.miracle.userservice.dto.response.*;
 import com.miracle.userservice.exception.NoSuchApplicationLetterException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,4 +69,14 @@ public interface ApplicationLetterService {
      * @author chocola
      */
     Page<ApplicantListResponseDto> getApplicantList(Long postId, Pageable pageable);
+
+    /**
+     * 지원서 목록을 조회하는 메서드
+     *
+     * @param userId 유저 ID
+     * @param pageable 지원서 목록 페이징 정보
+     * @return 지원서 목록이 담긴 {@code Page}. 지원서 목록 정보는 지원서 ID, 공고 ID, 면접 ID, 공고 타입, 제출 일자, 지원 상태, 직무를 포함한다.
+     * @author chocola
+     */
+    Page<ApplicationLetterListResponseDto> getApplicationLetterList(Long userId, Pageable pageable);
 }
