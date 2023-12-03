@@ -1,10 +1,10 @@
 package com.miracle.userservice.dto.response;
 
+import com.miracle.userservice.util.DateFormatUtil;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class ResumeInApplicationLetterResponseDto {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userCareer = userCareer;
-        this.userBirth = userBirth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.userBirth = DateFormatUtil.dateToString(userBirth);
         this.userPhone = userPhone;
         this.userAddress = userAddress;
         this.userJob = userJob;

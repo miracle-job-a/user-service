@@ -22,7 +22,7 @@ public class UserInfoResponseDto {
     public UserInfoResponseDto(Long id, String name, LocalDate birth, int password, String phone, String address, Set<Long> stackIdSet) {
         this.id = id;
         this.name = name;
-        this.birth = DateFormatUtil.dateToString(birth, "yyyy-MM-dd");
+        this.birth = DateFormatUtil.dateToString(birth);
         this.password = password;
         this.phone = phone;
         this.address = address;
