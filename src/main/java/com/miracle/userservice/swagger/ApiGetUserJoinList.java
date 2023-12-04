@@ -109,7 +109,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                         {
                                                             "httpStatus": 400,
                                                             "message": "페이징 파라미터 형식이 올바르지 않습니다.",
-                                                            "code": "400_1",
+                                                            "code": "400",
                                                             "exception": "InvalidParameterException"
                                                         }
                                                         """
