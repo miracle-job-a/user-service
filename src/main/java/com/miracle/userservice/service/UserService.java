@@ -51,10 +51,10 @@ public interface UserService {
 
     /**
      * 특정 유저의 기본 정보를 반환하는 메서드
-     * 기본 정보에는 이메일, 이름, 전화번호, 생년월일, 주소를 포함한다.
+     * 기본 정보에는 이메일, 이름, 전화번호, 생년월일, 주소, 스택 ID 목록을 포함한다.
      *
      * @param userId 유저의 ID
-     * @return 유저의 기본 정보가 담긴 DTO(email, name, phone, birth, address)
+     * @return 유저의 기본 정보가 담긴 DTO(email, name, phone, birth, address, stackIdSet)
      * @author chocola
      */
     UserBaseInfoResponseDto getUserBaseInfo(Long userId);
