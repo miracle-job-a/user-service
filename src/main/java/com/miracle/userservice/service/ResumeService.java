@@ -5,6 +5,7 @@ import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.exception.NoSuchResumeException;
+import com.miracle.userservice.exception.OverflowException;
 
 import java.util.List;
 
@@ -26,11 +27,13 @@ public interface ResumeService {
 
     /**
      * 유저의 이력서를 저장
+     * 이력서는 최대 5개까지 저장할 수 있음
      *
      * @param userId 유저 ID
      * @param dto    이력서 정보
      * @return true
      * @throws NullPointerException If {@code dto} is null
+     * @throws OverflowException    해당 유저의 이력서가 이미 5개 존재할 경우
      * @author chocola
      */
     boolean postResume(Long userId, ResumePostRequestDto dto);
