@@ -25,7 +25,7 @@ public class ApplicationLetter extends BaseEntity {
     @Column(name = "application_letter_type", nullable = false, length = 10)
     private PostType postType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
