@@ -4,8 +4,8 @@ import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CoverLetterService {
 
@@ -17,7 +17,7 @@ public interface CoverLetterService {
      * @throws NullPointerException If {@code userId} is null
      * @author hazzokko
      */
-    List<CoverLetterListResponseDto> getCoverLetterList(Long userId);
+    Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable);
 
     /**
      * 유저의 자기소개서 내용 조회
