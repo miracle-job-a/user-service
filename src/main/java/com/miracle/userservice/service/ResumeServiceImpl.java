@@ -2,6 +2,7 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
+import com.miracle.userservice.dto.response.DetailInResumeResponseDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.entity.*;
@@ -53,19 +54,19 @@ public class ResumeServiceImpl implements ResumeService {
                 .careerDetailList(
                         resume.getCareerDetailList()
                                 .stream()
-                                .map(ResumeCareerDetail::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .projectList(
                         resume.getProjectList()
                                 .stream()
-                                .map(ResumeProject::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .etcList(
                         resume.getEtcList()
                                 .stream()
-                                .map(ResumeEtc::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .build();

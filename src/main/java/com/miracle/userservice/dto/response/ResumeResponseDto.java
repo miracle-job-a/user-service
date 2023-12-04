@@ -22,12 +22,12 @@ public class ResumeResponseDto {
     private final String gitLink;
     private final Set<Long> jobIdSet;
     private final Set<Long> stackIdSet;
-    private final List<String> careerDetailList;
-    private final List<String> projectList;
-    private final List<String> etcList;
+    private final List<DetailInResumeResponseDto> careerDetailList;
+    private final List<DetailInResumeResponseDto> projectList;
+    private final List<DetailInResumeResponseDto> etcList;
 
     @Builder
-    private ResumeResponseDto(Long id, String title, String photo, int career, boolean open, LocalDate birth, String phone, String education, String gitLink, Set<Long> jobIdSet, Set<Long> stackIdSet, List<String> careerDetailList, List<String> projectList, List<String> etcList) {
+    private ResumeResponseDto(Long id, String title, String photo, int career, boolean open, LocalDate birth, String phone, String education, String gitLink, Set<Long> jobIdSet, Set<Long> stackIdSet, List<DetailInResumeResponseDto> careerDetailList, List<DetailInResumeResponseDto> projectList, List<DetailInResumeResponseDto> etcList) {
         this.id = id;
         this.title = title;
         this.photo = photo;
