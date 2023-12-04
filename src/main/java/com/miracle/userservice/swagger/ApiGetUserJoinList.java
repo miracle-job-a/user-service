@@ -34,32 +34,62 @@ import static java.lang.annotation.ElementType.METHOD;
                                                     "httpStatus": 200,
                                                     "message": "회원 가입 목록 조회 성공",
                                                     "data": [
-                                                        {
-                                                            "userId": 31,
-                                                            "email": "youremail30@naver.com",
-                                                            "name": "오스틴",
-                                                            "createdAt": [
-                                                                2023,
-                                                                11,
-                                                                30,
-                                                                15,
-                                                                21,
-                                                                43
-                                                            ]
-                                                        },
-                                                        {
-                                                            "userId": 30,
-                                                            "email": "youremail29@naver.com",
-                                                            "name": "오스틴",
-                                                            "createdAt": [
-                                                                2023,
-                                                                11,
-                                                                29,
-                                                                15,
-                                                                21,
-                                                                42
-                                                            ]
-                                                        }
+                                                        [
+                                                            {
+                                                                "userId": 29,
+                                                                "email": "youremail28@naver.com",
+                                                                "name": "오스틴",
+                                                                "createdAt": [
+                                                                    2023,
+                                                                    11,
+                                                                    30,
+                                                                    15,
+                                                                    21,
+                                                                    41
+                                                                ]
+                                                            },
+                                                            {
+                                                                "userId": 28,
+                                                                "email": "youremail27@naver.com",
+                                                                "name": "오스틴",
+                                                                "createdAt": [
+                                                                    2023,
+                                                                    11,
+                                                                    30,
+                                                                    15,
+                                                                    21,
+                                                                    40
+                                                                ]
+                                                            }
+                                                        ],
+                                                        [
+                                                            {
+                                                                "userId": 26,
+                                                                "email": "youremail25@naver.com",
+                                                                "name": "오스틴",
+                                                                "createdAt": [
+                                                                    2023,
+                                                                    11,
+                                                                    30,
+                                                                    15,
+                                                                    21,
+                                                                    39
+                                                                ]
+                                                            },
+                                                            {
+                                                                "userId": 27,
+                                                                "email": "youremail26@naver.com",
+                                                                "name": "오스틴",
+                                                                "createdAt": [
+                                                                    2023,
+                                                                    11,
+                                                                    30,
+                                                                    15,
+                                                                    21,
+                                                                    39
+                                                                ]
+                                                            }
+                                                        ]
                                                     ]
                                                 }
                                                 """

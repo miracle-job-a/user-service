@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -123,9 +122,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<UserJoinListResponseDto> getJoinList(LocalDate date) {
+    public Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable) {
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.plusDays(1L).atStartOfDay();
-        return userRepository.findJoinList(startDate, endDate);
+        return userRepository.findJoinList(startDate, endDate, pageable);
     }
 }

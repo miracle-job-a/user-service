@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -104,8 +103,9 @@ public interface UserService {
      * 특정 날짜의 유저 회원 가입 목록을 조회
      *
      * @param date 조회하고자 하는 날짜
+     * @param pageable 페이징 정보
      * @return {@code date}에 회원 가입한 유저 리스트
      * @author chocola
      */
-    List<UserJoinListResponseDto> getJoinList(LocalDate date);
+    Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable);
 }

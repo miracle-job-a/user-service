@@ -184,10 +184,18 @@ public class UserController {
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.UserJoinList.PAGING);
         date = ParameterValidator.checkParameterLocalDate(date);
-        List<UserJoinListResponseDto> dto = userService.getJoinList(date);
+
+        startPage--;
+        endPage--;
+        List<List<UserJoinListResponseDto>> result = new ArrayList<>();
+        for (int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<UserJoinListResponseDto> page = userService.getJoinList(date, pageable);
+            result.add(page.getContent());
+        }
 
         int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 목록 조회 성공";
-        return new SuccessApiResponse<>(httpStatus, message, dto);
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }
