@@ -69,13 +69,21 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public UserBaseInfoResponseDto getUserBaseInfo(Long userId) {
-        return userRepository.findUserBaseInfoResponseDtoById(userId);
+        User user = userRepository.findById(userId).orElseThrow();
+        return UserBaseInfoResponseDto.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .address(user.getAddress())
+                .phone(user.getPhone())
+                .birth(user.getBirth())
+                .stackIdSet(user.getStackIdSet())
+                .build();
     }
 
     @Transactional(readOnly = true)
     @Override
     public UserInfoResponseDto getUserInfo(Long userId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow();
         return UserInfoResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())

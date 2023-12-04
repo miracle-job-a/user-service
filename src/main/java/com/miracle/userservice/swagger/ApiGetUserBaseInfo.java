@@ -36,7 +36,12 @@ import static java.lang.annotation.ElementType.METHOD;
                                                     "name": "오스틴",
                                                     "phone": "01012345678",
                                                     "birth": "2017-01-01",
-                                                    "address": "서울특별시 서초구 효령로 113"
+                                                    "address": "서울특별시 서초구 효령로 113",
+                                                    "stackIdSet": [
+                                                      3,
+                                                      1,
+                                                      5
+                                                    ]
                                                   }
                                                 }
                                                 """

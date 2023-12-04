@@ -4,6 +4,7 @@ import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.ErrorApiResponse;
 import com.miracle.userservice.exception.InvalidEmailException;
 import com.miracle.userservice.exception.MiracleException;
+import com.miracle.userservice.exception.OverflowException;
 import com.miracle.userservice.exception.UserIdMismatchException;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,17 @@ public class MainExceptionAdvice {
         String message = e.getMessage();
         log.error(message);
         int httpStatus = BAD_REQUEST.value();
+        String code = e.getCode();
+        String exceptionName = getClassSimpleName(e);
+        return new ErrorApiResponse(httpStatus, message, code, exceptionName);
+    }
+
+    @ResponseStatus(NOT_ACCEPTABLE)
+    @ExceptionHandler(OverflowException.class)
+    public CommonApiResponse overflow(OverflowException e) {
+        String message = e.getMessage();
+        log.error(message);
+        int httpStatus = NOT_ACCEPTABLE.value();
         String code = e.getCode();
         String exceptionName = getClassSimpleName(e);
         return new ErrorApiResponse(httpStatus, message, code, exceptionName);

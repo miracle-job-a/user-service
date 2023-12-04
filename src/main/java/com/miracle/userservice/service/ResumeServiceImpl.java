@@ -2,10 +2,12 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
+import com.miracle.userservice.dto.response.DetailInResumeResponseDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
 import com.miracle.userservice.entity.*;
 import com.miracle.userservice.exception.NoSuchResumeException;
+import com.miracle.userservice.exception.OverflowException;
 import com.miracle.userservice.repository.ResumeRepository;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,7 @@ public class ResumeServiceImpl implements ResumeService {
                 .title(resume.getTitle())
                 .photo(resume.getPhoto())
                 .career(resume.getCareer())
+                .open(resume.isOpen())
                 .birth(resume.getUser().getBirth())
                 .phone(resume.getUser().getPhone())
                 .education(resume.getEducation())
@@ -51,19 +54,19 @@ public class ResumeServiceImpl implements ResumeService {
                 .careerDetailList(
                         resume.getCareerDetailList()
                                 .stream()
-                                .map(ResumeCareerDetail::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .projectList(
                         resume.getProjectList()
                                 .stream()
-                                .map(ResumeProject::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .etcList(
                         resume.getEtcList()
                                 .stream()
-                                .map(ResumeEtc::getContent)
+                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
                                 .toList()
                 )
                 .build();
@@ -73,7 +76,11 @@ public class ResumeServiceImpl implements ResumeService {
     public boolean postResume(Long userId, ResumePostRequestDto dto) {
         Objects.requireNonNull(dto, "ResumePostRequestDto is null");
 
-        Resume resume = getResume(userId, dto);
+        if (resumeRepository.countByUserId(userId) >= 5) {
+            throw new OverflowException("406", "이력서는 최대 5개까지 저장 가능합니다.");
+        }
+
+        Resume resume = createResume(userId, dto);
 
         resume.addStackIdAll(dto.getStackIdSet());
         resume.addJobIdAll(dto.getJobIdSet());
@@ -86,7 +93,7 @@ public class ResumeServiceImpl implements ResumeService {
         return true;
     }
 
-    private Resume getResume(Long userId, ResumePostRequestDto dto) {
+    private Resume createResume(Long userId, ResumePostRequestDto dto) {
         User user = userRepository.findById(userId).orElseThrow();
         return Resume.builder()
                 .user(user)

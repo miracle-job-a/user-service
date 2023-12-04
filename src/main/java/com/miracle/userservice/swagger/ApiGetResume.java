@@ -38,6 +38,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                     "title": "Software Engineer",
                                                     "photo": "photo-url",
                                                     "career": 3,
+                                                    "open": true,
                                                     "birth": "1990-01-01",
                                                     "phone": "010-1234-5678",
                                                     "education": "Bachelor's Degree",
