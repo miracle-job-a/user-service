@@ -42,6 +42,7 @@ public class ResumeServiceImpl implements ResumeService {
                 .title(resume.getTitle())
                 .photo(resume.getPhoto())
                 .career(resume.getCareer())
+                .open(resume.isOpen())
                 .birth(resume.getUser().getBirth())
                 .phone(resume.getUser().getPhone())
                 .education(resume.getEducation())

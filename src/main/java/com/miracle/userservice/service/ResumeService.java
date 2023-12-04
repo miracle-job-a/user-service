@@ -15,7 +15,7 @@ public interface ResumeService {
      * 유저가 조회했을 경우, 비공개 이력서도 조회 되어야함
      * 기업이 조회했을 경우, 공개 이력서만 조회 되어야함
      *
-     * @param resumeId        이력서 ID
+     * @param resumeId  이력서 ID
      * @param requester 이력서 조회를 요청한 멤버의 타입
      * @return 이력서 상세 데이터
      * @throws NullPointerException  If {@code resumeId} is null
@@ -38,8 +38,8 @@ public interface ResumeService {
     /**
      * 유저의 특정 이력서를 수정
      *
-     * @param resumeId  이력서 ID
-     * @param dto 이력서 정보
+     * @param resumeId 이력서 ID
+     * @param dto      이력서 정보
      * @return true
      * @throws NullPointerException  If {@code resumeId}, {@code dto} is null
      * @throws NoSuchResumeException If resume doesn't exist
