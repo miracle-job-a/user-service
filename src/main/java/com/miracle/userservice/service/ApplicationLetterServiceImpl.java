@@ -85,20 +85,6 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         return true;
     }
 
-    private List<ResumeTitleResponseDto> getResumeList(Long userId) {
-        List<Resume> resumeList = resumeRepository.findByUserId(userId);
-        return resumeList.stream()
-                .map(resume -> new ResumeTitleResponseDto(resume.getId(), resume.getTitle()))
-                .toList();
-    }
-
-    private List<CoverLetterTitleResponseDto> getCoverLetterList(Long userId) {
-        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
-        return coverLetterList.stream()
-                .map(coverLetter -> new CoverLetterTitleResponseDto(coverLetter.getId(), coverLetter.getTitle()))
-                .toList();
-    }
-
     @Override
     public ResumeInApplicationLetterResponseDto getResume(Long applicationLetterId) {
         Optional<ApplicationLetter> applicationLetterOpt = applicationLetterRepository.findById(applicationLetterId);
@@ -136,6 +122,32 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
     @Override
     public Page<ApplicantListResponseDto> getApplicantList(Long postId, Pageable pageable) {
         return applicationLetterRepository.findAllApplicantListByPostId(postId, pageable);
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteApplicationLetter(Long applicationLetterId) {
+        String errorMessage = "ApplicationLetter id is null";
+        Objects.requireNonNull(applicationLetterId, errorMessage);
+
+        applicationLetterRepository.findById(applicationLetterId).orElseThrow(() -> new NoSuchApplicationLetterException("400_1", "지원서가 존재하지 않습니다."));
+        applicationLetterRepository.deleteById(applicationLetterId);
+
+        return true;
+    }
+
+    private List<ResumeTitleResponseDto> getResumeList(Long userId) {
+        List<Resume> resumeList = resumeRepository.findByUserId(userId);
+        return resumeList.stream()
+                .map(resume -> new ResumeTitleResponseDto(resume.getId(), resume.getTitle()))
+                .toList();
+    }
+
+    private List<CoverLetterTitleResponseDto> getCoverLetterList(Long userId) {
+        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
+        return coverLetterList.stream()
+                .map(coverLetter -> new CoverLetterTitleResponseDto(coverLetter.getId(), coverLetter.getTitle()))
+                .toList();
     }
 
     @Override

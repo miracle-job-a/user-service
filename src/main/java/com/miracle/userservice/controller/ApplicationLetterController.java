@@ -77,6 +77,18 @@ public class ApplicationLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @ApiDeleteApplicationLetter
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{applicationLetterId}")
+    public CommonApiResponse deleteApplicationLetter(@PathVariable Long applicationLetterId) {
+        boolean result = applicationLetterService.deleteApplicationLetter(applicationLetterId);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 삭제 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
     @ApiGetApplicationLetterList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping

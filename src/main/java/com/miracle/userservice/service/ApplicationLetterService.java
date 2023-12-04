@@ -61,6 +61,17 @@ public interface ApplicationLetterService {
     CoverLetterInApplicationLetterResponseDto getCoverLetter(Long applicationLetterId);
 
     /**
+     * 유저의 지원서를 삭제하는 메서드
+     *
+     * @param applicationLetterId 지원서 ID
+     * @return true
+     * @throws NullPointerException If {@code applicationLetterId} is null
+     * @throws NoSuchApplicationLetterException If applicationLetter doesn't exist
+     * @author hazzokko
+     * */
+    boolean deleteApplicationLetter(Long applicationLetterId);
+
+    /**
      * 지원자 목록을 조회하는 메서드
      *
      * @param postId   공고 ID
