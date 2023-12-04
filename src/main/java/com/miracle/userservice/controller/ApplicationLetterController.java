@@ -3,6 +3,7 @@ package com.miracle.userservice.controller;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
+import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
@@ -98,7 +99,7 @@ public class ApplicationLetterController {
             @RequestParam(required = false, defaultValue = "5") int endPage,
             @RequestParam(required = false, defaultValue = "10") int pageSize
     ) {
-        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize);
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.ApplicationLetterList.PAGING);
 
         startPage--;
         endPage--;

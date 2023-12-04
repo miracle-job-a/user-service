@@ -69,4 +69,9 @@ public class ValidationDefaultMsgUtil {
         public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
         public static final String SORT = "400_2:정렬 파라미터 형식이 올바르지 않습니다. 값이 ('NAME', 'SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC') 중 하나여야 합니다.";
     }
+
+    public static abstract class ApplicationLetterList {
+
+        public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
+    }
 }
