@@ -24,13 +24,13 @@ public abstract class ParameterValidator {
         if (i <= 0) throw new InvalidParameterException(code, errorMessage);
     }
 
-    public static <T extends Enum<T>> T checkParameterEnum(String sortStr, Class<T> clazz, String errorMessage) {
+    public static <T extends Enum<T>> T checkParameterEnum(String enumName, Class<T> clazz, String errorMessage) {
         String[] split = errorMessage.split(":");
         String code = split[0];
         String message = split[1];
 
         return Arrays.stream(clazz.getEnumConstants())
-                .filter(e -> e.name().equals(sortStr.toUpperCase()))
+                .filter(e -> e.name().equals(enumName.toUpperCase()))
                 .findFirst()
                 .orElseThrow(() -> new InvalidParameterException(code, message));
     }
