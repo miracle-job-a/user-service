@@ -74,4 +74,9 @@ public class ValidationDefaultMsgUtil {
 
         public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
     }
+
+    public static abstract class UserJoinList {
+
+        public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
+    }
 }
