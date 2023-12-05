@@ -34,14 +34,14 @@ import static java.lang.annotation.ElementType.METHOD;
                                                   "message": "자기소개서 검색 결과 출력 성공",
                                                   "data": [
                                                               {
-                                                                  "id": 3,
+                                                                  "id": 19,
                                                                   "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
-                                                                  "modifiedAt": "2023-12-03"
+                                                                  "modifiedAt": "2023-12-06"
                                                               },
                                                               {
-                                                                  "id": 6,
+                                                                  "id": 15,
                                                                   "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
-                                                                  "modifiedAt": "2023-12-04"
+                                                                  "modifiedAt": "2023-12-05"
                                                               },
                                                               {
                                                                   "id": 9,
@@ -49,14 +49,14 @@ import static java.lang.annotation.ElementType.METHOD;
                                                                   "modifiedAt": "2023-12-04"
                                                               },
                                                               {
-                                                                  "id": 12,
+                                                                  "id": 6,
                                                                   "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
-                                                                  "modifiedAt": "2023-12-04"
+                                                                  "modifiedAt": "2023-12-02"
                                                               },
                                                               {
-                                                                  "id": 15,
+                                                                  "id": 3,
                                                                   "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
-                                                                  "modifiedAt": "2023-12-04"
+                                                                  "modifiedAt": "2023-12-01"
                                                               }
                                                           ]
                                                 }
