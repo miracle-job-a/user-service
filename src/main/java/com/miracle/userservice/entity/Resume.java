@@ -3,6 +3,7 @@ package com.miracle.userservice.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -76,25 +77,30 @@ public class Resume extends BaseEntity {
     public void updateCareerDetailList(List<String> careerDetailList) {
         this.careerDetailList.clear();
         this.careerDetailList.addAll(careerDetailList);
+        setModifiedAt(LocalDateTime.now());
     }
 
     public void updateProjectList(List<String> projectList) {
         this.projectList.clear();
         this.projectList.addAll(projectList);
+        setModifiedAt(LocalDateTime.now());
     }
 
     public void updateEtcList(List<String> etcList) {
         this.etcList.clear();
         this.etcList.addAll(etcList);
+        setModifiedAt(LocalDateTime.now());
     }
 
     public void updateStackIdSet(Set<Long> stackIdSet) {
         this.stackIdSet.clear();
         this.stackIdSet.addAll(stackIdSet);
+        setModifiedAt(LocalDateTime.now());
     }
 
     public void updateJobIdSet(Set<Long> jobIdSet) {
         this.jobIdSet.clear();
         this.jobIdSet.addAll(jobIdSet);
+        setModifiedAt(LocalDateTime.now());
     }
 }
