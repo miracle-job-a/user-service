@@ -13,15 +13,6 @@ import java.util.List;
 @Data
 public class InterviewPostRequestDto {
 
-    @Positive(message = ValidationDefaultMsgUtil.InterviewPost.USER_ID)
-    @NotNull(message = ValidationDefaultMsgUtil.InterviewPost.USER_ID)
-    @Schema(
-            description = "유저 ID",
-            required = true,
-            example = "1"
-    )
-    private final Long userId;
-
     @Positive(message = ValidationDefaultMsgUtil.InterviewPost.APPLICATION_LETTER_ID)
     @NotNull(message = ValidationDefaultMsgUtil.InterviewPost.APPLICATION_LETTER_ID)
     @Schema(
@@ -42,7 +33,6 @@ public class InterviewPostRequestDto {
     private final List<Qna> qnaList;
 
     public InterviewPostRequestDto() {
-        this.userId = null;
         this.applicationLetterId = null;
         this.qnaList = null;
     }

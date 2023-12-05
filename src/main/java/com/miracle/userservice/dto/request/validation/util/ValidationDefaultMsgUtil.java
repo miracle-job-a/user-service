@@ -82,8 +82,7 @@ public class ValidationDefaultMsgUtil {
 
     public static abstract class InterviewPost {
 
-        public static final String USER_ID = "400_1:유저 아이디 값이 없거나 양수가 아닙니다.";
-        public static final String APPLICATION_LETTER_ID = "400_2:지원서 아이디 값이 없거나 양수가 아닙니다.";
-        public static final String COLLECTION = "400_3:Collection이 null입니다.";
+        public static final String APPLICATION_LETTER_ID = "400_1:지원서 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String COLLECTION = "400_2:Collection이 null입니다.";
     }
 }
