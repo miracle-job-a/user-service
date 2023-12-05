@@ -30,6 +30,9 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Transactional(readOnly = true)
     @Override
     public Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable) {
+        String errorMessage = "User id is null";
+        Objects.requireNonNull(userId, errorMessage);
+
         return coverLetterRepository.findByUserId(userId, pageable);
     }
 

@@ -34,9 +34,9 @@ public class CoverLetterController {
     @GetMapping
     public CommonApiResponse getCoverLetterList(
             @PathVariable Long userId,
-            @Parameter(description = "1") @RequestParam(required = false, defaultValue = "1") int startPage,
-            @Parameter(description = "10") @RequestParam(required = false, defaultValue = "10") int endPage,
-            @Parameter(description = "5") @RequestParam(required = false, defaultValue = "5") int pageSize
+            @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
+            @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int endPage,
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.CoverLetterList.PAGING);
 
