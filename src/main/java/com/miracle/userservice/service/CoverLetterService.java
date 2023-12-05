@@ -14,11 +14,23 @@ public interface CoverLetterService {
      *
      * @param userId   유저 ID
      * @param pageable 페이징 정보
-     * @return 자기소개서 정보가 담긴 {@code CoverLetterListResponseDto}를 리스트에 담아서 반환
+     * @return 자기소개서 정보가 담긴 {@code Page}를 반환
      * @throws NullPointerException If {@code userId} is null
      * @author hazzokko
      */
     Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable);
+
+    /**
+     * 유저의 자기소개서 목록에서 제목으로 검색
+     *
+     * @param userId   유저 ID
+     * @param word     검색어
+     * @param pageable 페이징 정보
+     * @return 자기소개서 정보가 담긴 {@code Page}를 반환
+     * @throws NullPointerException If {@code userId} or {@code word} is null
+     * @author hazzokko
+     */
+    Page<CoverLetterListResponseDto> searchCoverLetter(Long userId, String word, Pageable pageable);
 
     /**
      * 유저의 자기소개서 내용 조회
@@ -45,8 +57,8 @@ public interface CoverLetterService {
     /**
      * 유저의 자기소개서 수정
      *
-     * @param coverLetterId  자기소개서 ID
-     * @param dto            자기소개서 정보
+     * @param coverLetterId 자기소개서 ID
+     * @param dto           자기소개서 정보
      * @return true
      * @throws NullPointerException       If {@code dto} is null
      * @throws NoSuchCoverLetterException If coverLetter doesn't exist

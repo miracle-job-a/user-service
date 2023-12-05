@@ -54,6 +54,31 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/search")
+    public CommonApiResponse searchCoverLetter(
+            @PathVariable Long userId,
+            @RequestParam String word,
+            @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
+            @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int endPage,
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize
+    ) {
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.CoverLetterList.PAGING);
+
+        startPage--;
+        endPage--;
+        List<List<CoverLetterListResponseDto>> coverLetterList = new ArrayList<>();
+        for(int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<CoverLetterListResponseDto> page = coverLetterService.searchCoverLetter(userId, word, pageable);
+            coverLetterList.add(page.getContent());
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "자기소개서 검색 결과 출력 성공";
+        return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
+    }
+
     @ApiGetCoverLetter
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{coverLetterId}")
