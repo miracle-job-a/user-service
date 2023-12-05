@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,15 @@ public class Interview extends BaseEntity {
             joinColumns = @JoinColumn(name = "interview_id")
     )
     private final List<Qna> qnaList = new ArrayList<>();
+
+    @Builder
+    public Interview(User user, ApplicationLetter applicationLetter) {
+        this.user = user;
+        this.applicationLetter = applicationLetter;
+    }
+
+    public void updateQnaList(List<Qna> qnaList) {
+        this.qnaList.clear();
+        this.qnaList.addAll(qnaList);
+    }
 }

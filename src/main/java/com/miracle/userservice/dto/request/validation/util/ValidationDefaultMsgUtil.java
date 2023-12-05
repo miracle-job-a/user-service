@@ -84,4 +84,10 @@ public class ValidationDefaultMsgUtil {
 
         public static final String PAGING = "400_1:페이징 파라미터 형식이 올바르지 않습니다.";
     }
+
+    public static abstract class InterviewPost {
+
+        public static final String APPLICATION_LETTER_ID = "400_1:지원서 아이디 값이 없거나 양수가 아닙니다.";
+        public static final String COLLECTION = "400_2:Collection이 null입니다.";
+    }
 }
