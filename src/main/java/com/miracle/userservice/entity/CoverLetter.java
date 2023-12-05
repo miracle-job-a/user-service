@@ -26,16 +26,16 @@ public class CoverLetter extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @OneToMany(mappedBy = "coverLetter", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<CoverLetterQna> qnaList = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "cover_letter_qna",
+            joinColumns = @JoinColumn(name = "cover_letter_id")
+    )
+    private final List<Qna> qnaList = new ArrayList<>();
 
     @Builder
     public CoverLetter(User user, String title) {
         this.user = user;
         this.title = title;
-    }
-
-    public void addQna(CoverLetterQna coverLetterQna) {
-        qnaList.add(coverLetterQna);
     }
 }

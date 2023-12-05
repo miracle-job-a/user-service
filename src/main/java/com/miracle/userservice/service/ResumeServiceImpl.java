@@ -2,10 +2,10 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
-import com.miracle.userservice.dto.response.DetailInResumeResponseDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
-import com.miracle.userservice.entity.*;
+import com.miracle.userservice.entity.Resume;
+import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.NoSuchResumeException;
 import com.miracle.userservice.exception.OverflowException;
 import com.miracle.userservice.repository.ResumeRepository;
@@ -51,24 +51,9 @@ public class ResumeServiceImpl implements ResumeService {
                 .gitLink(resume.getGitLink())
                 .jobIdSet(resume.getJobIdSet())
                 .stackIdSet(resume.getStackIdSet())
-                .careerDetailList(
-                        resume.getCareerDetailList()
-                                .stream()
-                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
-                                .toList()
-                )
-                .projectList(
-                        resume.getProjectList()
-                                .stream()
-                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
-                                .toList()
-                )
-                .etcList(
-                        resume.getEtcList()
-                                .stream()
-                                .map(r -> new DetailInResumeResponseDto(r.getId(), r.getContent()))
-                                .toList()
-                )
+                .careerDetailList(resume.getCareerDetailList())
+                .projectList(resume.getProjectList())
+                .etcList(resume.getEtcList())
                 .build();
     }
 
@@ -82,12 +67,12 @@ public class ResumeServiceImpl implements ResumeService {
 
         Resume resume = createResume(userId, dto);
 
-        resume.addStackIdAll(dto.getStackIdSet());
-        resume.addJobIdAll(dto.getJobIdSet());
+        resume.getStackIdSet().addAll(dto.getStackIdSet());
+        resume.getJobIdSet().addAll(dto.getJobIdSet());
 
-        dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
-        dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
-        dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
+        resume.getCareerDetailList().addAll(dto.getCareerDetailList());
+        resume.getProjectList().addAll(dto.getProjectList());
+        resume.getEtcList().addAll(dto.getEtcList());
 
         resumeRepository.save(resume);
         return true;
@@ -127,17 +112,11 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setCareer(dto.getCareer());
         resume.setOpen(dto.isOpen());
 
-        resume.getStackIdSet().clear();
-        resume.getJobIdSet().clear();
-        resume.addStackIdAll(dto.getStackIdSet());
-        resume.addJobIdAll(dto.getJobIdSet());
-
-        resume.getCareerDetailList().clear();
-        resume.getProjectList().clear();
-        resume.getEtcList().clear();
-        dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
-        dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
-        dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
+        resume.updateStackIdSet(dto.getStackIdSet());
+        resume.updateJobIdSet(dto.getJobIdSet());
+        resume.updateCareerDetailList(dto.getCareerDetailList());
+        resume.updateProjectList(dto.getProjectList());
+        resume.updateEtcList(dto.getEtcList());
     }
 
     @Override

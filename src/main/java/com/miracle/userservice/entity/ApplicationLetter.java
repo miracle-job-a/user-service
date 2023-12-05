@@ -126,24 +126,4 @@ public class ApplicationLetter extends BaseEntity {
         this.userBirth = userBirth;
         this.userCareer = userCareer;
     }
-
-    public void addCareerDetail(String careerDetail) {
-        careerDetailList.add(careerDetail);
-    }
-
-    public void addProject(String project) {
-        projectList.add(project);
-    }
-
-    public void addEtc(String etc) {
-        etcList.add(etc);
-    }
-
-    public void addQna(Qna qna) {
-        qnaList.add(qna);
-    }
-
-    public void addStack(Long stackId) {
-        stackIdSet.add(stackId);
-    }
 }
