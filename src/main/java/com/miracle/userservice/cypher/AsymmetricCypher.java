@@ -1,6 +1,6 @@
 package com.miracle.userservice.cypher;
 
-public interface Cypher {
+public interface AsymmetricCypher {
 
     String encrypt(String input);
 }

@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.converter.SymmetricCypherConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,12 +49,14 @@ public class ApplicationLetter extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String coverLetterTitle;
 
+    @Convert(converter = SymmetricCypherConverter.class)
     @Column(nullable = false, length = 50)
     private String userEmail;
 
     @Column(nullable = false, length = 30)
     private String userName;
 
+    @Convert(converter = SymmetricCypherConverter.class)
     @Column(nullable = false, length = 20)
     private String userPhone;
 

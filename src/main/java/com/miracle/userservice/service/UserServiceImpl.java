@@ -1,6 +1,7 @@
 package com.miracle.userservice.service;
 
-import com.miracle.userservice.cypher.Cypher;
+import com.miracle.userservice.cypher.SymmetricCypher;
+import com.miracle.userservice.cypher.AsymmetricCypher;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
@@ -30,16 +31,25 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final Cypher cypher;
+    private final AsymmetricCypher asymmetricCypher;
+    private final SymmetricCypher symmetricCypher;
 
     @Override
     public Optional<User> login(UserLoginRequestDto dto) {
         String errorMessage = "UserLoginRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        String email = dto.getEmail();
-        String password = cypher.encrypt(dto.getPassword());
+        String email = encryptEmail(dto.getEmail());
+        String password = encryptPassword(dto.getPassword());
         return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    private String encryptEmail(String email) {
+        return symmetricCypher.encrypt(email);
+    }
+
+    private String encryptPassword(String password) {
+        return asymmetricCypher.encrypt(password);
     }
 
     @Override
@@ -47,13 +57,12 @@ public class UserServiceImpl implements UserService {
         String errorMessage = "UserJoinRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        String email = dto.getEmail();
+        String email = encryptEmail(dto.getEmail());
         if (userRepository.existsByEmail(email)) {
             throw new DuplicateEmailException("400_1", "이메일 중복입니다.");
         }
 
         User user = dto.transformToUser();
-        user.encryptPassword(cypher);
         userRepository.save(user);
     }
 
@@ -61,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkDuplicate(String email) {
         validEmail(email);
-        return userRepository.existsByEmail(email);
+        return userRepository.existsByEmail(encryptEmail(email));
     }
 
     private void validEmail(String email) {
@@ -108,7 +117,6 @@ public class UserServiceImpl implements UserService {
 
         User user = userOpt.get();
         user.update(dto);
-        user.encryptPassword(cypher);
         return true;
     }
 

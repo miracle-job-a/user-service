@@ -5,7 +5,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 import java.nio.charset.StandardCharsets;
 
-public class SHA3Cypher implements Cypher {
+public class SHA3Cypher implements AsymmetricCypher {
 
     @Override
     public String encrypt(String input) {
