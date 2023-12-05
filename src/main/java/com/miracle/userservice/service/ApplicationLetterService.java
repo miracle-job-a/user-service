@@ -3,6 +3,7 @@ package com.miracle.userservice.service;
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
 import com.miracle.userservice.dto.response.*;
 import com.miracle.userservice.exception.NoSuchApplicationLetterException;
+import com.miracle.userservice.exception.DuplicateApplicationLetterException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,6 +35,7 @@ public interface ApplicationLetterService {
      * @param dto 이력서 및 자기소개서 데이터
      * @return true
      * @throws NullPointerException If either parameters is null
+     * @throws DuplicateApplicationLetterException 해당 공고에 이미 지원한 경우
      * @author hazzokko
      * */
     boolean postApplicationLetter(Long userId, ApplicationLetterPostRequestDto dto);
