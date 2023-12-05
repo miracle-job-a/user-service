@@ -4,8 +4,6 @@ import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.entity.CoverLetter;
-import com.miracle.userservice.entity.CoverLetterQna;
-import com.miracle.userservice.entity.Qna;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
 import com.miracle.userservice.repository.CoverLetterRepository;
@@ -50,14 +48,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
                 .id(coverLetter.getId())
                 .title(coverLetter.getTitle())
                 .modifiedAt(coverLetter.getModifiedAt())
-                .qnaList(
-                        coverLetter.getQnaList()
-                                .stream()
-                                .map(coverLetterQna -> new Qna(
-                                        coverLetterQna.getQna().getQuestion(),
-                                        coverLetterQna.getQna().getAnswer()))
-                                .toList()
-                )
+                .qnaList(coverLetter.getQnaList())
                 .build();
     }
 
@@ -73,7 +64,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
                 .title(dto.getTitle())
                 .build();
 
-        dto.getQnaList().forEach(qna -> new CoverLetterQna(qna, coverLetter));
+        coverLetter.getQnaList().addAll(dto.getQnaList());
 
         coverLetterRepository.save(coverLetter);
 
@@ -90,7 +81,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
         coverLetter.setTitle(dto.getTitle());
         coverLetter.getQnaList().clear();
-        dto.getQnaList().forEach(qna -> coverLetter.addQna(new CoverLetterQna(qna, coverLetter)));
+        coverLetter.getQnaList().addAll(dto.getQnaList());
 
         coverLetterRepository.save(coverLetter);
 

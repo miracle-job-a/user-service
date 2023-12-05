@@ -74,11 +74,11 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
                         .userCareer(resume.getCareer())
                         .build();
 
-        resume.getCareerDetailList().forEach(resumeCareerDetail -> applicationLetter.addCareerDetail(resumeCareerDetail.getContent()));
-        resume.getProjectList().forEach(resumeProject -> applicationLetter.addProject(resumeProject.getContent()));
-        resume.getEtcList().forEach(resumeEtc -> applicationLetter.addEtc(resumeEtc.getContent()));
-        resume.getStackIdSet().forEach(applicationLetter::addStack);
-        coverLetter.getQnaList().forEach(coverLetterQna -> applicationLetter.addQna(coverLetterQna.getQna()));
+        applicationLetter.getCareerDetailList().addAll(resume.getCareerDetailList());
+        applicationLetter.getProjectList().addAll(resume.getProjectList());
+        applicationLetter.getEtcList().addAll(resume.getEtcList());
+        applicationLetter.getStackIdSet().addAll(resume.getStackIdSet());
+        applicationLetter.getQnaList().addAll(coverLetter.getQnaList());
 
         applicationLetterRepository.save(applicationLetter);
 
