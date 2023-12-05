@@ -85,8 +85,7 @@ public class InterviewServiceImpl implements InterviewService {
         Optional<Interview> interviewOpt = interviewRepository.findById(interviewId);
         Interview interview = interviewOpt.orElseThrow(() -> new NoSuchInterviewException("400_4", "면접 정보가 존재하지 않습니다."));
 
-        interview.getQnaList().clear();
-        interview.getQnaList().addAll(dto.getQnaList());
+        interview.updateQnaList(dto.getQnaList());
 
         return true;
     }

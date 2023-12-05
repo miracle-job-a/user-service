@@ -37,4 +37,9 @@ public class Interview extends BaseEntity {
         this.user = user;
         this.applicationLetter = applicationLetter;
     }
+
+    public void updateQnaList(List<Qna> qnaList) {
+        this.qnaList.clear();
+        this.qnaList.addAll(qnaList);
+    }
 }
