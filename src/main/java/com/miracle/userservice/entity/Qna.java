@@ -21,4 +21,8 @@ public class Qna {
         this.question = question;
         this.answer = answer;
     }
+
+    public Qna(Interview interview) {
+        interview.addQna(this);
+    }
 }
