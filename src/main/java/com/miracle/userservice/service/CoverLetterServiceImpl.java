@@ -39,7 +39,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         Objects.requireNonNull(userId, "User id is null");
         Objects.requireNonNull(word, "Word is null");
 
-        return coverLetterRepository.findByUserIdAndTitleContains(userId, word, pageable);
+        return coverLetterRepository.findByUserId(userId, word, pageable);
     }
 
     @Transactional(readOnly = true)

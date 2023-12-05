@@ -26,5 +26,5 @@ public interface CoverLetterRepository extends JpaRepository<CoverLetter, Long> 
            WHERE c.title LIKE %:word%
            AND (COALESCE(:userId, c.user.id) = c.user.id)
            """)
-    Page<CoverLetterListResponseDto> findByUserIdAndTitleContains(@Param("userId") Long userId, @Param("word") String word, Pageable pageable);
+    Page<CoverLetterListResponseDto> findByUserId(@Param("userId") Long userId, @Param("word") String word, Pageable pageable);
 }
