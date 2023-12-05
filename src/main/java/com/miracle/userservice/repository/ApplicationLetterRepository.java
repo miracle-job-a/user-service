@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -22,11 +23,14 @@ public interface ApplicationLetterRepository extends JpaRepository<ApplicationLe
 
     @Query("""
            SELECT new com.miracle.userservice.dto.response.ApplicationLetterListResponseDto(
-               al.id, al.postId, al.interview.id, al.postType, al.submitDate, al.applicationStatus, al.userJob
+               al.id, al.postId, i.id, al.postType, al.submitDate, al.applicationStatus, al.userJob
            )
            FROM ApplicationLetter al
+           LEFT JOIN Interview i
+           ON i.applicationLetter.id = al.id
+           WHERE al.user.id = :userId
            """)
-    Page<ApplicationLetterListResponseDto> findAllApplicationLetterListByUserId(Long userId, Pageable pageable);
+    Page<ApplicationLetterListResponseDto> findAllApplicationLetterListByUserId(@Param("userId") Long userId, Pageable pageable);
 
     Optional<ApplicationLetter> findByPostId(Long postId);
 }

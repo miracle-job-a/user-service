@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +38,11 @@ public class CoverLetter extends BaseEntity {
     public CoverLetter(User user, String title) {
         this.user = user;
         this.title = title;
+    }
+
+    public void updateQnaList(List<Qna> qnaList) {
+        this.qnaList.clear();
+        this.qnaList.addAll(qnaList);
+        setModifiedAt(LocalDateTime.now());
     }
 }

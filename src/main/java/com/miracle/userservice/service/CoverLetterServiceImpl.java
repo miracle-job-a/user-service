@@ -80,8 +80,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         coverLetter.setTitle(dto.getTitle());
-        coverLetter.getQnaList().clear();
-        coverLetter.getQnaList().addAll(dto.getQnaList());
+        coverLetter.updateQnaList(dto.getQnaList());
 
         coverLetterRepository.save(coverLetter);
 
