@@ -47,23 +47,12 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                 mediaType = APPLICATION_JSON,
                                 examples = {
                                         @ExampleObject(
-                                                name = "유저 ID 검증 실패",
-                                                value = """
-                                                        {
-                                                          "httpStatus": 400,
-                                                          "message": "유저 아이디 값이 없거나 양수가 아닙니다.",
-                                                          "code": "400_1",
-                                                          "exception": "MethodArgumentNotValidException"
-                                                        }
-                                                        """
-                                        ),
-                                        @ExampleObject(
                                                 name = "지원서 ID 검증 실패",
                                                 value = """
                                                         {
                                                           "httpStatus": 400,
                                                           "message": "지원서 아이디 값이 없거나 양수가 아닙니다.",
-                                                          "code": "400_2",
+                                                          "code": "400_1",
                                                           "exception": "MethodArgumentNotValidException"
                                                         }
                                                         """
@@ -74,19 +63,8 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                         {
                                                           "httpStatus": 400,
                                                           "message": "Collection이 null입니다.",
-                                                          "code": "400_3",
+                                                          "code": "400_2",
                                                           "exception": "MethodArgumentNotValidException"
-                                                        }
-                                                        """
-                                        ),
-                                        @ExampleObject(
-                                                name = "지원서가 존재하지 않음",
-                                                value = """
-                                                        {
-                                                          "httpStatus": 400,
-                                                          "message": "지원서가 존재하지 않습니다.",
-                                                          "code": "400_4",
-                                                          "exception": "NoSuchApplicationLetterException"
                                                         }
                                                         """
                                         ),
@@ -96,7 +74,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                                         {
                                                           "httpStatus": 400,
                                                           "message": "면접 정보가 이미 존재합니다.",
-                                                          "code": "400_5",
+                                                          "code": "400_3",
                                                           "exception": "DuplicateInterviewException"
                                                         }
                                                         """
