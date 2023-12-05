@@ -29,9 +29,6 @@ public class ApplicationLetter extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "applicationLetter", fetch = FetchType.LAZY)
-    private Interview interview;
-
     @Column(nullable = false)
     private Long postId;
 
