@@ -1,7 +1,6 @@
 package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.response.InterviewResponseDto;
-import com.miracle.userservice.exception.NoSuchApplicationLetterException;
 import com.miracle.userservice.exception.NoSuchInterviewException;
 
 public interface InterviewService {
@@ -21,7 +20,7 @@ public interface InterviewService {
      *
      * @param interviewId 면접 ID
      * @return true
-     * @throws NullPointerException     If {@code applicationLetterId} is null
+     * @throws NullPointerException     If {@code interviewId} is null
      * @throws NoSuchInterviewException If interview doesn't exist
      * @author hazzokko
      * */
