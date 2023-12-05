@@ -3,6 +3,7 @@ package com.miracle.userservice.service;
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
 import com.miracle.userservice.dto.response.*;
 import com.miracle.userservice.entity.*;
+import com.miracle.userservice.exception.DuplicateApplicationLetterException;
 import com.miracle.userservice.exception.NoSuchApplicationLetterException;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
 import com.miracle.userservice.exception.NoSuchResumeException;
@@ -53,8 +54,13 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         Objects.requireNonNull(dto, "ApplicationLetterPostRequestDto is null");
 
         User user = userRepository.findById(userId).orElseThrow();
-        Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
-        CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_2", "자기소개서가 존재하지 않습니다."));
+        Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_8", "이력서가 존재하지 않습니다."));
+        CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_9", "자기소개서가 존재하지 않습니다."));
+
+        Optional<ApplicationLetter> applicationOpt = applicationLetterRepository.findByPostId(dto.getPostId());
+        if(applicationOpt.isPresent()) {
+            throw new DuplicateApplicationLetterException("400_10", "이미 지원한 공고입니다.");
+        }
 
         ApplicationLetter applicationLetter = ApplicationLetter.builder()
                         .postType(dto.getPostType())

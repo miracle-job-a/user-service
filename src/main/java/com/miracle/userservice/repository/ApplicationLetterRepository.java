@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface ApplicationLetterRepository extends JpaRepository<ApplicationLetter, Long> {
 
     long countByPostId(Long postId);
@@ -25,4 +27,6 @@ public interface ApplicationLetterRepository extends JpaRepository<ApplicationLe
            FROM ApplicationLetter al
            """)
     Page<ApplicationLetterListResponseDto> findAllApplicationLetterListByUserId(Long userId, Pageable pageable);
+
+    Optional<ApplicationLetter> findByPostId(Long postId);
 }
