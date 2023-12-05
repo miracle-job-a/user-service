@@ -3,15 +3,22 @@ package com.miracle.userservice.controller;
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
 import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
+import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.service.CoverLetterService;
 import com.miracle.userservice.swagger.*;
+import com.miracle.userservice.util.ParameterValidator;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @UserPathDocket
@@ -25,8 +32,22 @@ public class CoverLetterController {
     @ApiGetCoverLetterList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public CommonApiResponse getCoverLetterList(@RequestParam Long userId) {
-        List<CoverLetterListResponseDto> coverLetterList = coverLetterService.getCoverLetterList(userId);
+    public CommonApiResponse getCoverLetterList(
+            @PathVariable Long userId,
+            @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
+            @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int endPage,
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize
+    ) {
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.CoverLetterList.PAGING);
+
+        startPage--;
+        endPage--;
+        List<List<CoverLetterListResponseDto>> coverLetterList = new ArrayList<>();
+        for(int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<CoverLetterListResponseDto> page = coverLetterService.getCoverLetterList(userId, pageable);
+            coverLetterList.add(page.getContent());
+        }
 
         int httpStatus = HttpStatus.OK.value();
         String message = "자기소개서 목록 출력 성공";

@@ -32,16 +32,58 @@ import static java.lang.annotation.ElementType.METHOD;
                                                 {
                                                   "httpStatus": 200,
                                                   "message": "자기소개서 목록 출력 성공",
-                                                  "data": {
-                                                    "id": 1,
-                                                    "userId": 1,
-                                                    "title": "한 달 만에 채용 사이트를 구현할 수 있었던 비결",
-                                                    "modifiedAt": "2023-11-22"
-                                                  }
+                                                  "data": [
+                                                              {
+                                                                  "id": 18,
+                                                                  "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
+                                                                  "modifiedAt": "2023-12-04"
+                                                              },
+                                                              {
+                                                                  "id": 17,
+                                                                  "title": "성실함 : Blog 1일 1업로드 실천",
+                                                                  "modifiedAt": "2023-12-04"
+                                                              },
+                                                              {
+                                                                  "id": 16,
+                                                                  "title": "한 달 만에 채용사이트를 구현할 수 있었던 비결",
+                                                                  "modifiedAt": "2023-12-04"
+                                                              },
+                                                              {
+                                                                  "id": 15,
+                                                                  "title": "비전공자의 커리어 전환기 : 야너두 할수있어",
+                                                                  "modifiedAt": "2023-12-04"
+                                                              },
+                                                              {
+                                                                  "id": 14,
+                                                                  "title": "성실함 : Blog 1일 1업로드 실천",
+                                                                  "modifiedAt": "2023-12-04"
+                                                              }
+                                                          ]
                                                 }
                                                 """
                                 ),
                                 schema = @Schema(implementation = SuccessApiResponse.class)
+                        )
+                ),
+                @ApiResponse(
+                        responseCode = SwaggerMsgUtil.ResponseCode.BAD_REQUEST,
+                        description = "잘못된 요청",
+                        content = @Content(
+                                mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
+                                examples = {
+                                        @ExampleObject(
+                                                name = "페이징 파라미터 형식 오류",
+                                                value = """
+                                                        {
+                                                            "httpStatus": 400,
+                                                            "message": "페이징 파라미터 형식이 올바르지 않습니다.",
+                                                            "code": "400_1",
+                                                            "exception": "InvalidParameterException"
+                                                        }
+                                                        """
+                                        )
+                                },
+                                schema = @Schema(implementation = ErrorApiResponse.class)
                         )
                 )
         }
