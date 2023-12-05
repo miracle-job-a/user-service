@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.cypher.Cypher;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import lombok.*;
 
@@ -70,5 +71,9 @@ public class User extends BaseEntity {
         this.address = dto.getAddress();
         stackIdSet.clear();
         stackIdSet.addAll(dto.getStackIdSet());
+    }
+
+    public void encryptPassword(Cypher cypher) {
+        this.password = cypher.encrypt(this.password);
     }
 }

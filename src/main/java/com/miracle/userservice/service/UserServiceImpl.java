@@ -30,6 +30,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final Cypher cypher;
 
     @Override
     public Optional<User> login(UserLoginRequestDto dto) {
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(dto, errorMessage);
 
         String email = dto.getEmail();
-        String password = dto.getPassword();
+        String password = cypher.encrypt(dto.getPassword());
         return userRepository.findByEmailAndPassword(email, password);
     }
 
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = dto.transformToUser();
+        user.encryptPassword(cypher);
         userRepository.save(user);
     }
 
@@ -106,6 +108,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userOpt.get();
         user.update(dto);
+        user.encryptPassword(cypher);
         return true;
     }
 
