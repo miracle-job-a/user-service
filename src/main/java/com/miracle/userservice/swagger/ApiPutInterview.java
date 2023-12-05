@@ -106,7 +106,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                         )
                 ),
                 @ApiResponse(
-                responseCode = SwaggerMsgUtil.ResponseCode.NOT_ACCEPTABLE,
+                        responseCode = SwaggerMsgUtil.ResponseCode.NOT_ACCEPTABLE,
                         description = "면접 정보 등록 실패",
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
