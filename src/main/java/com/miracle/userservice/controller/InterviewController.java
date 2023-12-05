@@ -21,9 +21,9 @@ public class InterviewController {
 
     @ApiGetInterviews
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{applicationLetterId}")
-    public CommonApiResponse getInterviews(@PathVariable Long applicationLetterId) {
-        InterviewResponseDto dto = interviewService.getInterviews(applicationLetterId);
+    @GetMapping("/{interviewId}")
+    public CommonApiResponse getInterviews(@PathVariable Long interviewId) {
+        InterviewResponseDto dto = interviewService.getInterviews(interviewId);
 
         int httpStatus = HttpStatus.OK.value();
         String message = "면접 정보 조회 성공";

@@ -20,7 +20,7 @@ import static java.lang.annotation.ElementType.METHOD;
 @Retention(RetentionPolicy.RUNTIME)
 @Operation(
         summary = "해당 지원서에 대한 면접 정보 조회 요청 처리",
-        description = "면접 정보 조회 요청을 처리하는 API. 해당 지원서에 대한 면접 정보가 없을 시 null 반환",
+        description = "면접 정보 조회 요청을 처리하는 API. 해당 지원서에 대한 면접 ID가 null이면 null 반환",
         responses = {
                 @ApiResponse(
                         responseCode = SwaggerMsgUtil.ResponseCode.OK,
@@ -57,13 +57,13 @@ import static java.lang.annotation.ElementType.METHOD;
                         content = @Content(
                                 mediaType = APPLICATION_JSON,
                                 examples = @ExampleObject(
-                                        name = "지원서가 존재하지 않음",
+                                        name = "면접 정보가 존재하지 않음",
                                         value = """
                                                 {
                                                   "httpStatus": 400,
-                                                  "message": "지원서가 존재하지 않습니다.",
+                                                  "message": "면접 정보가 존재하지 않습니다.",
                                                   "code": "400_1",
-                                                  "exception": "NoSuchApplicationLetterException"
+                                                  "exception": "NoSuchInterviewException"
                                                 }
                                                 """
                                 ),

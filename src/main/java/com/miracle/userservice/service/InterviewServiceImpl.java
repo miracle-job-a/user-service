@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -18,16 +19,14 @@ import java.util.Objects;
 public class InterviewServiceImpl implements InterviewService{
 
     private final InterviewRepository interviewRepository;
-    private final ApplicationLetterRepository applicationLetterRepository;
 
     @Transactional(readOnly = true)
     @Override
-    public InterviewResponseDto getInterviews(Long applicationLetterId) {
-        Objects.requireNonNull(applicationLetterId, "ApplicationLetter id is null");
+    public InterviewResponseDto getInterviews(Long interviewId) {
+        if(interviewId == null) return null;
 
-        applicationLetterRepository.findById(applicationLetterId).orElseThrow(() -> new NoSuchApplicationLetterException("400_1", "지원서가 존재하지 않습니다."));
-        Interview interview = interviewRepository.findByApplicationLetterId(applicationLetterId);
-        if(interview == null) return null;
+        Optional<Interview> interviewOpt = interviewRepository.findById(interviewId);
+        Interview interview = interviewOpt.orElseThrow(() -> new NoSuchInterviewException("400_1", "면접 정보가 존재하지 않습니다."));
 
         return new InterviewResponseDto(interview.getQnaList());
     }
