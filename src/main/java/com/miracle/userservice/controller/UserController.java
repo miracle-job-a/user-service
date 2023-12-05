@@ -6,27 +6,29 @@ import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
-import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
-import com.miracle.userservice.dto.response.UserInfoResponseDto;
-import com.miracle.userservice.dto.response.UserListResponseDto;
-import com.miracle.userservice.dto.response.UserLoginResponseDto;
+import com.miracle.userservice.dto.response.*;
 import com.miracle.userservice.dto.response.UserLoginResponseDto.UserLoginResponseDtoBuilder;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.service.UserService;
 import com.miracle.userservice.swagger.*;
 import com.miracle.userservice.util.ParameterValidator;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 @DefaultPathDocket
 @RequiredArgsConstructor
@@ -166,6 +168,34 @@ public class UserController {
 
         int httpStatus = HttpStatus.OK.value();
         String message = "회원 목록 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
+    @ApiGetUserJoinList
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/join-list")
+    public CommonApiResponse getUserJoinList(
+            @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int endPage,
+            @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int pageSize,
+
+            @Parameter(description = "회원 가입 날짜. 기본 값은 오늘 날짜", example = "2023-01-01", allowEmptyValue = true)
+            @RequestParam(required = false, defaultValue = "1900-01-01") @DateTimeFormat(iso = DATE) LocalDate date
+    ) {
+        ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.UserJoinList.PAGING);
+        date = ParameterValidator.checkParameterLocalDate(date);
+
+        startPage--;
+        endPage--;
+        List<List<UserJoinListResponseDto>> result = new ArrayList<>();
+        for (int i = startPage; i <= endPage; i++) {
+            Pageable pageable = PageRequest.of(i, pageSize);
+            Page<UserJoinListResponseDto> page = userService.getJoinList(date, pageable);
+            result.add(page.getContent());
+        }
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "회원 가입 목록 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }

@@ -6,6 +6,7 @@ import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
+import com.miracle.userservice.dto.response.UserJoinListResponseDto;
 import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -115,5 +118,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserListResponseDto> getUserList(Pageable pageable) {
         return userRepository.findAllUserList(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable) {
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.plusDays(1L).atStartOfDay();
+        return userRepository.findJoinList(startDate, endDate, pageable);
     }
 }

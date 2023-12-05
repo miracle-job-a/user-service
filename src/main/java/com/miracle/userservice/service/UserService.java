@@ -5,6 +5,7 @@ import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
 import com.miracle.userservice.dto.response.UserInfoResponseDto;
+import com.miracle.userservice.dto.response.UserJoinListResponseDto;
 import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
@@ -12,6 +13,7 @@ import com.miracle.userservice.exception.InvalidEmailException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface UserService {
@@ -73,7 +75,7 @@ public interface UserService {
      * 특정 유저의 정보를 수정하는 메서드
      *
      * @param userId 유저의 ID
-     * @param dto 유저 정보 수정 데이터
+     * @param dto    유저 정보 수정 데이터
      * @return true
      * @author chocola
      */
@@ -96,4 +98,14 @@ public interface UserService {
      * @author chocola
      */
     Page<UserListResponseDto> getUserList(Pageable pageable);
+
+    /**
+     * 특정 날짜의 유저 회원 가입 목록을 조회
+     *
+     * @param date 조회하고자 하는 날짜
+     * @param pageable 페이징 정보
+     * @return {@code date}에 회원 가입한 유저 리스트
+     * @author chocola
+     */
+    Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable);
 }
