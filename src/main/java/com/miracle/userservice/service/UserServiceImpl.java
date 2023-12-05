@@ -1,5 +1,6 @@
 package com.miracle.userservice.service;
 
+import com.miracle.userservice.cypher.Cypher;
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(dto, errorMessage);
 
         String email = dto.getEmail();
-        int password = dto.getPassword().hashCode();
+        String password = dto.getPassword();
         return userRepository.findByEmailAndPassword(email, password);
     }
 

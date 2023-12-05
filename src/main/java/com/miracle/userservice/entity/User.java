@@ -23,8 +23,8 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false)
-    private int password;
+    @Column(nullable = false, length = 128)
+    private String password;
 
     @Column(nullable = false, length = 30)
     private String name;
@@ -55,7 +55,7 @@ public class User extends BaseEntity {
     private final Set<Long> scrapPostIdSet = new HashSet<>();
 
     @Builder
-    public User(String email, int password, String name, String phone, LocalDate birth, String address) {
+    public User(String email, String password, String name, String phone, LocalDate birth, String address) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -65,7 +65,7 @@ public class User extends BaseEntity {
     }
 
     public void update(UserUpdateInfoRequestDto dto) {
-        this.password = dto.getPassword().hashCode();
+        this.password = dto.getPassword();
         this.phone = dto.getPhone();
         this.address = dto.getAddress();
         stackIdSet.clear();
