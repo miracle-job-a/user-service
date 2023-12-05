@@ -23,8 +23,8 @@ public interface CoverLetterRepository extends JpaRepository<CoverLetter, Long> 
     @Query("""
            SELECT new com.miracle.userservice.dto.response.CoverLetterListResponseDto(c.id, c.title, c.modifiedAt)
            FROM CoverLetter c
-           WHERE c.title LIKE %:word%
-           AND (COALESCE(:userId, c.user.id) = c.user.id)
+           WHERE c.user.id = :userId AND c.title LIKE %:word%
+           ORDER BY c.modifiedAt DESC
            """)
-    Page<CoverLetterListResponseDto> findByUserId(@Param("userId") Long userId, @Param("word") String word, Pageable pageable);
+    Page<CoverLetterListResponseDto> findByUserIdAndTitleContains(@Param("userId") Long userId, @Param("word") String word, Pageable pageable);
 }
