@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,9 +24,10 @@ public class Interview extends BaseEntity {
     @JoinColumn(name = "application_letter_id")
     private ApplicationLetter applicationLetter;
 
-    @Column(nullable = false)
-    private String question;
-
-    @Column(columnDefinition = "TEXT")
-    private String answer;
+    @ElementCollection
+    @CollectionTable(
+            name = "interview_qna",
+            joinColumns = @JoinColumn(name = "interview_id")
+    )
+    private final List<Qna> qnaList = new ArrayList<>();
 }

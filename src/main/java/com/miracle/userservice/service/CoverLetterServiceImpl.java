@@ -11,10 +11,11 @@ import com.miracle.userservice.exception.NoSuchCoverLetterException;
 import com.miracle.userservice.repository.CoverLetterRepository;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,20 +29,11 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CoverLetterListResponseDto> getCoverLetterList(Long userId) {
+    public Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable) {
         String errorMessage = "User id is null";
         Objects.requireNonNull(userId, errorMessage);
 
-        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
-
-        return coverLetterList.stream()
-                .map(coverLetter -> new CoverLetterListResponseDto(
-                        coverLetter.getId(),
-                        coverLetter.getUser().getId(),
-                        coverLetter.getTitle(),
-                        coverLetter.getModifiedAt()
-                ))
-                .toList();
+        return coverLetterRepository.findByUserId(userId, pageable);
     }
 
     @Transactional(readOnly = true)
