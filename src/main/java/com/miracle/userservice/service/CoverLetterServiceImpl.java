@@ -34,6 +34,14 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         return coverLetterRepository.findByUserId(userId, pageable);
     }
 
+    @Override
+    public Page<CoverLetterListResponseDto> searchCoverLetter(Long userId, String word, Pageable pageable) {
+        Objects.requireNonNull(userId, "User id is null");
+        Objects.requireNonNull(word, "Word is null");
+
+        return coverLetterRepository.findByUserIdAndTitleContains(userId, word, pageable);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public CoverLetterResponseDto getCoverLetterDetail(Long coverLetterId) {
