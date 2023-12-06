@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,15 +37,18 @@ public class CoverLetterController {
             @PathVariable Long userId,
             @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
             @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int endPage,
-            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize,
+            @Parameter(name = "sort", description = "정렬 기준 IN ('MODIFIED_AT_ASC', 'MODIFIED_AT_DESC').\nDefalut Value = MODIFIED_AT_DESC") @RequestParam(required = false, defaultValue = "MODIFIED_AT_DESC", name = "sort") String sortStr
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.CoverLetterList.PAGING);
+        CoverLetterListSort coverLetterListSort = ParameterValidator.checkParameterEnum(sortStr, CoverLetterListSort.class, ValidationDefaultMsgUtil.CoverLetterList.SORT);
+        Sort sort = coverLetterListSort.toSort();
 
         startPage--;
         endPage--;
         List<List<CoverLetterListResponseDto>> coverLetterList = new ArrayList<>();
         for(int i = startPage; i <= endPage; i++) {
-            Pageable pageable = PageRequest.of(i, pageSize);
+            Pageable pageable = PageRequest.of(i, pageSize, sort);
             Page<CoverLetterListResponseDto> page = coverLetterService.getCoverLetterList(userId, pageable);
             coverLetterList.add(page.getContent());
         }
