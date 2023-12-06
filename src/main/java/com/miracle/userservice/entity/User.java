@@ -1,5 +1,7 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.converter.AsymmetricCypherConverter;
+import com.miracle.userservice.converter.SymmetricCypherConverter;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import lombok.*;
 
@@ -20,16 +22,19 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Convert(converter = SymmetricCypherConverter.class)
+    @Column(nullable = false, unique = true, length = 350)
     private String email;
 
-    @Column(nullable = false)
-    private int password;
+    @Convert(converter = AsymmetricCypherConverter.class)
+    @Column(nullable = false, length = 128)
+    private String password;
 
     @Column(nullable = false, length = 30)
     private String name;
 
-    @Column(nullable = false, length = 20)
+    @Convert(converter = SymmetricCypherConverter.class)
+    @Column(nullable = false, length = 350)
     private String phone;
 
     @Column(nullable = false)
@@ -55,7 +60,7 @@ public class User extends BaseEntity {
     private final Set<Long> scrapPostIdSet = new HashSet<>();
 
     @Builder
-    public User(String email, int password, String name, String phone, LocalDate birth, String address) {
+    public User(String email, String password, String name, String phone, LocalDate birth, String address) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -65,7 +70,7 @@ public class User extends BaseEntity {
     }
 
     public void update(UserUpdateInfoRequestDto dto) {
-        this.password = dto.getPassword().hashCode();
+        this.password = dto.getPassword();
         this.phone = dto.getPhone();
         this.address = dto.getAddress();
         stackIdSet.clear();

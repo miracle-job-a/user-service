@@ -13,13 +13,13 @@ public class UserInfoResponseDto {
     private final Long id;
     private final String name;
     private final String birth;
-    private final int password;
+    private final String password;
     private final String phone;
     private final String address;
     private final Set<Long> stackIdSet;
 
     @Builder
-    public UserInfoResponseDto(Long id, String name, LocalDate birth, int password, String phone, String address, Set<Long> stackIdSet) {
+    public UserInfoResponseDto(Long id, String name, LocalDate birth, String password, String phone, String address, Set<Long> stackIdSet) {
         this.id = id;
         this.name = name;
         this.birth = DateFormatUtil.dateToString(birth);

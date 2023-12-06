@@ -1,8 +1,8 @@
 package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.Birth;
-import com.miracle.userservice.entity.User;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
+import com.miracle.userservice.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Data
 public class UserJoinRequestDto {
@@ -90,7 +89,7 @@ public class UserJoinRequestDto {
     public User transformToUser() {
         String name = this.name;
         String email = this.email;
-        int password = Objects.requireNonNull(this.password, "Password is null").hashCode();
+        String password = this.password;
         String phone = this.phone;
         String address = this.address;
         LocalDate birth = this.birth;

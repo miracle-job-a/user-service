@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(dto, errorMessage);
 
         String email = dto.getEmail();
-        int password = dto.getPassword().hashCode();
+        String password = dto.getPassword();
         return userRepository.findByEmailAndPassword(email, password);
     }
 
