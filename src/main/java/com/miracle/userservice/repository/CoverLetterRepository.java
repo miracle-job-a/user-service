@@ -16,8 +16,9 @@ public interface CoverLetterRepository extends JpaRepository<CoverLetter, Long> 
     @Query("""
            SELECT new com.miracle.userservice.dto.response.CoverLetterListResponseDto(c.id, c.title, c.modifiedAt)
            FROM CoverLetter c
+           WHERE c.user.id = :userId
            """)
-    Page<CoverLetterListResponseDto> findByUserId(Long userId, Pageable pageable);
+    Page<CoverLetterListResponseDto> findByUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
            SELECT new com.miracle.userservice.dto.response.CoverLetterListResponseDto(c.id, c.title, c.modifiedAt)
