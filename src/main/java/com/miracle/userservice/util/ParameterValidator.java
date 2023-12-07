@@ -3,7 +3,6 @@ package com.miracle.userservice.util;
 import com.miracle.userservice.exception.InvalidParameterException;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public abstract class ParameterValidator {
 
@@ -36,22 +35,23 @@ public abstract class ParameterValidator {
     /**
      * Enum 파라미터를 검증하기 위한 메서드
      *
-     * @param enumName     열거 상수 이름
-     * @param clazz        열거 상수 타입
-     * @param errorMessage 해당 상수가 존재하지 않는 경우에 나타날 에러 메시지
      * @param <T>          열거 상수
+     * @param enumClass    열거 상수 타입
+     * @param enumName     열거 상수 이름
+     * @param errorMessage 해당 상수가 존재하지 않는 경우에 나타날 에러 메시지
      * @return 해당 열거 상수
      * @author chocola
      */
-    public static <T extends Enum<T>> T checkParameterEnum(String enumName, Class<T> clazz, String errorMessage) {
+    public static <T extends Enum<T>> T checkParameterEnum(Class<T> enumClass, String enumName, String errorMessage) {
         String[] split = errorMessage.split(":");
         String code = split[0];
         String message = split[1];
 
-        return Arrays.stream(clazz.getEnumConstants())
-                .filter(e -> e.name().equals(enumName.toUpperCase()))
-                .findFirst()
-                .orElseThrow(() -> new InvalidParameterException(code, message));
+        try {
+            return Enum.valueOf(enumClass, enumName);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidParameterException(code, message);
+        }
     }
 
     /**
