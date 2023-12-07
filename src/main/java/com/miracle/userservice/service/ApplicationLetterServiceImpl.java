@@ -57,28 +57,28 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_8", "이력서가 존재하지 않습니다."));
         CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_9", "자기소개서가 존재하지 않습니다."));
 
-        Optional<ApplicationLetter> applicationOpt = applicationLetterRepository.findByPostId(dto.getPostId());
+        Optional<ApplicationLetter> applicationOpt = applicationLetterRepository.findByUserIdAndPostId(userId, dto.getPostId());
         if(applicationOpt.isPresent()) {
             throw new DuplicateApplicationLetterException("400_10", "이미 지원한 공고입니다.");
         }
 
         ApplicationLetter applicationLetter = ApplicationLetter.builder()
-                        .postType(dto.getPostType())
-                        .user(user)
-                        .postId(dto.getPostId())
-                        .submitDate(dto.getSubmitDate())
-                        .applicationStatus(dto.getApplicationStatus())
-                        .resumeTitle(resume.getTitle())
-                        .coverLetterTitle(coverLetter.getTitle())
-                        .userEmail(user.getEmail())
-                        .userName(user.getName())
-                        .userPhone(user.getPhone())
-                        .userEducation(resume.getEducation())
-                        .userJob(dto.getUserJob())
-                        .userGitLink(resume.getGitLink())
-                        .userBirth(user.getBirth())
-                        .userCareer(resume.getCareer())
-                        .build();
+                .postType(dto.getPostType())
+                .user(user)
+                .postId(dto.getPostId())
+                .submitDate(dto.getSubmitDate())
+                .applicationStatus(dto.getApplicationStatus())
+                .resumeTitle(resume.getTitle())
+                .coverLetterTitle(coverLetter.getTitle())
+                .userEmail(user.getEmail())
+                .userName(user.getName())
+                .userPhone(user.getPhone())
+                .userEducation(resume.getEducation())
+                .userJob(dto.getUserJob())
+                .userGitLink(resume.getGitLink())
+                .userBirth(user.getBirth())
+                .userCareer(resume.getCareer())
+                .build();
 
         applicationLetter.getCareerDetailList().addAll(resume.getCareerDetailList());
         applicationLetter.getProjectList().addAll(resume.getProjectList());
