@@ -58,11 +58,12 @@ public class CoverLetterController {
         return new SuccessApiResponse<>(httpStatus, message, coverLetterList);
     }
 
+    @ApiGetSearchCoverLetterList
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/search")
     public CommonApiResponse searchCoverLetter(
             @PathVariable Long userId,
-            @RequestParam String word,
+            @Parameter(description = "검색 키워드") @RequestParam(required = false, defaultValue = "") String word,
             @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
             @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int endPage,
             @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int pageSize
