@@ -4,8 +4,10 @@ import com.miracle.userservice.controller.Requester;
 import com.miracle.userservice.dto.request.ResumePostRequestDto;
 import com.miracle.userservice.dto.response.ResumeListResponseDto;
 import com.miracle.userservice.dto.response.ResumeResponseDto;
-import com.miracle.userservice.entity.*;
+import com.miracle.userservice.entity.Resume;
+import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.NoSuchResumeException;
+import com.miracle.userservice.exception.OverflowException;
 import com.miracle.userservice.repository.ResumeRepository;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class ResumeServiceImpl implements ResumeService {
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
         if (requester == Requester.COMPANY) resumeOpt = resumeOpt.filter(Resume::isOpen);
 
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
         return getResumeResponseDto(resume);
     }
 
@@ -42,52 +44,41 @@ public class ResumeServiceImpl implements ResumeService {
                 .title(resume.getTitle())
                 .photo(resume.getPhoto())
                 .career(resume.getCareer())
+                .open(resume.isOpen())
                 .birth(resume.getUser().getBirth())
                 .phone(resume.getUser().getPhone())
                 .education(resume.getEducation())
                 .gitLink(resume.getGitLink())
                 .jobIdSet(resume.getJobIdSet())
                 .stackIdSet(resume.getStackIdSet())
-                .careerDetailList(
-                        resume.getCareerDetailList()
-                                .stream()
-                                .map(ResumeCareerDetail::getContent)
-                                .toList()
-                )
-                .projectList(
-                        resume.getProjectList()
-                                .stream()
-                                .map(ResumeProject::getContent)
-                                .toList()
-                )
-                .etcList(
-                        resume.getEtcList()
-                                .stream()
-                                .map(ResumeEtc::getContent)
-                                .toList()
-                )
+                .careerDetailList(resume.getCareerDetailList())
+                .projectList(resume.getProjectList())
+                .etcList(resume.getEtcList())
                 .build();
     }
 
     @Override
-    public boolean postResume(ResumePostRequestDto dto) {
+    public boolean postResume(Long userId, ResumePostRequestDto dto) {
         Objects.requireNonNull(dto, "ResumePostRequestDto is null");
 
-        Resume resume = getResume(dto);
+        if (resumeRepository.countByUserId(userId) >= 5) {
+            throw new OverflowException("406", "이력서는 최대 5개까지 저장 가능합니다.");
+        }
 
-        resume.addStackIdAll(dto.getStackIdSet());
-        resume.addJobIdAll(dto.getJobIdSet());
+        Resume resume = createResume(userId, dto);
 
-        dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
-        dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
-        dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
+        resume.getStackIdSet().addAll(dto.getStackIdSet());
+        resume.getJobIdSet().addAll(dto.getJobIdSet());
+
+        resume.getCareerDetailList().addAll(dto.getCareerDetailList());
+        resume.getProjectList().addAll(dto.getProjectList());
+        resume.getEtcList().addAll(dto.getEtcList());
 
         resumeRepository.save(resume);
         return true;
     }
 
-    private Resume getResume(ResumePostRequestDto dto) {
-        Long userId = dto.getUserId();
+    private Resume createResume(Long userId, ResumePostRequestDto dto) {
         User user = userRepository.findById(userId).orElseThrow();
         return Resume.builder()
                 .user(user)
@@ -105,7 +96,7 @@ public class ResumeServiceImpl implements ResumeService {
         Objects.requireNonNull(resumeId, "Resume id is null");
 
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
 
         update(resume, dto);
 
@@ -121,17 +112,11 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setCareer(dto.getCareer());
         resume.setOpen(dto.isOpen());
 
-        resume.getStackIdSet().clear();
-        resume.getJobIdSet().clear();
-        resume.addStackIdAll(dto.getStackIdSet());
-        resume.addJobIdAll(dto.getJobIdSet());
-
-        resume.getCareerDetailList().clear();
-        resume.getProjectList().clear();
-        resume.getEtcList().clear();
-        dto.getCareerDetailList().forEach(content -> new ResumeCareerDetail(content, resume));
-        dto.getProjectList().forEach(content -> new ResumeProject(content, resume));
-        dto.getEtcList().forEach(content -> new ResumeEtc(content, resume));
+        resume.updateStackIdSet(dto.getStackIdSet());
+        resume.updateJobIdSet(dto.getJobIdSet());
+        resume.updateCareerDetailList(dto.getCareerDetailList());
+        resume.updateProjectList(dto.getProjectList());
+        resume.updateEtcList(dto.getEtcList());
     }
 
     @Override
@@ -139,7 +124,7 @@ public class ResumeServiceImpl implements ResumeService {
         Objects.requireNonNull(resumeId, "Resume id is null");
 
         Optional<Resume> resumeOpt = resumeRepository.findById(resumeId);
-        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("이력서가 존재하지 않습니다.", "400_1"));
+        Resume resume = resumeOpt.orElseThrow(() -> new NoSuchResumeException("400_1", "이력서가 존재하지 않습니다."));
 
         resumeRepository.delete(resume);
         return true;

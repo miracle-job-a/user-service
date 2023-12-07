@@ -1,9 +1,13 @@
 package com.miracle.userservice.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,9 +26,22 @@ public class Interview extends BaseEntity {
     @JoinColumn(name = "application_letter_id")
     private ApplicationLetter applicationLetter;
 
-    @Column(nullable = false)
-    private String question;
+    @ElementCollection
+    @CollectionTable(
+            name = "interview_qna",
+            joinColumns = @JoinColumn(name = "interview_id")
+    )
+    private final List<Qna> qnaList = new ArrayList<>();
 
-    @Column(columnDefinition = "TEXT")
-    private String answer;
+    @Builder
+    public Interview(User user, ApplicationLetter applicationLetter) {
+        this.user = user;
+        this.applicationLetter = applicationLetter;
+    }
+
+    public void updateQnaList(List<Qna> qnaList) {
+        this.qnaList.clear();
+        this.qnaList.addAll(qnaList);
+        setModifiedAt(LocalDateTime.now());
+    }
 }

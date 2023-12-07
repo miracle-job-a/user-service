@@ -1,5 +1,7 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.converter.SymmetricCypherConverter;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +26,7 @@ public class ApplicationLetter extends BaseEntity {
     @Column(name = "application_letter_type", nullable = false, length = 10)
     private PostType postType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -39,11 +41,19 @@ public class ApplicationLetter extends BaseEntity {
     private ApplicationStatus applicationStatus;
 
     @Column(nullable = false, length = 50)
+    private String resumeTitle;
+
+    @Column(nullable = false, length = 50)
+    private String coverLetterTitle;
+
+    @Convert(converter = SymmetricCypherConverter.class)
+    @Column(nullable = false, length = 50)
     private String userEmail;
 
     @Column(nullable = false, length = 30)
     private String userName;
 
+    @Convert(converter = SymmetricCypherConverter.class)
     @Column(nullable = false, length = 20)
     private String userPhone;
 
@@ -88,7 +98,6 @@ public class ApplicationLetter extends BaseEntity {
             name = "application_letter_answer",
             joinColumns = @JoinColumn(name = "application_letter_id")
     )
-    @Embedded
     private final List<Qna> qnaList = new ArrayList<>();
 
     @ElementCollection
@@ -98,4 +107,23 @@ public class ApplicationLetter extends BaseEntity {
     )
     @Column(name = "stack_id", nullable = false)
     private final Set<Long> stackIdSet = new HashSet<>();
+
+    @Builder
+    public ApplicationLetter(PostType postType, User user, Long postId, LocalDateTime submitDate, ApplicationStatus applicationStatus, String resumeTitle, String coverLetterTitle, String userEmail, String userName, String userPhone, String userEducation, String userJob, String userGitLink, LocalDate userBirth, int userCareer) {
+        this.postType = postType;
+        this.user = user;
+        this.postId = postId;
+        this.submitDate = submitDate;
+        this.applicationStatus = applicationStatus;
+        this.resumeTitle = resumeTitle;
+        this.coverLetterTitle = coverLetterTitle;
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userEducation = userEducation;
+        this.userJob = userJob;
+        this.userGitLink = userGitLink;
+        this.userBirth = userBirth;
+        this.userCareer = userCareer;
+    }
 }

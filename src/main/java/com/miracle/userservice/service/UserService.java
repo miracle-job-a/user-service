@@ -2,11 +2,18 @@ package com.miracle.userservice.service;
 
 import com.miracle.userservice.dto.request.UserJoinRequestDto;
 import com.miracle.userservice.dto.request.UserLoginRequestDto;
+import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import com.miracle.userservice.dto.response.UserBaseInfoResponseDto;
+import com.miracle.userservice.dto.response.UserInfoResponseDto;
+import com.miracle.userservice.dto.response.UserJoinListResponseDto;
+import com.miracle.userservice.dto.response.UserListResponseDto;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.DuplicateEmailException;
 import com.miracle.userservice.exception.InvalidEmailException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface UserService {
@@ -46,11 +53,59 @@ public interface UserService {
 
     /**
      * 특정 유저의 기본 정보를 반환하는 메서드
-     * 기본 정보에는 이메일, 이름, 전화번호, 생년월일, 주소를 포함한다.
+     * 기본 정보에는 이메일, 이름, 전화번호, 생년월일, 주소, 스택 ID 목록을 포함한다.
      *
-     * @param id 유저의 ID
-     * @return 유저의 기본 정보가 담긴 DTO(email, name, phone, birth, address)
+     * @param userId 유저의 ID
+     * @return 유저의 기본 정보가 담긴 DTO(email, name, phone, birth, address, stackIdSet)
      * @author chocola
      */
-    UserBaseInfoResponseDto getUserBaseInfo(Long id);
+    UserBaseInfoResponseDto getUserBaseInfo(Long userId);
+
+    /**
+     * 특정 유저의 정보를 반환하는 메서드
+     * 유저 정보에는 아이디, 이름, 생년월일, 비밀번호, 전화번호, 주소, 스택 아이디 목록을 포함한다.
+     *
+     * @param userId 유저의 ID
+     * @return 유저의 정보가 담긴 DTO(id, name, birth, password, phone, address, stackIdSet)
+     * @author chocola
+     */
+    UserInfoResponseDto getUserInfo(Long userId);
+
+    /**
+     * 특정 유저의 정보를 수정하는 메서드
+     *
+     * @param userId 유저의 ID
+     * @param dto    유저 정보 수정 데이터
+     * @return true
+     * @author chocola
+     */
+    boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto);
+
+    /**
+     * 특정 유저 회원 탈퇴 메서드
+     *
+     * @param userId 유저의 ID
+     * @return true
+     * @author chocola
+     */
+    boolean deleteUser(Long userId);
+
+    /**
+     * 유저 목록을 조회하는 메서드
+     *
+     * @param pageable 유저 목록 페이징 정보
+     * @return 유저 목록이 담긴 {@code Page}. 유저 목록 정보는 ID, 이메일, 이름, 주소, 회원 가입 날짜를 포함한다.
+     * @author chocola
+     */
+    Page<UserListResponseDto> getUserList(Pageable pageable);
+
+    /**
+     * 특정 날짜의 유저 회원 가입 목록을 조회
+     *
+     * @param date 조회하고자 하는 날짜
+     * @param pageable 페이징 정보
+     * @return {@code date}에 회원 가입한 유저 리스트
+     * @author chocola
+     */
+    Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable);
 }

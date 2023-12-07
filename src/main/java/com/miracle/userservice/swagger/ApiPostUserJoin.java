@@ -22,7 +22,7 @@ import static java.lang.annotation.ElementType.METHOD;
         description = "유저의 회원 가입 요청을 처리하는 API. 성공 시 DB에 유저의 정보가 저장됨",
         responses = {
                 @ApiResponse(
-                        responseCode = SwaggerMsgUtil.ResponseCode.NO_CONTENT,
+                        responseCode = SwaggerMsgUtil.ResponseCode.OK,
                         description = "회원 가입 성공",
                         content = @Content(
                                 mediaType = SwaggerMsgUtil.MediaType.APPLICATION_JSON,
@@ -30,7 +30,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                         name = "성공",
                                         value = """
                                                 {
-                                                  "httpStatus": 204,
+                                                  "httpStatus": 200,
                                                   "message": "회원 가입 성공",
                                                   "data": null
                                                 }

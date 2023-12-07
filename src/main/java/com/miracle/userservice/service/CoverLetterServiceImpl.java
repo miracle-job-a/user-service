@@ -4,17 +4,16 @@ import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.entity.CoverLetter;
-import com.miracle.userservice.entity.CoverLetterQna;
-import com.miracle.userservice.entity.Qna;
 import com.miracle.userservice.entity.User;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
 import com.miracle.userservice.repository.CoverLetterRepository;
 import com.miracle.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,61 +27,53 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CoverLetterListResponseDto> getCoverLetterList(Long userId) {
+    public Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable) {
         String errorMessage = "User id is null";
         Objects.requireNonNull(userId, errorMessage);
 
-        List<CoverLetter> coverLetterList = coverLetterRepository.findByUserId(userId);
-
-        return coverLetterList.stream()
-                .map(coverLetter -> new CoverLetterListResponseDto(
-                        coverLetter.getId(),
-                        coverLetter.getUser().getId(),
-                        coverLetter.getTitle(),
-                        coverLetter.getModifiedAt()
-                ))
-                .toList();
+        return coverLetterRepository.findByUserId(userId, pageable);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public CoverLetterResponseDto getCoverLetterDetail(Long id) {
+    public Page<CoverLetterListResponseDto> searchCoverLetter(Long userId, String word, Pageable pageable) {
+        Objects.requireNonNull(userId, "User id is null");
+        Objects.requireNonNull(word, "Word is null");
+
+        return coverLetterRepository.findByUserIdAndTitleContains(userId, word, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public CoverLetterResponseDto getCoverLetterDetail(Long coverLetterId) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
 
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         return CoverLetterResponseDto.builder()
                 .id(coverLetter.getId())
                 .title(coverLetter.getTitle())
                 .modifiedAt(coverLetter.getModifiedAt())
-                .qnaList(
-                        coverLetter.getQnaList()
-                                .stream()
-                                .map(coverLetterQna -> new Qna(
-                                        coverLetterQna.getQna().getQuestion(),
-                                        coverLetterQna.getQna().getAnswer()))
-                                .toList()
-                )
+                .qnaList(coverLetter.getQnaList())
                 .build();
     }
 
     @Override
-    public boolean postCoverLetter(CoverLetterPostRequestDto dto) {
+    public boolean postCoverLetter(Long userId, CoverLetterPostRequestDto dto) {
         String errorMessage = "CoverLetterPostRequestDto is null";
         Objects.requireNonNull(dto, errorMessage);
 
-        Long userId = dto.getUserId();
-        Optional<User> user = userRepository.findById(userId);
+        User user = userRepository.findById(userId).orElseThrow();
 
         CoverLetter coverLetter = CoverLetter.builder()
-                .user(user.get())
+                .user(user)
                 .title(dto.getTitle())
                 .build();
 
-        dto.getQnaList().forEach(qna -> new CoverLetterQna(qna, coverLetter));
+        coverLetter.getQnaList().addAll(dto.getQnaList());
 
         coverLetterRepository.save(coverLetter);
 
@@ -90,16 +81,15 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     }
 
     @Override
-    public boolean updateCoverLetter(Long id, CoverLetterPostRequestDto dto) {
+    public boolean updateCoverLetter(Long coverLetterId, CoverLetterPostRequestDto dto) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         coverLetter.setTitle(dto.getTitle());
-        coverLetter.getQnaList().clear();
-        dto.getQnaList().forEach(qna -> coverLetter.addQna(new CoverLetterQna(qna, coverLetter)));
+        coverLetter.updateQnaList(dto.getQnaList());
 
         coverLetterRepository.save(coverLetter);
 
@@ -107,12 +97,12 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     }
 
     @Override
-    public boolean deleteCoverLetter(Long id) {
+    public boolean deleteCoverLetter(Long coverLetterId) {
         String errorMessage = "CoverLetter id is null";
-        Objects.requireNonNull(id, errorMessage);
+        Objects.requireNonNull(coverLetterId, errorMessage);
 
-        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(id);
-        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("자기소개서가 존재하지 않습니다.", "400_1"));
+        Optional<CoverLetter> coverLetterOpt = coverLetterRepository.findById(coverLetterId);
+        CoverLetter coverLetter = coverLetterOpt.orElseThrow(() -> new NoSuchCoverLetterException("400_1", "자기소개서가 존재하지 않습니다."));
 
         coverLetterRepository.delete(coverLetter);
 

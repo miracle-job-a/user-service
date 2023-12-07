@@ -3,6 +3,7 @@ package com.miracle.userservice.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -37,28 +38,28 @@ public class Resume extends BaseEntity {
     @Column(name = "open_status")
     private boolean open;
 
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ResumeCareerDetail> careerDetailList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ResumeProject> projectList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ResumeEtc> etcList = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "resume_career_detail", joinColumns = @JoinColumn(name = "resume_id"))
+    @Column(nullable = false, name = "content")
+    private final List<String> careerDetailList = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(
-            name = "resume_stack",
-            joinColumns = @JoinColumn(nullable = false, name = "resume_id")
-    )
+    @CollectionTable(name = "resume_project", joinColumns = @JoinColumn(name = "resume_id"))
+    @Column(nullable = false, name = "content", columnDefinition = "TEXT")
+    private final List<String> projectList = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "resume_etc", joinColumns = @JoinColumn(name = "resume_id"))
+    @Column(nullable = false, name = "content")
+    private final List<String> etcList = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "resume_stack", joinColumns = @JoinColumn(nullable = false, name = "resume_id"))
     @Column(nullable = false, name = "stack_id")
     private final Set<Long> stackIdSet = new HashSet<>();
 
     @ElementCollection
-    @CollectionTable(
-            name = "resume_job",
-            joinColumns = @JoinColumn(nullable = false, name = "resume_id")
-    )
+    @CollectionTable(name = "resume_job", joinColumns = @JoinColumn(nullable = false, name = "resume_id"))
     @Column(nullable = false, name = "job_id")
     private final Set<Long> jobIdSet = new HashSet<>();
 
@@ -73,23 +74,33 @@ public class Resume extends BaseEntity {
         this.open = open;
     }
 
-    public void addStackIdAll(Collection<Long> collection) {
-        stackIdSet.addAll(collection);
+    public void updateCareerDetailList(List<String> careerDetailList) {
+        this.careerDetailList.clear();
+        this.careerDetailList.addAll(careerDetailList);
+        setModifiedAt(LocalDateTime.now());
     }
 
-    public void addJobIdAll(Collection<Long> collection) {
-        jobIdSet.addAll(collection);
+    public void updateProjectList(List<String> projectList) {
+        this.projectList.clear();
+        this.projectList.addAll(projectList);
+        setModifiedAt(LocalDateTime.now());
     }
 
-    public void addCareerDetail(ResumeCareerDetail resumeCareerDetail) {
-        careerDetailList.add(resumeCareerDetail);
+    public void updateEtcList(List<String> etcList) {
+        this.etcList.clear();
+        this.etcList.addAll(etcList);
+        setModifiedAt(LocalDateTime.now());
     }
 
-    public void addProject(ResumeProject resumeProject) {
-        projectList.add(resumeProject);
+    public void updateStackIdSet(Set<Long> stackIdSet) {
+        this.stackIdSet.clear();
+        this.stackIdSet.addAll(stackIdSet);
+        setModifiedAt(LocalDateTime.now());
     }
 
-    public void addEtc(ResumeEtc resumeEtc) {
-        etcList.add(resumeEtc);
+    public void updateJobIdSet(Set<Long> jobIdSet) {
+        this.jobIdSet.clear();
+        this.jobIdSet.addAll(jobIdSet);
+        setModifiedAt(LocalDateTime.now());
     }
 }

@@ -2,25 +2,17 @@ package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.entity.Qna;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
 public class CoverLetterPostRequestDto {
-
-    @Positive(message = ValidationDefaultMsgUtil.CoverLetterPost.USER_ID)
-    @Schema(
-            description = "유저 ID",
-            required = true,
-            example = "1"
-    )
-    private final Long userId;
 
     @Size(max = 50, message = ValidationDefaultMsgUtil.CoverLetterPost.TITLE)
     @NotBlank(message = ValidationDefaultMsgUtil.CoverLetterPost.TITLE)
@@ -32,15 +24,16 @@ public class CoverLetterPostRequestDto {
     private final String title;
 
     @NotEmpty(message = ValidationDefaultMsgUtil.CoverLetterPost.QNA)
-    @Schema(
-            description = "질문 및 답변 목록",
-            required = true,
-            implementation = Qna.class
+    @ArraySchema(
+            schema = @Schema(
+                    description = "질문 및 답변 목록",
+                    required = true,
+                    implementation = Qna.class
+            )
     )
     private final List<Qna> qnaList;
 
     public CoverLetterPostRequestDto() {
-        this.userId = null;
         this.title = null;
         this.qnaList = null;
     }

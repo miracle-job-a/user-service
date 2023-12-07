@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +20,19 @@ public class CoverLetter extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false, length = 50)
     private String title;
 
-    @OneToMany(mappedBy = "coverLetter", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<CoverLetterQna> qnaList = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "cover_letter_qna",
+            joinColumns = @JoinColumn(name = "cover_letter_id")
+    )
+    private final List<Qna> qnaList = new ArrayList<>();
 
     @Builder
     public CoverLetter(User user, String title) {
@@ -35,7 +40,9 @@ public class CoverLetter extends BaseEntity {
         this.title = title;
     }
 
-    public void addQna(CoverLetterQna coverLetterQna) {
-        qnaList.add(coverLetterQna);
+    public void updateQnaList(List<Qna> qnaList) {
+        this.qnaList.clear();
+        this.qnaList.addAll(qnaList);
+        setModifiedAt(LocalDateTime.now());
     }
 }

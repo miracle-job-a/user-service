@@ -44,7 +44,7 @@ class UserServiceTest {
                 .birth(birth)
                 .build();
 
-        User entity = new User(email, password.hashCode(), name, phone, birth, address);
+        User entity = new User(email, password, name, phone, birth, address);
 
         //w
         userService.join(input);
