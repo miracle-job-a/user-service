@@ -2,6 +2,7 @@ package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
+import com.miracle.userservice.controller.sort.ApplicationLetterListSort;
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
@@ -11,10 +12,12 @@ import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto
 import com.miracle.userservice.service.ApplicationLetterService;
 import com.miracle.userservice.swagger.*;
 import com.miracle.userservice.util.ParameterValidator;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,17 +98,20 @@ public class ApplicationLetterController {
     @GetMapping
     public CommonApiResponse getApplicationLetterList(
             @PathVariable Long userId,
-            @RequestParam(required = false, defaultValue = "1") int startPage,
-            @RequestParam(required = false, defaultValue = "5") int endPage,
-            @RequestParam(required = false, defaultValue = "10") int pageSize
+            @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
+            @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int endPage,
+            @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int pageSize,
+            @Parameter(name = "sort", description = "Value in ('SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC').\n Default Value = SUBMIT_DATE_ASC") @RequestParam(name = "sort", required = false, defaultValue = "") String sortStr
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.ApplicationLetterList.PAGING);
+        ApplicationLetterListSort applicationLetterListSort = ParameterValidator.checkParameterEnum(ApplicationLetterListSort.class, sortStr, ValidationDefaultMsgUtil.ApplicationLetterList.SORT);
+        Sort sort = applicationLetterListSort.toSort();
 
         startPage--;
         endPage--;
         List<List<ApplicationLetterListResponseDto>> result = new ArrayList<>();
         for (int i = startPage; i <= endPage; i++) {
-            Pageable pageable = PageRequest.of(i, pageSize);
+            Pageable pageable = PageRequest.of(i, pageSize, sort);
             Page<ApplicationLetterListResponseDto> page = applicationLetterService.getApplicationLetterList(userId, pageable);
             result.add(page.getContent());
         }

@@ -3,7 +3,7 @@ package com.miracle.userservice.controller.sort;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 
-public enum ApplicantListSort {
+public enum ApplicantListSort implements Sortable {
 
     NAME {
         @Override
@@ -22,7 +22,5 @@ public enum ApplicantListSort {
         public Sort toSort() {
             return Sort.by(Order.desc("submitDate"));
         }
-    };
-
-    public abstract Sort toSort();
+    }
 }

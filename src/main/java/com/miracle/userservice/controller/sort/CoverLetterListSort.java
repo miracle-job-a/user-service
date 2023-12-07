@@ -3,7 +3,7 @@ package com.miracle.userservice.controller.sort;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 
-public enum CoverLetterListSort {
+public enum CoverLetterListSort implements Sortable {
 
     MODIFIED_AT_ASC {
         @Override
@@ -17,7 +17,5 @@ public enum CoverLetterListSort {
         public Sort toSort() {
             return Sort.by(Order.desc("modifiedAt"));
         }
-    };
-
-    public abstract Sort toSort();
+    }
 }
