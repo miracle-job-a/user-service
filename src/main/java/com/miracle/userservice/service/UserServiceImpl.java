@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
+    @Transactional
     @Override
     public void join(UserJoinRequestDto dto) {
         String errorMessage = "UserJoinRequestDto is null";
@@ -54,7 +55,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public boolean checkDuplicate(String email) {
         validEmail(email);
@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional(readOnly = true)
     @Override
     public UserBaseInfoResponseDto getUserBaseInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
@@ -83,7 +82,6 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public UserInfoResponseDto getUserInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
@@ -108,19 +106,18 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean deleteUser(Long userId) {
         userRepository.deleteById(userId);
         return true;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Page<UserListResponseDto> getUserList(Pageable pageable) {
         return userRepository.findAllUserList(pageable);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable) {
         LocalDateTime startDate = date.atStartOfDay();
