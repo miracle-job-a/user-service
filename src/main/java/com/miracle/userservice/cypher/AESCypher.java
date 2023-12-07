@@ -1,22 +1,15 @@
 package com.miracle.userservice.cypher;
 
+import lombok.RequiredArgsConstructor;
+
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+@RequiredArgsConstructor
 public class AESCypher implements SymmetricCypher {
 
     private final SecretKey secretKey;
-
-    public AESCypher() {
-        try {
-            this.secretKey = KeyGenerator.getInstance("AES").generateKey();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public String encrypt(String input) {
