@@ -1,19 +1,7 @@
-server:
-  port: 60001
-
 spring:
-  datasource:
-    url: ${DB_url}
-    username: ${DB_username}
-    password: ${DB_password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-
-my:
-  secret-key: LeyrEvp8XhaybwN5tEKSMw==
+  application:
+    name: userService
+  profiles:
+    active: prod
+  config:
+    import: optional:configserver:http://miracle:1234@3.36.100.180:60010

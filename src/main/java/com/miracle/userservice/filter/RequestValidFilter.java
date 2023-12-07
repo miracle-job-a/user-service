@@ -2,6 +2,7 @@ package com.miracle.userservice.filter;
 
 import com.miracle.userservice.util.Const;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,7 +15,11 @@ import java.util.Objects;
 @WebFilter("/v1/*")
 public class RequestValidFilter implements Filter {
 
-    private static final String PRIVATE_KEY = "TkwkdsladkdlrhdnjfrmqdhodlfjgrpaksgdlwnjTdjdy";
+    private final String privateKey;
+
+    public RequestValidFilter(Environment environment) {
+        this.privateKey = environment.getProperty("my.private-key");
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -28,7 +33,7 @@ public class RequestValidFilter implements Filter {
         }
 
         int hashCode = request.getIntHeader(Const.RequestHeader.MIRACLE);
-        String key = sessionId + PRIVATE_KEY;
+        String key = sessionId + privateKey;
         int h = key.hashCode();
 
         if (h != hashCode) {
