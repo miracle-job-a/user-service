@@ -1,4 +1,4 @@
-package com.miracle.userservice.controller;
+package com.miracle.userservice.controller.sort;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
