@@ -40,10 +40,10 @@ public class ApplicationLetter extends BaseEntity {
     @Column(nullable = false, length = 30)
     private ApplicationStatus applicationStatus;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String resumeTitle;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String coverLetterTitle;
 
     @Convert(converter = SymmetricCypherConverter.class)

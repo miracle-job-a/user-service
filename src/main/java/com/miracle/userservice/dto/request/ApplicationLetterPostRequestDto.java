@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class ApplicationLetterPostRequestDto {
 
     @Positive(message = ValidationDefaultMsgUtil.ApplicationLetterPost.RESUME_ID)
-    @NotNull(message = ValidationDefaultMsgUtil.ApplicationLetterPost.RESUME_ID)
     @Schema(
             description = "이력서 ID",
             required = true,
@@ -23,7 +22,6 @@ public class ApplicationLetterPostRequestDto {
     private final Long resumeId;
 
     @Positive(message = ValidationDefaultMsgUtil.ApplicationLetterPost.COVER_LETTER_ID)
-    @NotNull(message = ValidationDefaultMsgUtil.ApplicationLetterPost.COVER_LETTER_ID)
     @Schema(
             description = "자기소개서 ID",
             required = true,

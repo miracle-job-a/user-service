@@ -3,6 +3,7 @@ package com.miracle.userservice.service;
 import com.miracle.userservice.dto.request.ApplicationLetterPostRequestDto;
 import com.miracle.userservice.dto.response.*;
 import com.miracle.userservice.entity.*;
+import com.miracle.userservice.entity.ApplicationLetter.ApplicationLetterBuilder;
 import com.miracle.userservice.exception.DuplicateApplicationLetterException;
 import com.miracle.userservice.exception.NoSuchApplicationLetterException;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,40 +56,62 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
         Objects.requireNonNull(dto, "ApplicationLetterPostRequestDto is null");
 
         User user = userRepository.findById(userId).orElseThrow();
-        Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_8", "이력서가 존재하지 않습니다."));
-        CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_9", "자기소개서가 존재하지 않습니다."));
+        Long postId = dto.getPostId();
+        PostType postType = dto.getPostType();
 
-        Optional<ApplicationLetter> applicationOpt = applicationLetterRepository.findByUserIdAndPostId(userId, dto.getPostId());
-        if(applicationOpt.isPresent()) {
+        Optional<ApplicationLetter> applicationOpt = applicationLetterRepository.findByUserIdAndPostId(userId, postId);
+        if (applicationOpt.isPresent()) {
             throw new DuplicateApplicationLetterException("400_10", "이미 지원한 공고입니다.");
         }
 
-        ApplicationLetter applicationLetter = ApplicationLetter.builder()
-                .postType(dto.getPostType())
-                .user(user)
-                .postId(dto.getPostId())
-                .submitDate(dto.getSubmitDate())
-                .applicationStatus(dto.getApplicationStatus())
-                .resumeTitle(resume.getTitle())
-                .coverLetterTitle(coverLetter.getTitle())
-                .userEmail(user.getEmail())
-                .userName(user.getName())
-                .userPhone(user.getPhone())
-                .userEducation(resume.getEducation())
-                .userJob(dto.getUserJob())
-                .userGitLink(resume.getGitLink())
-                .userBirth(user.getBirth())
-                .userCareer(resume.getCareer())
-                .build();
+        ApplicationLetter applicationLetter;
+        ApplicationLetterBuilder builder = ApplicationLetter.builder();
+        LocalDateTime submitDate = dto.getSubmitDate();
+        ApplicationStatus applicationStatus = dto.getApplicationStatus();
+        String email = user.getEmail();
+        String userName = user.getName();
+        String phone = user.getPhone();
+        if (postType == PostType.NORMAL) {
+            Resume resume = resumeRepository.findById(dto.getResumeId()).orElseThrow(() -> new NoSuchResumeException("400_8", "이력서가 존재하지 않습니다."));
+            CoverLetter coverLetter = coverLetterRepository.findById(dto.getCoverLetterId()).orElseThrow(() -> new NoSuchCoverLetterException("400_9", "자기소개서가 존재하지 않습니다."));
 
-        applicationLetter.getCareerDetailList().addAll(resume.getCareerDetailList());
-        applicationLetter.getProjectList().addAll(resume.getProjectList());
-        applicationLetter.getEtcList().addAll(resume.getEtcList());
-        applicationLetter.getStackIdSet().addAll(resume.getStackIdSet());
-        applicationLetter.getQnaList().addAll(coverLetter.getQnaList());
+            applicationLetter = builder
+                    .postType(postType)
+                    .user(user)
+                    .postId(postId)
+                    .submitDate(submitDate)
+                    .applicationStatus(applicationStatus)
+                    .userEmail(email)
+                    .userName(userName)
+                    .userPhone(phone)
+                    .resumeTitle(resume.getTitle())
+                    .coverLetterTitle(coverLetter.getTitle())
+                    .userEducation(resume.getEducation())
+                    .userJob(dto.getUserJob())
+                    .userGitLink(resume.getGitLink())
+                    .userBirth(user.getBirth())
+                    .userCareer(resume.getCareer())
+                    .build();
+
+            applicationLetter.getCareerDetailList().addAll(resume.getCareerDetailList());
+            applicationLetter.getProjectList().addAll(resume.getProjectList());
+            applicationLetter.getEtcList().addAll(resume.getEtcList());
+            applicationLetter.getStackIdSet().addAll(resume.getStackIdSet());
+            applicationLetter.getQnaList().addAll(coverLetter.getQnaList());
+        } else {
+            applicationLetter = builder
+                    .postType(postType)
+                    .user(user)
+                    .postId(postId)
+                    .submitDate(submitDate)
+                    .applicationStatus(applicationStatus)
+                    .userEmail(email)
+                    .userName(userName)
+                    .userPhone(phone)
+                    .build();
+        }
 
         applicationLetterRepository.save(applicationLetter);
-
         return true;
     }
 
