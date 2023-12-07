@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
            SELECT new com.miracle.userservice.dto.response.UserJoinListResponseDto(u.id, u.email, u.name, u.createdAt)
            FROM User u
-           WHERE createdAt >= :startDate AND createdAt < :endDate
+           WHERE u.createdAt >= :startDate AND u.createdAt < :endDate
            ORDER BY u.createdAt DESC
            """)
     Page<UserJoinListResponseDto> findJoinList(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, Pageable pageable);

@@ -4,6 +4,7 @@ import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterResponseDto;
 import com.miracle.userservice.exception.NoSuchCoverLetterException;
+import com.miracle.userservice.exception.InvalidParameterException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +16,8 @@ public interface CoverLetterService {
      * @param userId   유저 ID
      * @param pageable 페이징 정보
      * @return 자기소개서 정보가 담긴 {@code Page}를 반환
-     * @throws NullPointerException If {@code userId} is null
+     * @throws NullPointerException      If {@code userId} is null
+     * @throws InvalidParameterException When the parameter format is incorrect
      * @author hazzokko
      */
     Page<CoverLetterListResponseDto> getCoverLetterList(Long userId, Pageable pageable);
