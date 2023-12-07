@@ -35,7 +35,6 @@ import static java.lang.annotation.ElementType.METHOD;
                                                     "id": 2,
                                                     "name": "오스틴",
                                                     "birth": "2017-01-01",
-                                                    "password": -1518854684,
                                                     "phone": "01012345678",
                                                     "address": "서울특별시 서초구 효령로 113",
                                                     "stackIdSet": [1, 3, 5]

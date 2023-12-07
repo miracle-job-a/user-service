@@ -88,7 +88,6 @@ public class UserServiceImpl implements UserService {
         return UserInfoResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .password(user.getPassword())
                 .phone(user.getPhone())
                 .birth(user.getBirth())
                 .address(user.getAddress())
