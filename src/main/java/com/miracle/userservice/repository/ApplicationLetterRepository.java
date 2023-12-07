@@ -18,8 +18,9 @@ public interface ApplicationLetterRepository extends JpaRepository<ApplicationLe
     @Query("""
            SELECT new com.miracle.userservice.dto.response.ApplicantListResponseDto(al.id, al.resumeTitle, al.userName, al.user.address, al.submitDate)
            FROM ApplicationLetter al
+           WHERE al.postId = :postId
            """)
-    Page<ApplicantListResponseDto> findAllApplicantListByPostId(Long postId, Pageable pageable);
+    Page<ApplicantListResponseDto> findAllApplicantListByPostId(@Param("postId") Long postId, Pageable pageable);
 
     @Query("""
            SELECT new com.miracle.userservice.dto.response.ApplicationLetterListResponseDto(
