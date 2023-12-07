@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Transactional
     @Override
     public boolean updateUserInfo(Long userId, UserUpdateInfoRequestDto dto) {
         Optional<User> userOpt = userRepository.findById(userId);
