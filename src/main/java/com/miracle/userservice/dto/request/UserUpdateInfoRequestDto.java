@@ -1,6 +1,7 @@
 package com.miracle.userservice.dto.request;
 
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,10 +30,11 @@ public class UserUpdateInfoRequestDto {
     @Size(max = 50, message = ValidationDefaultMsgUtil.UserUpdateInfo.PHOTO)
     private final String photo;
 
-    @Schema(
-            description = "기술 스택 ID 목록",
-            required = true,
-            example = "[1, 3]"
+    @ArraySchema(
+            schema = @Schema(
+                    description = "기술 스택 ID 목록",
+                    required = true
+            )
     )
     @NotNull(message = ValidationDefaultMsgUtil.UserUpdateInfo.COLLECTION)
     private final Set<Long> stackIdSet;
