@@ -37,6 +37,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             {
                                                                 "applicationLetterId": 29,
                                                                 "resumeTitle": "title1",
+                                                                "email": email1@naver.com,
                                                                 "name": "오스틴",
                                                                 "address": "서울특별시 서초구 효령로 113",
                                                                 "submitDate": "2023-11-30"
@@ -44,6 +45,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             {
                                                                 "applicationLetterId": 15,
                                                                 "resumeTitle": "title2",
+                                                                "email": email2@naver.com,
                                                                 "name": "사장님",
                                                                 "address": "서울특별시 서초구 효령로 114",
                                                                 "submitDate": "2023-12-25"
@@ -53,6 +55,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             {
                                                                 "applicationLetterId": 10,
                                                                 "resumeTitle": "title3",
+                                                                "email": email3@naver.com,
                                                                 "name": "아이고",
                                                                 "address": "서울특별시 서초구 효령로 153",
                                                                 "submitDate": "2023-10-04"
@@ -60,6 +63,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             {
                                                                 "applicationLetterId": 50,
                                                                 "resumeTitle": "title4",
+                                                                "email": email4@naver.com,
                                                                 "name": "월급",
                                                                 "address": "서울특별시 서초구 효령로 119",
                                                                 "submitDate": "2023-08-06"

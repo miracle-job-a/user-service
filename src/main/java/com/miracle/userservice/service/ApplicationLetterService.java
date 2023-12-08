@@ -78,7 +78,7 @@ public interface ApplicationLetterService {
      *
      * @param postId   공고 ID
      * @param pageable 지원자 목록 페이징 정보
-     * @return 지원자 목록이 담긴 {@code Page}. 지원자 목록 정보는 지원서 ID, 이력서 제목, 이름, 주소, 지원 날짜를 포함한다.
+     * @return 지원자 목록이 담긴 {@code Page}. 지원자 목록 정보는 지원서 ID, 이력서 제목, 이메일, 이름, 주소, 지원 날짜를 포함한다.
      * @author chocola
      */
     Page<ApplicantListResponseDto> getApplicantList(Long postId, Pageable pageable);
