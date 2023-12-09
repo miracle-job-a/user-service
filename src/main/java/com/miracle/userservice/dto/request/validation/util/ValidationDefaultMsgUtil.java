@@ -76,6 +76,11 @@ public class ValidationDefaultMsgUtil {
         public static final String SORT = "400_2:정렬 기준이 올바르지 않습니다. 정렬 기준은 ('SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC') 안에 있는 값만 입력 가능합니다.";
     }
 
+    public static abstract class ApplicationLetterUpdate {
+
+        public static final String STATUS = "400_1:지원 상태 값이 올바르지 않습니다. 값이 ('PASS', 'FAIL', 'IN_PROGRESS') 중 하나여야 합니다.";
+    }
+
     public static abstract class UserJoinList {
 
         public static final String PAGING = "400:페이징 파라미터 형식이 올바르지 않습니다.";
