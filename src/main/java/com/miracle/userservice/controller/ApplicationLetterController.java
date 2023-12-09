@@ -9,6 +9,7 @@ import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
+import com.miracle.userservice.entity.ApplicationStatus;
 import com.miracle.userservice.service.ApplicationLetterService;
 import com.miracle.userservice.swagger.*;
 import com.miracle.userservice.util.ParameterValidator;
@@ -79,6 +80,21 @@ public class ApplicationLetterController {
         String message = "지원한 자기소개서 조회 성공";
 
         return new SuccessApiResponse<>(httpStatus, message, dto);
+    }
+
+    @ApiPutApplicationLetter
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{applicationLetterId}")
+    public CommonApiResponse updateApplicationLetter(
+            @PathVariable Long applicationLetterId,
+            @Parameter(name = "applicationStatus", description = "Value in ('PASS', 'FAIL', 'IN_PROGRESS')") @RequestParam(name = "applicationStatus") String status) {
+        ApplicationStatus applicationStatus = ParameterValidator.checkParameterEnum(ApplicationStatus.class, status, ValidationDefaultMsgUtil.ApplicationLetterUpdate.STATUS);
+        boolean result = applicationLetterService.updateApplicationLetter(applicationLetterId, applicationStatus);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 수정 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
     }
 
     @ApiDeleteApplicationLetter

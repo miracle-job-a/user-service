@@ -156,6 +156,20 @@ public class ApplicationLetterServiceImpl implements ApplicationLetterService {
 
     @Transactional
     @Override
+    public boolean updateApplicationLetter(Long applicationLetterId, ApplicationStatus applicationStatus) {
+        Objects.requireNonNull(applicationLetterId, "ApplicationLetter id is null");
+        Objects.requireNonNull(applicationStatus, "ApplicationStatus is null");
+
+        Optional<ApplicationLetter> applicationLetterOpt = applicationLetterRepository.findById(applicationLetterId);
+        ApplicationLetter applicationLetter = applicationLetterOpt.orElseThrow(() -> new NoSuchApplicationLetterException("400_2", "지원서가 존재하지 않습니다."));
+
+        applicationLetter.setApplicationStatus(applicationStatus);
+
+        return true;
+    }
+
+    @Transactional
+    @Override
     public boolean deleteApplicationLetter(Long applicationLetterId) {
         String errorMessage = "ApplicationLetter id is null";
         Objects.requireNonNull(applicationLetterId, errorMessage);
