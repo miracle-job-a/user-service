@@ -2,9 +2,6 @@ package com.miracle.userservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 import java.util.stream.Stream;
 
 public enum ApplicationStatus {

@@ -48,7 +48,7 @@ public abstract class ParameterValidator {
         String message = split[1];
 
         try {
-            return Enum.valueOf(enumClass, enumName);
+            return Enum.valueOf(enumClass, enumName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new InvalidParameterException(code, message);
         }
