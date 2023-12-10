@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -123,5 +124,12 @@ public class UserServiceImpl implements UserService {
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.plusDays(1L).atStartOfDay();
         return userRepository.findJoinList(startDate, endDate, pageable);
+    }
+
+    @Override
+    public Map<String, Object> getUserJoinNumber(LocalDate date) {
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.plusDays(1L).atStartOfDay();
+        return userRepository.countByCreatedAt(startDate, endDate);
     }
 }

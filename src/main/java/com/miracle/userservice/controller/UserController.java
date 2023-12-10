@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
@@ -196,6 +197,20 @@ public class UserController {
 
         int httpStatus = HttpStatus.OK.value();
         String message = "회원 가입 목록 조회 성공";
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
+    @ApiGetUserJoinNumber
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/join-number")
+    public CommonApiResponse getUserJoinNumber(@Parameter(description = "회원 가입 날짜", example = "2023-01-01")
+                                               @RequestParam @DateTimeFormat(iso = DATE) LocalDate date) {
+        date = ParameterValidator.checkParameterLocalDate(date);
+
+        Map<String, Object> result = userService.getUserJoinNumber(date);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "일자별 회원 가입 수 조회 성공";
         return new SuccessApiResponse<>(httpStatus, message, result);
     }
 }

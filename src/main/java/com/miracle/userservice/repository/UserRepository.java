@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -32,4 +33,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
            ORDER BY u.createdAt DESC
            """)
     Page<UserJoinListResponseDto> findJoinList(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, Pageable pageable);
+
+    @Query("""
+           SELECT DATE_FORMAT(u.createdAt, '%Y-%m-%d') AS date, COUNT(*) AS userJoinNumber
+           FROM User u
+           WHERE u.createdAt >= :startDate AND u.createdAt < :endDate
+           GROUP BY date
+           """)
+    Map<String, Object> countByCreatedAt(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }

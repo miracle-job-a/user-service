@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -108,4 +109,13 @@ public interface UserService {
      * @author chocola
      */
     Page<UserJoinListResponseDto> getJoinList(LocalDate date, Pageable pageable);
+
+    /**
+     * 일자별 유저 회원가입 수를 조회
+     *
+     * @param date 조회 일자
+     * @return {@code date}에 회원 가입한 유저 수
+     * @throws NullPointerException If {@code date} is null
+     * */
+    Map<String, Object> getUserJoinNumber(LocalDate date);
 }
