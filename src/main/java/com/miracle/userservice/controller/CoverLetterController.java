@@ -2,6 +2,7 @@ package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
+import com.miracle.userservice.controller.sort.CoverLetterListSort;
 import com.miracle.userservice.dto.request.CoverLetterPostRequestDto;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.CoverLetterListResponseDto;
@@ -41,7 +42,7 @@ public class CoverLetterController {
             @Parameter(name = "sort", description = "정렬 기준 IN ('MODIFIED_AT_ASC', 'MODIFIED_AT_DESC').\nDefalut Value = MODIFIED_AT_DESC") @RequestParam(required = false, defaultValue = "MODIFIED_AT_DESC", name = "sort") String sortStr
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.CoverLetterList.PAGING);
-        CoverLetterListSort coverLetterListSort = ParameterValidator.checkParameterEnum(sortStr, CoverLetterListSort.class, ValidationDefaultMsgUtil.CoverLetterList.SORT);
+        CoverLetterListSort coverLetterListSort = ParameterValidator.checkParameterEnum(CoverLetterListSort.class, sortStr, ValidationDefaultMsgUtil.CoverLetterList.SORT);
         Sort sort = coverLetterListSort.toSort();
 
         startPage--;

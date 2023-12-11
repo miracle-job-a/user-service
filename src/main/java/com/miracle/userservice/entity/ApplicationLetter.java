@@ -4,6 +4,7 @@ import com.miracle.userservice.converter.SymmetricCypherConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class ApplicationLetter extends BaseEntity {

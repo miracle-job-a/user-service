@@ -2,6 +2,7 @@ package com.miracle.userservice.controller;
 
 import com.miracle.userservice.controller.response.CommonApiResponse;
 import com.miracle.userservice.controller.response.SuccessApiResponse;
+import com.miracle.userservice.controller.sort.ApplicantListSort;
 import com.miracle.userservice.dto.request.validation.util.ValidationDefaultMsgUtil;
 import com.miracle.userservice.dto.response.ApplicantListResponseDto;
 import com.miracle.userservice.service.ApplicationLetterService;
@@ -50,7 +51,7 @@ public class PostController {
             @Parameter(name = "sort", description = "정렬 기준 in ('NAME', 'SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC').\nDefault Value = SUBMIT_DATE_DESC") @RequestParam(required = false, defaultValue = "SUBMIT_DATE_DESC", name = "sort") String sortStr
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.ApplicantList.PAGING);
-        ApplicantListSort applicantListSort = ParameterValidator.checkParameterEnum(sortStr, ApplicantListSort.class, ValidationDefaultMsgUtil.ApplicantList.SORT);
+        ApplicantListSort applicantListSort = ParameterValidator.checkParameterEnum(ApplicantListSort.class, sortStr, ValidationDefaultMsgUtil.ApplicantList.SORT);
         Sort sort = applicantListSort.toSort();
 
         startPage--;
