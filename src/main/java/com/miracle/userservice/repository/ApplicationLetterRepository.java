@@ -30,7 +30,6 @@ public interface ApplicationLetterRepository extends JpaRepository<ApplicationLe
            LEFT JOIN Interview i
            ON i.applicationLetter.id = al.id
            WHERE al.user.id = :userId
-           ORDER BY al.submitDate DESC
            """)
     Page<ApplicationLetterListResponseDto> findAllApplicationLetterListByUserId(@Param("userId") Long userId, Pageable pageable);
 

@@ -9,6 +9,7 @@ import com.miracle.userservice.dto.response.ApplicationLetterListResponseDto;
 import com.miracle.userservice.dto.response.ApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.CoverLetterInApplicationLetterResponseDto;
 import com.miracle.userservice.dto.response.ResumeInApplicationLetterResponseDto;
+import com.miracle.userservice.entity.ApplicationStatus;
 import com.miracle.userservice.service.ApplicationLetterService;
 import com.miracle.userservice.swagger.*;
 import com.miracle.userservice.util.ParameterValidator;
@@ -81,6 +82,21 @@ public class ApplicationLetterController {
         return new SuccessApiResponse<>(httpStatus, message, dto);
     }
 
+    @ApiPutApplicationLetter
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{applicationLetterId}")
+    public CommonApiResponse updateApplicationLetter(
+            @PathVariable Long applicationLetterId,
+            @Parameter(name = "applicationStatus", description = "Value in ('PASS', 'FAIL', 'IN_PROGRESS')") @RequestParam(name = "applicationStatus") String status) {
+        ApplicationStatus applicationStatus = ParameterValidator.checkParameterEnum(ApplicationStatus.class, status, ValidationDefaultMsgUtil.ApplicationLetterUpdate.STATUS);
+        boolean result = applicationLetterService.updateApplicationLetter(applicationLetterId, applicationStatus);
+
+        int httpStatus = HttpStatus.OK.value();
+        String message = "지원서 수정 성공";
+
+        return new SuccessApiResponse<>(httpStatus, message, result);
+    }
+
     @ApiDeleteApplicationLetter
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{applicationLetterId}")
@@ -101,7 +117,7 @@ public class ApplicationLetterController {
             @Parameter(description = "Default Value = 1") @RequestParam(required = false, defaultValue = "1") int startPage,
             @Parameter(description = "Default Value = 5") @RequestParam(required = false, defaultValue = "5") int endPage,
             @Parameter(description = "Default Value = 10") @RequestParam(required = false, defaultValue = "10") int pageSize,
-            @Parameter(name = "sort", description = "Value in ('SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC').\n Default Value = SUBMIT_DATE_ASC") @RequestParam(name = "sort", required = false, defaultValue = "") String sortStr
+            @Parameter(name = "sort", description = "Value in ('SUBMIT_DATE_ASC', 'SUBMIT_DATE_DESC').\n Default Value = SUBMIT_DATE_ASC") @RequestParam(name = "sort", required = false, defaultValue = "SUBMIT_DATE_ASC") String sortStr
     ) {
         ParameterValidator.checkParameterWhenPaging(startPage, endPage, pageSize, ValidationDefaultMsgUtil.ApplicationLetterList.PAGING);
         ApplicationLetterListSort applicationLetterListSort = ParameterValidator.checkParameterEnum(ApplicationLetterListSort.class, sortStr, ValidationDefaultMsgUtil.ApplicationLetterList.SORT);
