@@ -71,7 +71,6 @@ public interface ApplicationLetterService {
      * @return true
      * @throws NullPointerException             If {@code applicationLetterId} or {@code applicationStatus} is null
      * @throws NoSuchApplicationLetterException If applicationLetter doesn't exist
-     * @throws InvalidParameterException        When {@code applicationStatus} value is not among PASS, FAIL, or IN_PROGRESS
      * @author hazzokko
      */
     boolean updateApplicationLetter(Long applicationLetterId, ApplicationStatus applicationStatus);
