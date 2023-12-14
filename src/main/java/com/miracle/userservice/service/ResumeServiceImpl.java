@@ -148,6 +148,7 @@ public class ResumeServiceImpl implements ResumeService {
                 .jobIdSet(resume.getJobIdSet())
                 .modifiedAt(resume.getModifiedAt())
                 .open(resume.isOpen())
+                .photo(resume.getPhoto())
                 .build();
     }
 }

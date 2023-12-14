@@ -17,6 +17,7 @@ public class ResumeInApplicationLetterResponseDto {
     private final int userCareer;
     private final String userBirth;
     private final String userPhone;
+    private final String userPhoto;
     private final String userAddress;
     private final String userJob;
     private final Set<Long> userStackIdSet;
@@ -27,13 +28,14 @@ public class ResumeInApplicationLetterResponseDto {
     private final List<String> userEtcList;
 
     @Builder
-    public ResumeInApplicationLetterResponseDto(String resumeTitle, String userName, String userEmail, int userCareer, LocalDate userBirth, String userPhone, String userAddress, String userJob, Set<Long> userStackIdSet, String userEducation, String userGitLink, List<String> userCareerDetailList, List<String> userProjectList, List<String> userEtcList) {
+    public ResumeInApplicationLetterResponseDto(String resumeTitle, String userName, String userEmail, int userCareer, LocalDate userBirth, String userPhone, String userPhoto, String userAddress, String userJob, Set<Long> userStackIdSet, String userEducation, String userGitLink, List<String> userCareerDetailList, List<String> userProjectList, List<String> userEtcList) {
         this.resumeTitle = resumeTitle;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userCareer = userCareer;
         this.userBirth = DateFormatUtil.dateToString(userBirth);
         this.userPhone = userPhone;
+        this.userPhoto = userPhoto;
         this.userAddress = userAddress;
         this.userJob = userJob;
         this.userStackIdSet = Set.copyOf(userStackIdSet);
