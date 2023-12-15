@@ -56,8 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkDuplicate(String email) {
+    public boolean checkDuplicate(String email, String sso) {
         validEmail(email);
+        if (!sso.isBlank()) email = sso + "#" + email;
         return userRepository.existsByEmail(email);
     }
 
