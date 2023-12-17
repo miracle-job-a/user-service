@@ -28,13 +28,17 @@ public class ResumeListResponseDto {
 
     @Schema(description = "이력서 공개 여부")
     private boolean open;
+    
+    @Schema(description = "이력서 사진")
+    private String photo;
 
     @Builder
-    public ResumeListResponseDto(Long id, String title, Set<Long> jobIdSet, LocalDateTime modifiedAt, boolean open) {
+    public ResumeListResponseDto(Long id, String title, Set<Long> jobIdSet, LocalDateTime modifiedAt, boolean open, String photo) {
         this.id = id;
         this.title = title;
         this.jobIdSet = Set.copyOf(jobIdSet);
         this.modifiedAt = modifiedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
         this.open = open;
+        this.photo = photo;
     }
 }

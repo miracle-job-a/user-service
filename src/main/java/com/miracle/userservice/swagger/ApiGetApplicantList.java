@@ -36,6 +36,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                         [
                                                             {
                                                                 "applicationLetterId": 29,
+                                                                "userId": 1,
                                                                 "resumeTitle": "title1",
                                                                 "email": email1@naver.com,
                                                                 "name": "오스틴",
@@ -44,6 +45,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             },
                                                             {
                                                                 "applicationLetterId": 15,
+                                                                "userId": 2,
                                                                 "resumeTitle": "title2",
                                                                 "email": email2@naver.com,
                                                                 "name": "사장님",
@@ -54,6 +56,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                         [
                                                             {
                                                                 "applicationLetterId": 10,
+                                                                "userId": 3,
                                                                 "resumeTitle": "title3",
                                                                 "email": email3@naver.com,
                                                                 "name": "아이고",
@@ -62,6 +65,7 @@ import static java.lang.annotation.ElementType.METHOD;
                                                             },
                                                             {
                                                                 "applicationLetterId": 50,
+                                                                "userId": 4,
                                                                 "resumeTitle": "title4",
                                                                 "email": email4@naver.com,
                                                                 "name": "월급",

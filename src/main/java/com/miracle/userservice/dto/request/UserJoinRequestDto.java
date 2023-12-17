@@ -67,6 +67,12 @@ public class UserJoinRequestDto {
     @NotBlank(message = ValidationDefaultMsgUtil.UserJoin.ADDRESS)
     private final String address;
 
+    @Schema(
+            description = "sso 이름",
+            example = "google"
+    )
+    private final String sso;
+
     public UserJoinRequestDto() {
         this.email = null;
         this.name = null;
@@ -74,21 +80,31 @@ public class UserJoinRequestDto {
         this.phone = null;
         this.birth = null;
         this.address = null;
+        this.sso = null;
     }
 
     @Builder
-    public UserJoinRequestDto(String email, String name, String password, String phone, LocalDate birth, String address) {
+    public UserJoinRequestDto(String email, String name, String password, String phone, LocalDate birth, String address, String sso) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.phone = phone;
         this.birth = birth;
         this.address = address;
+        this.sso = sso;
+    }
+
+    public String getEmail() {
+        if (sso != null) {
+            return sso + "#" + email;
+        }
+
+        return email;
     }
 
     public User transformToUser() {
         String name = this.name;
-        String email = this.email;
+        String email = getEmail();
         String password = this.password;
         String phone = this.phone;
         String address = this.address;

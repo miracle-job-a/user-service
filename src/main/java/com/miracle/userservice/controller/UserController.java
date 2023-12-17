@@ -84,10 +84,10 @@ public class UserController {
     @ApiGetCheckEmail
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/check-email/{email}")
-    public CommonApiResponse checkDuplicateEmail(@PathVariable String email) {
+    public CommonApiResponse checkDuplicateEmail(@PathVariable String email, @RequestParam(required = false, defaultValue = "") String sso) {
         String message;
         Boolean data;
-        if (userService.checkDuplicate(email)) {
+        if (userService.checkDuplicate(email, sso)) {
             message = "사용할 수 없는 이메일입니다.";
             data = Boolean.TRUE;
         } else {

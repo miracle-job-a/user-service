@@ -1,5 +1,6 @@
 package com.miracle.userservice.entity;
 
+import com.miracle.userservice.converter.EmailConverter;
 import com.miracle.userservice.converter.SymmetricCypherConverter;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,7 +49,7 @@ public class ApplicationLetter extends BaseEntity {
     @Column(length = 50)
     private String coverLetterTitle;
 
-    @Convert(converter = SymmetricCypherConverter.class)
+    @Convert(converter = EmailConverter.class)
     @Column(nullable = false, length = 50)
     private String userEmail;
 
@@ -58,6 +59,9 @@ public class ApplicationLetter extends BaseEntity {
     @Convert(converter = SymmetricCypherConverter.class)
     @Column(nullable = false, length = 20)
     private String userPhone;
+
+    @Column(length = 50)
+    private String userPhoto;
 
     @Column(length = 20)
     private String userEducation;
@@ -111,7 +115,7 @@ public class ApplicationLetter extends BaseEntity {
     private final Set<Long> stackIdSet = new HashSet<>();
 
     @Builder
-    public ApplicationLetter(PostType postType, User user, Long postId, LocalDateTime submitDate, ApplicationStatus applicationStatus, String resumeTitle, String coverLetterTitle, String userEmail, String userName, String userPhone, String userEducation, String userJob, String userGitLink, LocalDate userBirth, int userCareer) {
+    public ApplicationLetter(PostType postType, User user, Long postId, LocalDateTime submitDate, ApplicationStatus applicationStatus, String resumeTitle, String coverLetterTitle, String userEmail, String userName, String userPhone, String userPhoto, String userEducation, String userJob, String userGitLink, LocalDate userBirth, int userCareer) {
         this.postType = postType;
         this.user = user;
         this.postId = postId;
@@ -122,6 +126,7 @@ public class ApplicationLetter extends BaseEntity {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPhone = userPhone;
+        this.userPhoto = userPhoto;
         this.userEducation = userEducation;
         this.userJob = userJob;
         this.userGitLink = userGitLink;

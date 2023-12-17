@@ -1,26 +1,22 @@
 package com.miracle.userservice.converter;
 
-import com.miracle.userservice.cypher.SymmetricCypher;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@RequiredArgsConstructor
 @Component
 @Converter
-public class SymmetricCypherConverter implements AttributeConverter<String, String> {
-
-    private final SymmetricCypher symmetricCypher;
+public class SsoConverter implements AttributeConverter<String, String> {
 
     @Override
     public String convertToDatabaseColumn(String attribute) {
-        return symmetricCypher.encrypt(attribute);
+        return attribute;
     }
 
     @Override
     public String convertToEntityAttribute(String dbData) {
-        return symmetricCypher.decrypt(dbData);
+        int index = dbData.indexOf('#');
+        return (index > 0) ? dbData.substring(index + 1) : dbData;
     }
 }

@@ -45,11 +45,12 @@ public interface UserService {
      * 해당 이메일이 DB에 저장되어 있는지 확인한다. 저장되어 있다면 true, 그렇지 않으면 false를 반환한다.
      *
      * @param email 유저 이메일
+     * @param sso   sso 회사 이름
      * @return {@code email}이 기 저장되어 있다면 true, 그렇지 않으면 false를 반환
      * @throws InvalidEmailException {@code email}이 올바른 형식이 아닐 경우
      * @author chocola
      */
-    boolean checkDuplicate(String email);
+    boolean checkDuplicate(String email, String sso);
 
     /**
      * 특정 유저의 기본 정보를 반환하는 메서드
@@ -102,7 +103,7 @@ public interface UserService {
     /**
      * 특정 날짜의 유저 회원 가입 목록을 조회
      *
-     * @param date 조회하고자 하는 날짜
+     * @param date     조회하고자 하는 날짜
      * @param pageable 페이징 정보
      * @return {@code date}에 회원 가입한 유저 리스트
      * @author chocola

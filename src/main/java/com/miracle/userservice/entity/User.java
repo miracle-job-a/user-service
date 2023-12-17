@@ -1,6 +1,7 @@
 package com.miracle.userservice.entity;
 
 import com.miracle.userservice.converter.AsymmetricCypherConverter;
+import com.miracle.userservice.converter.EmailConverter;
 import com.miracle.userservice.converter.SymmetricCypherConverter;
 import com.miracle.userservice.dto.request.UserUpdateInfoRequestDto;
 import lombok.*;
@@ -22,7 +23,7 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Convert(converter = SymmetricCypherConverter.class)
+    @Convert(converter = EmailConverter.class)
     @Column(nullable = false, unique = true, length = 350)
     private String email;
 
