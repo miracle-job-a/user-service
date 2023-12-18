@@ -53,7 +53,7 @@ public class ApplicationLetterController {
         boolean result = applicationLetterService.postApplicationLetter(userId, dto);
 
         int httpStatus = HttpStatus.OK.value();
-        String message = "지원서 등록 성공";
+        String message = "해당 공고에 지원이 완료되었습니다.";
 
         return new SuccessApiResponse<>(httpStatus, message, result);
     }

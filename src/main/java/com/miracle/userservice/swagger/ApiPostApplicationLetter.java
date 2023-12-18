@@ -32,7 +32,7 @@ import static com.miracle.userservice.swagger.util.SwaggerMsgUtil.MediaType.APPL
                                         value = """
                                                 {
                                                   "httpStatus": 201,
-                                                  "message": "지원서 등록 성공",
+                                                  "message": "해당 공고에 지원이 완료되었습니다.",
                                                   "data": true
                                                 }
                                                 """
