@@ -34,9 +34,9 @@ public class ValidationDefaultMsgUtil {
     }
 
     public static abstract class CoverLetterPost {
-        public static final String USER_ID = "400_1:유저 아이디는 양수만 가능합니다.";
-        public static final String TITLE = "400_2:제목이 없거나 글자 제한 수를 초과했습니다.";
-        public static final String QNA = "400_3:질문 및 답변이 없습니다.";
+
+        public static final String TITLE = "400_1:제목이 없거나 글자 제한 수를 초과했습니다.";
+        public static final String QNA = "400_2:질문 및 답변이 없습니다.";
     }
 
     public static abstract class UserUpdateInfo {
