@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
     private static final String TITLE = "Miracle User Service API";
     private static final String DESCRIPTION = "유저와 연관된 요청들을 처리하는 API";
-    private static final String VERSION = "1.0";
+    private static final String VERSION = "1.3";
     private static final String BASE_PACKAGE = "com.miracle.userservice.controller";
 
     @Bean
